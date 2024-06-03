@@ -39,6 +39,10 @@ public class ChessController implements Initializable {
     private Button buttonPlay;
     @FXML
     private VBox newButtons;
+    @FXML
+    private Label nicknameMe;
+    @FXML
+    private Label nicknameEnnemy;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -125,8 +129,8 @@ public class ChessController implements Initializable {
         } else {
             j2 = new Joueur(nom.getText(), prenom.getText(), false);
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
-            System.out.println(j1);
-            System.out.println(j2);
+            nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
+            nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
         }
 
     }
