@@ -4,22 +4,22 @@ import fr.iut.chesscomsae.Joueur;
 
 public abstract class Piece {
 
-    private final int row;
-    private final int column;
-    private final boolean isWhite;
+    private final int ligne;
+    private final int colonne;
+    private final boolean estBlanc;
     private final Joueur joueur;
 
     /**
      * @author Hugo Valente
-     * @param row Ligne de la pièce
-     * @param column Colonne de la pièce
-     * @param isWhite
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param estBlanc
      * description Constructeur de la classe Piece
      */
-    public Piece(int row, int column, boolean isWhite, Joueur joueur) {
-        this.row = row;
-        this.column = column;
-        this.isWhite = isWhite;
+    public Piece(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        this.ligne = ligne;
+        this.colonne = colonne;
+        this.estBlanc = estBlanc;
         this.joueur = joueur;
     }
 
@@ -27,33 +27,33 @@ public abstract class Piece {
      * @author Hugo Valente
      * @return La colonne de la pièce
      */
-    public int getColumn() {
-        return row;
+    public int getColonne() {
+        return ligne;
     }
 
     /**
      * @author Hugo Valente
      * @return La ligne de la pièce
      */
-    public int getRow() {
-        return column;
+    public int getLigne() {
+        return colonne;
     }
 
     /**
      * @author Hugo Valente
      * @return Vrai si la pièce est blanche, faux sinon
      */
-    public boolean isWhite() {
-        return isWhite;
+    public boolean estBlanc() {
+        return estBlanc;
     }
 
     /**
      * @author Hugo Valente
-     * @param row Line de la pièce
-     * @param column Colonnes de la pièce
+     * @param ligne Line de la pièce
+     * @param colonne Colonnes de la pièce
      * @return Vrai si le déplacement est légal, faux sinon
      */
-    public abstract boolean isMoveLegal(int row, int column);
+    public abstract boolean isMoveLegal(int ligne, int colonne);
 
     /**
      * @author Hugo Valente

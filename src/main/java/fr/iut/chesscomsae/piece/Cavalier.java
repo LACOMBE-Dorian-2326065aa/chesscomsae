@@ -4,12 +4,12 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Cavalier extends Piece{
 
-        public Cavalier(int row, int column, boolean isWhite, Joueur joueur) {
-            super(row, column, isWhite, joueur);
+        public Cavalier(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+            super(ligne, colonne, estBlanc, joueur);
         }
 
         @Override
         public boolean isMoveLegal(int row, int column) {
-            return (Math.abs(row - getColumn()) == 2 && Math.abs(column - getRow()) == 1) || (Math.abs(row - getColumn()) == 1 && Math.abs(column - getRow()) == 2);
+            return (Math.abs(row - getColonne()) == 2 && Math.abs(column - getLigne()) == 1) || (Math.abs(row - getColonne()) == 1 && Math.abs(column - getLigne()) == 2);
         }
 }

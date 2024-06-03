@@ -4,13 +4,13 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Tour extends Piece {
 
-    public Tour(int row, int column, boolean isWhite, Joueur joueur) {
-        super(row, column, isWhite, joueur);
+    public Tour(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        super(ligne, colonne, estBlanc, joueur);
     }
 
     @Override
     public boolean isMoveLegal(int row, int column) {
-        return row == getColumn() || column == getRow();
+        return row == getColonne() || column == getLigne();
     }
 
 }

@@ -4,13 +4,13 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Reine extends Piece{
 
-    public Reine(int row, int column, boolean isWhite, Joueur joueur) {
-        super(row, column, isWhite, joueur);
+    public Reine(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        super(ligne, colonne, estBlanc, joueur);
     }
 
     @Override
     public boolean isMoveLegal(int row, int column) {
-        return row == getColumn() || column == getRow() || Math.abs(row - getColumn()) == Math.abs(column - getRow());
+        return row == getColonne() || column == getLigne() || Math.abs(row - getColonne()) == Math.abs(column - getLigne());
     }
 
 }
