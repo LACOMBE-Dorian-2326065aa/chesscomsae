@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Cavalier extends Piece{
 
-    public Cavalier(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+    public Cavalier(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 

@@ -4,7 +4,7 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Fou extends Piece {
 
-    public Fou(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+    public Fou(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 

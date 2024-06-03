@@ -4,7 +4,7 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Tour extends Piece {
 
-    public Tour(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+    public Tour(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 

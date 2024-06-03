@@ -7,8 +7,8 @@ class PlateauTest {
 
     @Test
     public void testTableau() {
-        Joueur joueurNoir = new Joueur("Valente", "Hugo");
-        Joueur joueurBlanc = new Joueur("Lacombe", "Dorian");
+        Joueur joueurNoir = new Joueur("Valente", "Hugo", false);
+        Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Plateau plateau = new Plateau(joueurBlanc, joueurNoir);
         plateau.init();
         System.out.println(plateau.getTableau());

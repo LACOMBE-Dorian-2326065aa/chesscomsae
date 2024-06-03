@@ -4,7 +4,7 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Pion extends Piece {
 
-    public Pion(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+    public Pion(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 

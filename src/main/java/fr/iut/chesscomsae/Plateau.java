@@ -37,45 +37,45 @@ public class Plateau {
             for (int j = 0; j < 8; ++j) {
                 // Création de nouvelles tours aux cases correspondantes
                 if (i==0 && (j==0 || j==7)) {
-                    tableau.get(i).set(j, new Tour(i, j, false, joueurNoir)); // Tours noires
+                    tableau.get(i).set(j, new Tour(i, j, joueurNoir)); // Tours noires
                 }
                 else if (i==7 && (j==0 || j==7)) {
-                    tableau.get(i).set(j, new Tour(i, j, true, joueurBlanc)); // Tours blanches
+                    tableau.get(i).set(j, new Tour(i, j, joueurBlanc)); // Tours blanches
                 }
                 // Création de nouveaux cavaliers aux cases correspondantes
                 else if (i==0 && (j==1 || j==6)) {
-                    tableau.get(i).set(j, new Cavalier(i, j, false, joueurNoir)); // Cavaliers noirs
+                    tableau.get(i).set(j, new Cavalier(i, j, joueurNoir)); // Cavaliers noirs
                 }
                 else if (i==7 && (j==1 || j==6)) {
-                    tableau.get(i).set(j, new Cavalier(i, j, true, joueurBlanc)); // Cavaliers blancs
+                    tableau.get(i).set(j, new Cavalier(i, j, joueurBlanc)); // Cavaliers blancs
                 }
                 // Création de nouveaux fous aux cases correspondantes
                 else if (i==0 && (j==2 || j==5)) {
-                    tableau.get(i).set(j, new Fou(i, j, false, joueurNoir)); // Fous noirs
+                    tableau.get(i).set(j, new Fou(i, j, joueurNoir)); // Fous noirs
                 }
                 else if (i==7 && (j==2 || j==5)) {
-                    tableau.get(i).set(j, new Fou(i, j, true, joueurBlanc)); // Fous blancs
+                    tableau.get(i).set(j, new Fou(i, j, joueurBlanc)); // Fous blancs
                 }
                 // Création de nouvelles reines aux cases correspondantes
                 else if (i==0 && j==3) {
-                    tableau.get(i).set(j, new Reine(i, j, false, joueurNoir)); // Reine noire
+                    tableau.get(i).set(j, new Reine(i, j, joueurNoir)); // Reine noire
                 }
                 else if (i==7 && j==3) {
-                    tableau.get(i).set(j, new Reine(i, j, true, joueurBlanc)); // Reine blanche
+                    tableau.get(i).set(j, new Reine(i, j, joueurBlanc)); // Reine blanche
                 }
                 // Création de nouveaux rois aux cases correspondantes
                 else if (i==0 && j==4) {
-                    tableau.get(i).set(j, new Roi(i, j, false, joueurNoir)); // Roi noir
+                    tableau.get(i).set(j, new Roi(i, j, joueurNoir)); // Roi noir
                 }
                 else if (i==7 && j==4) {
-                    tableau.get(i).set(j, new Roi(i, j, true, joueurBlanc)); // Roi blanc
+                    tableau.get(i).set(j, new Roi(i, j, joueurBlanc)); // Roi blanc
                 }
                 // Création de nouveaux pions aux cases correspondantes
                 else if (i==1) {
-                    tableau.get(i).set(j, new Pion(i, j, false, joueurNoir)); // Pions noirs
+                    tableau.get(i).set(j, new Pion(i, j, joueurNoir)); // Pions noirs
                 }
                 else if (i==6) {
-                    tableau.get(i).set(j, new Pion(i, j, true, joueurBlanc)); // Pions blancs
+                    tableau.get(i).set(j, new Pion(i, j, joueurBlanc)); // Pions blancs
                 }
             }
         }
@@ -84,6 +84,7 @@ public class Plateau {
     /**
      * @author Quentin Fournier
      * getTableau, affiche les éléments, pièces, présentes sur le plateau
+     * @return le tableau (la liste des listes et de leurs éléments)
      */
     public ArrayList<ArrayList<Piece>> getTableau() {
         return tableau;
