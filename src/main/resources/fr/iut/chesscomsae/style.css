@@ -1,0 +1,17 @@
+.main {
+    -fx-background-color: #302e2b;
+    -fx-padding: 0 5px;
+}
+
+.nickname {
+    -fx-text-fill: #fff;
+    -fx-padding: 0 10px;
+}
+
+.timer {
+    -fx-text-fill: #ccc;
+    -fx-background-color: #2f2d2a;
+    -fx-padding: 0 10px;
+    -fx-font-size: 2.7em;
+    -fx-alignment: CENTER_RIGHT;
+}
