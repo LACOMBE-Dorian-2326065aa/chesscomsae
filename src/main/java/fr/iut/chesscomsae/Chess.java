@@ -16,6 +16,7 @@ public class Chess extends Application {
         String css = this.getClass().getResource("style.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
