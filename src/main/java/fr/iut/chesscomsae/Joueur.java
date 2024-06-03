@@ -61,7 +61,7 @@ public class Joueur implements Serializable {
     }
 
     // Setter pour la couleur
-    public void setWhite(boolean estBlanc) {
+    public void setEstBlanc(boolean estBlanc) {
         this.estBlanc = estBlanc;
     }
 
@@ -79,6 +79,8 @@ public class Joueur implements Serializable {
             return (Joueur) ois.readObject();
         }
     }
+
+    @Override
     public String toString() {
         return "Joueur[" +
                 "nom='" + nom + '\'' +

@@ -15,7 +15,7 @@ public class Reine extends Piece{
 
     @Override
     public String getImage() {
-        return null;
+        return estBlanc() ? "file:src/main/resources/pieces/reineBlanc.png" : "file:src/main/resources/pieces/reineNoir.png";
     }
 
     @Override

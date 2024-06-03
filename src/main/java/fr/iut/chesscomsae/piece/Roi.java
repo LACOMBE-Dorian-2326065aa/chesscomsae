@@ -15,7 +15,7 @@ public class Roi extends Piece {
 
     @Override
     public String getImage() {
-        return null;
+        return estBlanc() ? "file:src/main/resources/pieces/roiBlanc.png" : "file:src/main/resources/pieces/roiNoir.png";
     }
 
     @Override

@@ -15,7 +15,7 @@ public class Fou extends Piece {
 
     @Override
     public String getImage() {
-        return null;
+        return estBlanc() ? "file:src/main/resources/pieces/fouBlanc.png" : "file:src/main/resources/pieces/fouNoir.png";
     }
 
     @Override
