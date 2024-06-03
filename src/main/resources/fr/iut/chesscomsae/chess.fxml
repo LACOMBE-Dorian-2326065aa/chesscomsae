@@ -89,6 +89,7 @@
                 </items>
             </ChoiceBox>
             <Button styleClass="buttonPlay" onAction="#play" fx:id="buttonPlay">Jouer</Button>
+            <VBox fx:id="newButtons" styleClass="newButtons"></VBox>
             <Region VBox.vgrow="ALWAYS"/>
             <Button styleClass="buttonTournoi">
                 <graphic>

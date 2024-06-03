@@ -107,3 +107,34 @@
     -fx-text-fill: #ccc;
     -fx-padding: 5px 10px 5px 0;
 }
+
+.newButtons {
+    -fx-max-width: 300px;
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+.prenomLabel, .nomLabel {
+    -fx-text-fill: #fff;
+    -fx-font-size: 1em;
+}
+
+.prenom, .nom {
+    -fx-background-color: transparent;
+    -fx-text-fill: #fff;
+    -fx-padding: 5px;
+    -fx-border-color: #888;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.valid {
+    -fx-background-color: #81b64c;
+    -fx-padding: 5px 50px;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-font-size: 1.5em;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, #45753c, 0, 0, 0, 5);
+}
