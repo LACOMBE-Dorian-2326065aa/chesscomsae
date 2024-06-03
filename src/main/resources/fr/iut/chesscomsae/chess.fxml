@@ -55,28 +55,28 @@
     <VBox>
         <HBox>
             <VBox styleClass="menuRightActual">
-                <ImageView fitWidth="30" fitHeight="30">
+                <ImageView fitWidth="25" fitHeight="25">
                     <Image url="@./img/new_game.png"></Image>
                 </ImageView>
                 <Label styleClass="labelRight">Nouvelle partie</Label>
             </VBox>
 
             <VBox styleClass="menuRight">
-                <ImageView fitWidth="30" fitHeight="30">
+                <ImageView fitWidth="25" fitHeight="25">
                     <Image url="@./img/chess_board.png"></Image>
                 </ImageView>
                 <Label styleClass="labelRight">Parties</Label>
             </VBox>
 
             <VBox styleClass="menuRight">
-                <ImageView fitWidth="30" fitHeight="30">
+                <ImageView fitWidth="25" fitHeight="25">
                     <Image url="@./img/players.png"></Image>
                 </ImageView>
                 <Label styleClass="labelRight">Joueurs</Label>
             </VBox>
         </HBox>
         <VBox styleClass="boxRight">
-            <Button>Jouer</Button>
+            <Button styleClass="buttonPlay">Jouer</Button>
         </VBox>
     </VBox>
 </HBox>
