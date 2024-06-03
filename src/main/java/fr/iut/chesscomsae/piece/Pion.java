@@ -6,7 +6,6 @@ public class Pion extends Piece {
         super(x, y, isWhite);
     }
 
-
     @Override
     public boolean isMoveLegal(int x, int y) {
         if (isWhite()) return y == getRow() + 1 && x == getColumn();
