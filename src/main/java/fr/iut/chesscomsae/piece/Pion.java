@@ -9,9 +9,9 @@ public class Pion extends Piece {
     }
 
     @Override
-    public boolean isMoveLegal(int row, int column) {
-        if (estBlanc()) return row == getLigne() && column == getColonne() + 1;
-        return row == getLigne() && column == getColonne() - 1;
+    public boolean isMoveLegal(int ligne, int colonne) {
+        if (estBlanc()) return ligne == getLigne() && colonne == getColonne() + 1;
+        return ligne == getLigne() && colonne == getColonne() - 1;
     }
 
     @Override

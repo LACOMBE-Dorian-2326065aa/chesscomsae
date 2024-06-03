@@ -9,8 +9,8 @@ public class Reine extends Piece{
     }
 
     @Override
-    public boolean isMoveLegal(int row, int column) {
-        return row == getColonne() || column == getLigne() || Math.abs(row - getColonne()) == Math.abs(column - getLigne());
+    public boolean isMoveLegal(int ligne, int colonne) {
+        return ligne == getColonne() || colonne == getLigne() || Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
     }
 
     @Override

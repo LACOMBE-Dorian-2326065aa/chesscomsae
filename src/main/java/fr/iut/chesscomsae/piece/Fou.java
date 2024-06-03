@@ -9,8 +9,8 @@ public class Fou extends Piece {
     }
 
     @Override
-    public boolean isMoveLegal(int row, int column) {
-        return Math.abs(row - getColonne()) == Math.abs(column - getLigne());
+    public boolean isMoveLegal(int ligne, int colonne) {
+        return Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
     }
 
     @Override
