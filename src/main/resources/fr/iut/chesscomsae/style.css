@@ -5,7 +5,9 @@
 
 .nickname {
     -fx-text-fill: #fff;
-    -fx-padding: 0 10px;
+    -fx-padding: 5px 10px;
+    -fx-font-weight: 900;
+    -fx-font-size: 1em;
 }
 
 .timer {
@@ -27,7 +29,7 @@
 }
 
 .settings {
-    -fx-max-width: 50px;
+    -fx-max-width: 1px;
 }
 
 .menuRight {
@@ -55,6 +57,8 @@
     -fx-min-height: 635px;
     -fx-background-color: #262522;
     -fx-alignment: CENTER;
+    -fx-spacing: 20;
+    -fx-padding: 20px;
 }
 
 .buttonPlay {
@@ -65,4 +69,41 @@
     -fx-font-size: 2em;
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(gaussian, #45753c, 0, 0, 0, 5);
+}
+
+.buttonTournoi {
+    -fx-background-color: #1e1e1b;
+    -fx-padding: 20px 70px;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-font-size: 2em;
+    -fx-background-radius: 5px;
+    -fx-spacing: 10;
+}
+
+.choiceBox {
+    -fx-background-color: #3c3b39;
+    -fx-padding: 15px 103px;
+    -fx-font-weight: 900;
+    -fx-font-size: 1.3em;
+    -fx-background-radius: 10px;
+}
+
+.choice-box .label {
+    -fx-text-fill: #fff;
+}
+
+.imageTournoi {
+    -fx-padding: 50px;
+}
+
+.playing, .games {
+    -fx-text-fill: #fff;
+    -fx-font-size: 1em;
+    -fx-padding: 5px 5px 5px 25px;
+}
+
+.secondary {
+    -fx-text-fill: #ccc;
+    -fx-padding: 5px 10px 5px 0;
 }
