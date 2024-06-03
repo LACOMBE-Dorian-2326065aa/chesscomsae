@@ -1,10 +1,12 @@
 package fr.iut.chesscomsae;
 
+import fr.iut.chesscomsae.piece.Piece;
+
 import java.util.ArrayList;
 
 public class Plateau {
 
-    private ArrayList<ArrayList> tableau;
+    private ArrayList<ArrayList<Piece>> tableau;
 
     public Plateau() {
         tableau = new ArrayList<>(8);
@@ -15,4 +17,9 @@ public class Plateau {
             }
         }
     }
+
+    public ArrayList<ArrayList<Piece>> getTableau() {
+        return tableau;
+    }
+
 }
