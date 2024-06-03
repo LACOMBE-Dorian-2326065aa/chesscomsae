@@ -1,6 +1,6 @@
 .main {
     -fx-background-color: #302e2b;
-    -fx-padding: 0 5px;
+    -fx-padding: 5px 0 5px 5px;
 }
 
 .nickname {
@@ -12,6 +12,45 @@
     -fx-text-fill: #ccc;
     -fx-background-color: #2f2d2a;
     -fx-padding: 0 10px;
-    -fx-font-size: 2.7em;
+    -fx-font-size: 3em;
     -fx-alignment: CENTER_RIGHT;
+    -fx-background-radius: 5px;
+}
+
+.timer2 {
+    -fx-text-fill: #555;
+    -fx-background-color: #989795;
+    -fx-padding: 0 10px;
+    -fx-font-size: 3em;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-background-radius: 5px;
+}
+
+.settings {
+    -fx-max-width: 50px;
+}
+
+.menuRight {
+    -fx-min-width: 120px;
+    -fx-alignment: CENTER;
+    -fx-background-color: #21201d;
+    -fx-padding: 15px;
+}
+
+.menuRightActual {
+    -fx-min-width: 120px;
+    -fx-alignment: CENTER;
+    -fx-background-color: #262522;
+    -fx-padding: 15px;
+    -fx-background-radius: 10px 0 0 0;
+}
+
+.labelRight {
+    -fx-text-fill: #fff;
+}
+
+.boxRight {
+    -fx-min-width: 360px;
+    -fx-min-height: 635px;
+    -fx-background-color: #262522;
 }

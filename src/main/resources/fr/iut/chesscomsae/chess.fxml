@@ -29,16 +29,54 @@
             </ImageView>
             <Label styleClass="nickname">Adversaire</Label>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="timerMe" styleClass="timer">10:00</Label>
+            <Label fx:id="timerMe" styleClass="timer2">10:00</Label>
         </HBox>
 
     </VBox>
 
-    <VBox>
+    <VBox styleClass="settings">
+        <ImageView fitWidth="25" fitHeight="25">
+            <Image url="@./img/settings.png"></Image>
+        </ImageView>
 
+        <ImageView fitWidth="25" fitHeight="25">
+            <Image url="@./img/full_screen.png"></Image>
+        </ImageView>
+
+        <ImageView fitWidth="25" fitHeight="25">
+            <Image url="@./img/rectangle.png"></Image>
+        </ImageView>
+
+        <ImageView fitWidth="25" fitHeight="25">
+            <Image url="@./img/double_fleches.png"></Image>
+        </ImageView>
     </VBox>
 
     <VBox>
+        <HBox>
+            <VBox styleClass="menuRightActual">
+                <ImageView fitWidth="30" fitHeight="30">
+                    <Image url="@./img/new_game.png"></Image>
+                </ImageView>
+                <Label styleClass="labelRight">Nouvelle partie</Label>
+            </VBox>
 
+            <VBox styleClass="menuRight">
+                <ImageView fitWidth="30" fitHeight="30">
+                    <Image url="@./img/chess_board.png"></Image>
+                </ImageView>
+                <Label styleClass="labelRight">Parties</Label>
+            </VBox>
+
+            <VBox styleClass="menuRight">
+                <ImageView fitWidth="30" fitHeight="30">
+                    <Image url="@./img/players.png"></Image>
+                </ImageView>
+                <Label styleClass="labelRight">Joueurs</Label>
+            </VBox>
+        </HBox>
+        <VBox styleClass="boxRight">
+            <Button>Jouer</Button>
+        </VBox>
     </VBox>
 </HBox>
