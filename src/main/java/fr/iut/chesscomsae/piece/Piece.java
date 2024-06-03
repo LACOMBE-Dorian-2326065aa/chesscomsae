@@ -1,11 +1,13 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public abstract class Piece {
 
     private final int x;
     private final int y;
-
     private final boolean isWhite;
+    private final Joueur joueur;
 
     /**
      * @author Hugo Valente
@@ -14,10 +16,11 @@ public abstract class Piece {
      * @param isWhite
      * description Constructeur de la classe Piece
      */
-    public Piece(int x, int y, boolean isWhite) {
+    public Piece(int x, int y, boolean isWhite, Joueur joueur) {
         this.x = x;
         this.y = y;
         this.isWhite = isWhite;
+        this.joueur = joueur;
     }
 
     /**
@@ -52,4 +55,11 @@ public abstract class Piece {
      */
     public abstract boolean isMoveLegal(int x, int y);
 
+    /**
+     * @author Hugo Valente
+     * @return Le joueur de la pièce
+     */
+    public Joueur getJoueur() {
+        return joueur;
+    }
 }

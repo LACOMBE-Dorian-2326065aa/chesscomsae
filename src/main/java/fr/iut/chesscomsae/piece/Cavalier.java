@@ -1,9 +1,11 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public class Cavalier extends Piece{
 
-        public Cavalier(int x, int y, boolean isWhite) {
-            super(x, y, isWhite);
+        public Cavalier(int x, int y, boolean isWhite, Joueur joueur) {
+            super(x, y, isWhite, joueur);
         }
 
         @Override
