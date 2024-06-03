@@ -1,55 +1,65 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public abstract class Piece {
 
-    private final int x;
-    private final int y;
-
-    private final boolean isWhite;
+    private final int ligne;
+    private final int colonne;
+    private final boolean estBlanc;
+    private final Joueur joueur;
 
     /**
      * @author Hugo Valente
-     * @param x Ligne de la pièce
-     * @param y Colonne de la pièce
-     * @param isWhite
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param estBlanc
      * description Constructeur de la classe Piece
      */
-    public Piece(int x, int y, boolean isWhite) {
-        this.x = x;
-        this.y = y;
-        this.isWhite = isWhite;
+    public Piece(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        this.ligne = ligne;
+        this.colonne = colonne;
+        this.estBlanc = estBlanc;
+        this.joueur = joueur;
     }
 
     /**
      * @author Hugo Valente
      * @return La colonne de la pièce
      */
-    public int getColumn() {
-        return x;
+    public int getColonne() {
+        return ligne;
     }
 
     /**
      * @author Hugo Valente
      * @return La ligne de la pièce
      */
-    public int getRow() {
-        return y;
+    public int getLigne() {
+        return colonne;
     }
 
     /**
      * @author Hugo Valente
      * @return Vrai si la pièce est blanche, faux sinon
      */
-    public boolean isWhite() {
-        return isWhite;
+    public boolean estBlanc() {
+        return estBlanc;
     }
 
     /**
      * @author Hugo Valente
-     * @param x Line de la pièce
-     * @param y Colonnes de la pièce
+     * @param ligne Line de la pièce
+     * @param colonne Colonnes de la pièce
      * @return Vrai si le déplacement est légal, faux sinon
      */
-    public abstract boolean isMoveLegal(int x, int y);
+    public abstract boolean isMoveLegal(int ligne, int colonne);
 
+    /**
+     * @author Hugo Valente
+     * @return Le joueur de la pièce
+     */
+    public Joueur getJoueur() {
+        return joueur;
+    }
 }

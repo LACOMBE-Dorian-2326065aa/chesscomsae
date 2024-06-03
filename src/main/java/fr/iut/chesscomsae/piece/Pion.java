@@ -1,14 +1,16 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public class Pion extends Piece {
 
-    public Pion(int x, int y, boolean isWhite) {
-        super(x, y, isWhite);
+    public Pion(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        super(ligne, colonne, estBlanc, joueur);
     }
 
     @Override
-    public boolean isMoveLegal(int x, int y) {
-        if (isWhite()) return y == getRow() + 1 && x == getColumn();
-        return y == getRow() - 1 && x == getColumn();
+    public boolean isMoveLegal(int row, int column) {
+        if (estBlanc()) return row == getLigne() && column == getColonne() + 1;
+        return row == getLigne() && column == getColonne() - 1;
     }
 }

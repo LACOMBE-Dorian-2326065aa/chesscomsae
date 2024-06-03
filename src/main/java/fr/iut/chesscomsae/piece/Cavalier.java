@@ -1,13 +1,15 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public class Cavalier extends Piece{
 
-        public Cavalier(int x, int y, boolean isWhite) {
-            super(x, y, isWhite);
+        public Cavalier(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+            super(ligne, colonne, estBlanc, joueur);
         }
 
         @Override
-        public boolean isMoveLegal(int x, int y) {
-            return (Math.abs(x - getColumn()) == 2 && Math.abs(y - getRow()) == 1) || (Math.abs(x - getColumn()) == 1 && Math.abs(y - getRow()) == 2);
+        public boolean isMoveLegal(int row, int column) {
+            return (Math.abs(row - getColonne()) == 2 && Math.abs(column - getLigne()) == 1) || (Math.abs(row - getColonne()) == 1 && Math.abs(column - getLigne()) == 2);
         }
 }

@@ -1,13 +1,15 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public class Fou extends Piece {
 
-    public Fou(int x, int y, boolean isWhite) {
-        super(x, y, isWhite);
+    public Fou(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        super(ligne, colonne, estBlanc, joueur);
     }
 
     @Override
-    public boolean isMoveLegal(int x, int y) {
-        return Math.abs(x - getColumn()) == Math.abs(y - getRow());
+    public boolean isMoveLegal(int row, int column) {
+        return Math.abs(row - getColonne()) == Math.abs(column - getLigne());
     }
 }

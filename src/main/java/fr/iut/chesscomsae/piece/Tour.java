@@ -1,14 +1,16 @@
 package fr.iut.chesscomsae.piece;
 
+import fr.iut.chesscomsae.Joueur;
+
 public class Tour extends Piece {
 
-    public Tour(int x, int y, boolean isWhite) {
-        super(x, y, isWhite);
+    public Tour(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
+        super(ligne, colonne, estBlanc, joueur);
     }
 
     @Override
-    public boolean isMoveLegal(int x, int y) {
-        return x == getColumn() || y == getRow();
+    public boolean isMoveLegal(int row, int column) {
+        return row == getColonne() || column == getLigne();
     }
 
 }
