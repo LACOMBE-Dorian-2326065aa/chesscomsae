@@ -4,12 +4,12 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Roi extends Piece {
 
-    public Roi(int x, int y, boolean isWhite, Joueur joueur) {
-        super(x, y, isWhite, joueur);
+    public Roi(int row, int column, boolean isWhite, Joueur joueur) {
+        super(row, column, isWhite, joueur);
     }
 
     @Override
-    public boolean isMoveLegal(int x, int y) {
-        return Math.abs(x - getColumn()) <= 1 && Math.abs(y - getRow()) <= 1;
+    public boolean isMoveLegal(int row, int column) {
+        return Math.abs(row - getColumn()) <= 1 && Math.abs(column - getRow()) <= 1;
     }
 }

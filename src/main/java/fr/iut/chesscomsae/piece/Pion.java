@@ -4,13 +4,13 @@ import fr.iut.chesscomsae.Joueur;
 
 public class Pion extends Piece {
 
-    public Pion(int x, int y, boolean isWhite, Joueur joueur) {
-        super(x, y, isWhite, joueur);
+    public Pion(int row, int column, boolean isWhite, Joueur joueur) {
+        super(row, column, isWhite, joueur);
     }
 
     @Override
-    public boolean isMoveLegal(int x, int y) {
-        if (isWhite()) return y == getRow() + 1 && x == getColumn();
-        return y == getRow() - 1 && x == getColumn();
+    public boolean isMoveLegal(int row, int column) {
+        if (isWhite()) return row == getRow() && column == getColumn() + 1;
+        return row == getRow() && column == getColumn() - 1;
     }
 }

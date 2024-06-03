@@ -4,21 +4,21 @@ import fr.iut.chesscomsae.Joueur;
 
 public abstract class Piece {
 
-    private final int x;
-    private final int y;
+    private final int row;
+    private final int column;
     private final boolean isWhite;
     private final Joueur joueur;
 
     /**
      * @author Hugo Valente
-     * @param x Ligne de la pièce
-     * @param y Colonne de la pièce
+     * @param row Ligne de la pièce
+     * @param column Colonne de la pièce
      * @param isWhite
      * description Constructeur de la classe Piece
      */
-    public Piece(int x, int y, boolean isWhite, Joueur joueur) {
-        this.x = x;
-        this.y = y;
+    public Piece(int row, int column, boolean isWhite, Joueur joueur) {
+        this.row = row;
+        this.column = column;
         this.isWhite = isWhite;
         this.joueur = joueur;
     }
@@ -28,7 +28,7 @@ public abstract class Piece {
      * @return La colonne de la pièce
      */
     public int getColumn() {
-        return x;
+        return row;
     }
 
     /**
@@ -36,7 +36,7 @@ public abstract class Piece {
      * @return La ligne de la pièce
      */
     public int getRow() {
-        return y;
+        return column;
     }
 
     /**
@@ -49,11 +49,11 @@ public abstract class Piece {
 
     /**
      * @author Hugo Valente
-     * @param x Line de la pièce
-     * @param y Colonnes de la pièce
+     * @param row Line de la pièce
+     * @param column Colonnes de la pièce
      * @return Vrai si le déplacement est légal, faux sinon
      */
-    public abstract boolean isMoveLegal(int x, int y);
+    public abstract boolean isMoveLegal(int row, int column);
 
     /**
      * @author Hugo Valente
