@@ -73,7 +73,7 @@ public abstract class Piece {
     /**
      * Permet d'obtenir l'image qui correspond à la pièce
      * @return L'image qui correspond à la pièce
-     * @autor Hugo Valente
+     * @author Hugo Valente
      */
     public abstract String getImage();
 
@@ -88,7 +88,7 @@ public abstract class Piece {
 
     /**
      * Permet d'obtenir une chaine de caractère qui représente la pièce
-     * @autor Hugo Valente
+     * @author Hugo Valente
      * @return Une chaine de caractère qui représente la pièce
      */
     public String toString() {

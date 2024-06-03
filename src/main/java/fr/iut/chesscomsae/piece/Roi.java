@@ -9,8 +9,8 @@ public class Roi extends Piece {
     }
 
     @Override
-    public boolean isMoveLegal(int row, int column) {
-        return Math.abs(row - getColonne()) <= 1 && Math.abs(column - getLigne()) <= 1;
+    public boolean isMoveLegal(int ligne, int colonne) {
+        return Math.abs(ligne - getColonne()) <= 1 && Math.abs(colonne - getLigne()) <= 1;
     }
 
     @Override
