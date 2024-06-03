@@ -1,5 +1,6 @@
 package fr.iut.chesscomsae;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -62,6 +63,7 @@ public class ChessController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         createChessBoard();
+        createBindings();
         choiceBox.getSelectionModel().select("10 min");
         labelPlaying.setText(Integer.toString(ThreadLocalRandom.current().nextInt(100000, 200001)));
         labelGames.setText(Integer.toString(ThreadLocalRandom.current().nextInt(13000000, 14000001)));
@@ -90,15 +92,21 @@ public class ChessController implements Initializable {
         }
     }
 
+    public void createBindings() {
+        timerMe.textProperty().bind(Bindings.createStringBinding(() -> {
+            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05") : "00:00";
+        }, choiceBox.getSelectionModel().selectedItemProperty()));
+
+        timerEnnemy.textProperty().bind(Bindings.createStringBinding(() -> {
+            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05") : "00:00";
+        }, choiceBox.getSelectionModel().selectedItemProperty()));
+    }
+
     /**
-     * Fonction exécutée lorsqu'on clique sur le bouton JOUER qui démarre la partie et initialise les timer
+     * Fonction exécutée lorsqu'on clique sur le bouton JOUER qui démarre la partie
      * @author Dorian Lacombe
      */
     public void play() {
-        String timerString = choiceBox.getSelectionModel().getSelectedItem();
-        timerString = timerString.replace(" min", ":00").replace("5", "05");
-        timerMe.setText(timerString);
-        timerEnnemy.setText(timerString);
         buttonPlay.setDisable(true);
 
         prenomLabel = new Label("Prénom J1 :");

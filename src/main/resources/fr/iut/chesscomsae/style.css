@@ -1,3 +1,7 @@
+.buttonPlay:hover, .buttonTournoi:hover {
+    -fx-cursor: pointer;
+}
+
 .main {
     -fx-background-color: #302e2b;
     -fx-padding: 5px 0 5px 5px;
@@ -89,8 +93,24 @@
     -fx-background-radius: 10px;
 }
 
+.choice-box {
+    -fx-mark-color: #81b64c;
+}
+
 .choice-box .label {
     -fx-text-fill: #fff;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #3c3b39;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #81b64c;
+}
+
+.list-cell {
+    -fx-text-fill: #555;
 }
 
 .imageTournoi {
