@@ -4,42 +4,56 @@ import fr.iut.chesscomsae.Joueur;
 
 public abstract class Piece {
 
-    private final int ligne;
-    private final int colonne;
+    /**
+     * Attributs de la classe Piece
+     */
+    private int ligne;
+    private int colonne;
     private final boolean estBlanc;
     private final Joueur joueur;
 
     /**
+     * Constructeur de la classe Piece
      * @author Hugo Valente
      * @param ligne Ligne de la pièce
      * @param colonne Colonne de la pièce
-     * @param estBlanc
-     * description Constructeur de la classe Piece
+     * @param joueur Joueur de la pièce
      */
-    public Piece(int ligne, int colonne, boolean estBlanc, Joueur joueur) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.estBlanc = estBlanc;
+    public Piece(int ligne, int colonne, Joueur joueur) {
+        setLigne(ligne);
+        setColonne(colonne);
+        this.estBlanc = joueur.estBlanc();
         this.joueur = joueur;
     }
 
     /**
+     * Permet d'obtenir la colonne de la pièce
      * @author Hugo Valente
      * @return La colonne de la pièce
      */
     public int getColonne() {
-        return ligne;
+        return colonne;
+    }
+
+    public void setColonne(int colonne) {
+        this.colonne = colonne;
     }
 
     /**
+     * Permet d'obtenir la ligne de la pièce
      * @author Hugo Valente
      * @return La ligne de la pièce
      */
     public int getLigne() {
-        return colonne;
+        return ligne;
+    }
+
+    public void setLigne(int ligne) {
+        this.ligne = ligne;
     }
 
     /**
+     * Permet de savoir si la pièce est blanche ou non
      * @author Hugo Valente
      * @return Vrai si la pièce est blanche, faux sinon
      */
@@ -48,6 +62,7 @@ public abstract class Piece {
     }
 
     /**
+     * Permet de savoir si le déplacement est légal ou non
      * @author Hugo Valente
      * @param ligne Line de la pièce
      * @param colonne Colonnes de la pièce
@@ -56,10 +71,33 @@ public abstract class Piece {
     public abstract boolean isMoveLegal(int ligne, int colonne);
 
     /**
+     * Permet d'obtenir l'image qui correspond à la pièce
+     * @return L'image qui correspond à la pièce
+     * @autor Hugo Valente
+     */
+    public abstract String getImage();
+
+    /**
+     * Permet d'obtenir le joueur qui correspond à la pièce
      * @author Hugo Valente
      * @return Le joueur de la pièce
      */
     public Joueur getJoueur() {
         return joueur;
     }
+
+    /**
+     * Permet d'obtenir une chaine de caractère qui représente la pièce
+     * @autor Hugo Valente
+     * @return Une chaine de caractère qui représente la pièce
+     */
+    public String toString() {
+        return "Piece[" +
+                "ligne=" + ligne +
+                ", colonne=" + colonne +
+                ", estBlanc=" + estBlanc +
+                ", joueur=" + joueur.toString() +
+                ']';
+    }
+
 }
