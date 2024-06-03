@@ -7,7 +7,10 @@ class PlateauTest {
 
     @Test
     public void testTableau() {
-        Plateau plateau = new Plateau();
+        Joueur joueurNoir = new Joueur("Valente", "Hugo");
+        Joueur joueurBlanc = new Joueur("Lacombe", "Dorian");
+        Plateau plateau = new Plateau(joueurBlanc, joueurNoir);
+        plateau.init();
         System.out.println(plateau.getTableau());
     }
     
