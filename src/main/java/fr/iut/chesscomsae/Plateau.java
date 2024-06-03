@@ -83,6 +83,22 @@ public class Plateau {
 
     /**
      * @author Quentin Fournier
+     * @param piece De type Piece, c'est la pièce que le joueur souhaite bouger
+     * @param x De type int, c'est l'index de la ligne vers laquelle le joueur souhaite bouger sa pièce
+     * @param y De type int, c'est l'index de la colonne vers laquelle le joueur souhaite bouger sa pièce
+     * mouvement, vérifie si le mouvement est légal, si c'est le cas, met a l'ancienne position de la pièce un élément null
+     * puis met dans la case aux coordonnées voulues, la pièce. Enfin, met a jour les coordonnées de la pièce.
+     */
+    public void mouvement (Piece piece, int x, int y) {
+        if (!piece.isMoveLegal(x, y)) return; // Si le mouvement est illégal, alors rien ne se passe
+        tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
+        tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position
+        piece.setLigne(x);
+        piece.setColonne(y);
+    }
+
+    /**
+     * @author Quentin Fournier
      * getTableau, affiche les éléments, pièces, présentes sur le plateau
      * @return le tableau (la liste des listes et de leurs éléments)
      */
