@@ -16,7 +16,7 @@ public class Pion extends Piece {
 
     @Override
     public String getImage() {
-        return null;
+        return estBlanc() ? "file:src/main/resources/pieces/pionBlanc.png" : "file:src/main/resources/pieces/pionNoir.png";
     }
 
     @Override

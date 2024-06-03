@@ -15,7 +15,7 @@ public class Tour extends Piece {
 
     @Override
     public String getImage() {
-        return null;
+        return estBlanc() ? "file:src/main/resources/pieces/tourBlanc.png" : "file:src/main/resources/pieces/tourNoir.png";
     }
 
     @Override

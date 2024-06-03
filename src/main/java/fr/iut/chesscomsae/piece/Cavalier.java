@@ -1,7 +1,6 @@
 package fr.iut.chesscomsae.piece;
 
 import fr.iut.chesscomsae.Joueur;
-import javafx.scene.image.Image;
 
 public class Cavalier extends Piece{
 
@@ -15,7 +14,7 @@ public class Cavalier extends Piece{
     }
     @Override
     public String getImage() {
-        return estBlanc() ? "img/piece/cavalierBlanc.png" : "img/piece/cavalierNoir.png" ;
+        return estBlanc() ? "file:src/main/resources/pieces/cavalierBlanc.png" : "file:src/main/resources/pieces/cavalierNoir.png";
     }
 
     @Override
