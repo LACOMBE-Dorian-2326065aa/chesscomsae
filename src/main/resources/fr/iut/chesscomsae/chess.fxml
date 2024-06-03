@@ -19,7 +19,7 @@
             <ImageView fitWidth="50" fitHeight="50">
                 <Image url="@./img/profile_picture.png"></Image>
             </ImageView>
-            <Label styleClass="nickname">Adversaire</Label>
+            <Label styleClass="nickname" fx:id="nicknameEnnemy">Adversaire</Label>
             <Region HBox.hgrow="ALWAYS"/>
             <Label fx:id="timerEnnemy" styleClass="timer">10:00</Label>
         </HBox>
@@ -30,7 +30,7 @@
             <ImageView fitWidth="50" fitHeight="50">
                 <Image url="@./img/profile_picture2.png"></Image>
             </ImageView>
-            <Label styleClass="nickname">Adversaire</Label>
+            <Label styleClass="nickname" fx:id="nicknameMe">Adversaire</Label>
             <Region HBox.hgrow="ALWAYS"/>
             <Label fx:id="timerMe" styleClass="timer2">10:00</Label>
         </HBox>
