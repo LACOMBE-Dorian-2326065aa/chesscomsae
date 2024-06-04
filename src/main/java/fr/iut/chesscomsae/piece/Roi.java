@@ -19,15 +19,21 @@ public class Roi extends Piece {
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
-        for (int i = -1; i <= 1; ++i) {
-            for (int j = -1; j <= 1; ++j) {
-                if (i == 0 && j == 0) continue;
-                if (getLigne() + i < 0 || getLigne() + i > 7 || getColonne() + j < 0 || getColonne() + j > 7) continue;
-                if (plateau.getTableau().get(getLigne() + i).get(getColonne() + j) == null || plateau.getTableau().get(getLigne() + i).get(getColonne() + j).estBlanc() != estBlanc()) {
-                    mouvements.add(new int[]{getLigne() + i, getColonne() + j});
-                }
+        for (int i = -1; i < 1; ++i) {
+            mouvements.add(new int[]{getLigne() + 1, getColonne() + i});
+            mouvements.add(new int[]{getLigne() - 1, getColonne() + i});
+        }
+        mouvements.add(new int[]{getLigne(), getColonne() + 1});
+        mouvements.add(new int[]{getLigne(), getColonne() - 1});
+
+        for (int i = 0; i < mouvements.size(); ++i) {
+            int[] mouvement = mouvements.get(i);
+            if (mouvement[0] < 0 || mouvement[0] > 7 || mouvement[1] < 0 || mouvement[1] > 7) {
+                mouvements.remove(i);
+                --i;
             }
         }
+
         return mouvements;
     }
 
