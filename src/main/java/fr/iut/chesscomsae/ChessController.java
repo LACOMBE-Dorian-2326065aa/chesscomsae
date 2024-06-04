@@ -202,6 +202,7 @@ public class ChessController implements Initializable {
                     cellSelected = plateau.getTableau().get(row).get(col);
                     nodeSelected = node;
                     node.getStyleClass().add("selected");
+                    //displayMoves(cellSelected);
                     break;
                 } else if(cellSelected != null) {
                     Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
@@ -221,4 +222,16 @@ public class ChessController implements Initializable {
         clearAll();
         displayGame();
     }
+
+    public void displayMoves(Piece piece) {
+        ArrayList<int[]> moves = piece.mouvementsPossibles(plateau);
+        for(Node node : chessBoard.getChildren()) {
+            int[] coos = {GridPane.getRowIndex(node), GridPane.getColumnIndex(node)};
+            System.out.println(coos + " " + moves);
+            if (node instanceof Pane && moves.contains(coos)) {
+                node.getStyleClass().add("movable");
+            }
+        }
+    }
+
 }
