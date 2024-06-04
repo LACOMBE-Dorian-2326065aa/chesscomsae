@@ -34,9 +34,6 @@ public class Pion extends Piece {
             for (int i = 1; i <= deplacement; ++i) {
                 if (getLigne() - i > 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
                     mouvements.add(new int[]{getLigne() - i, getColonne()});
-                }else if (tableau.get(getLigne()-i).get(getColonne()) != null && tableau.get(getLigne() - i).get(getColonne()).estBlanc() != estBlanc()) {
-                    mouvements.add(new int[]{getLigne() - i, getColonne()});
-                    break;
                 }else {
                     break;
                 }
@@ -51,9 +48,6 @@ public class Pion extends Piece {
             for (int i = 1; i <= deplacement; ++i) {
                 if (getLigne() + i < 8 && tableau.get(getLigne()+i).get(getColonne()) == null) {
                     mouvements.add(new int[]{getLigne()+i, getColonne()});
-                } else if (tableau.get(getLigne()+i).get(getColonne()) != null && tableau.get(getLigne() + i).get(getColonne()).estBlanc() != estBlanc()) {
-                    mouvements.add(new int[]{getLigne()+i, getColonne()});
-                    break;
                 }else {
                     break;
                 }
