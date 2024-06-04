@@ -32,8 +32,8 @@ public class Plateau {
     }
 
     /**
-     * @author Quentin Fournier
      * Init, permet d'initialiser le plateau pour le début de partie, place les pions des différents joueurs au bon endroit
+     * @author Quentin Fournier
      */
     public void init() {
         for (int i = 0; i < 8; ++i) {

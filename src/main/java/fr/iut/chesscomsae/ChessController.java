@@ -68,8 +68,9 @@ public class ChessController implements Initializable {
     /**
      * Initialise les données de la fenêtre
      * @author Dorian Lacombe
-     * @param location
-     * @param resources
+     * @param location URL
+     * @param resources Ressources
+     * @author Dorian Lacombe
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +106,10 @@ public class ChessController implements Initializable {
         displayGame(plateauFictif);
     }
 
+    /**
+     * Permet d'initialiser les bindings
+     * @author Dorian Lacombe
+     */
     public void createBindings() {
         timerMe.textProperty().bind(Bindings.createStringBinding(() -> {
             return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05") : "00:00";
@@ -139,6 +144,11 @@ public class ChessController implements Initializable {
         valid.onActionProperty().set(actionEvent -> validation(true));
     }
 
+    /**
+     * Permet d'enregistrer les noms et prénoms entrés par les joueurs et d'initialiser les "écouteurs" de clic
+     * @param isJ1 Booléen pour savoir si c'est le joueur 1 qui envoie ses informations, ou le 2
+     * @author Dorian Lacombe
+     */
     public void validation(boolean isJ1) {
         if(isJ1) {
             j1 = new Joueur(nom.getText(), prenom.getText(), true);
@@ -160,6 +170,11 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * Permet d'afficher les pièces dans la fenêtre à partir d'une liste de listes
+     * @param plateau Plateau de jeu
+     * @author Dorian Lacombe
+     */
     public void displayGame(Plateau plateau) {
         ArrayList<ArrayList<Piece>> partie = plateau.getTableau();
         for(int i = 0; i < partie.size(); i++) {
@@ -174,6 +189,10 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * Permet de vider le plateau de jeu graphique avec de tout afficher de nouveau
+     * @author Dorian Lacombe
+     */
     public void clearAll() {
         List<Node> childrenToRemove = new ArrayList<>();
         for (Node node : chessBoard.getChildren()) {
@@ -184,6 +203,9 @@ public class ChessController implements Initializable {
         chessBoard.getChildren().removeAll(childrenToRemove);
     }
 
+    /**
+     * Permet d'écouter les clics sur le GridPane (plateau de jeu) et de récupérer la cellule cliquée
+     */
     public void handleClicks() {
         chessBoard.setOnMouseClicked(event -> {
             int col = (int) (event.getX() / 75);
@@ -193,6 +215,12 @@ public class ChessController implements Initializable {
         });
     }
 
+    /**
+     * Permet de gérer tout ce qui est lié au clic dans une cellule, à savoir la sélection d'une pièce, son déplacement, etc..
+     * @param row Numéro de la ligne concernée
+     * @param col Numéro de la colonne concernée
+     * @author Dorian Lacombe
+     */
     public void handleCellClick(int row, int col) {
         clearMoves();
         if(plateau.getTableau().get(row).get(col) != null && ((isWhitePlaying && cellSelected == null && !plateau.getTableau().get(row).get(col).estBlanc()) || (!isWhitePlaying && cellSelected == null && plateau.getTableau().get(row).get(col).estBlanc()))) return;
@@ -240,6 +268,11 @@ public class ChessController implements Initializable {
         displayGame(plateau);
     }
 
+    /**
+     * Permet d'afficher graphiquement les cases où une pièce peut se déplacer une fois cliquée
+     * @param piece Pièce dont les mouvements possibles doivent être ajoutés
+     * @author Dorian Lacombe
+     */
     public void displayMoves(Piece piece) {
         ArrayList<int[]> moves = piece.mouvementsPossibles(plateau);
         for(Node node : chessBoard.getChildren()) {
@@ -254,6 +287,11 @@ public class ChessController implements Initializable {
         }
     }
 
+
+    /**
+     * Permet de vider tout l'affichage graphique des mouvements possibles des pièces
+     * @author Dorian Lacombe
+     */
     public void clearMoves() {
         for(Node node : chessBoard.getChildren()) {
             if (node instanceof Pane) {
