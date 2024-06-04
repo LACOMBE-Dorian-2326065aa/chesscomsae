@@ -209,7 +209,7 @@ public class ChessController implements Initializable {
                     Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
                     int hasPlayed = plateau.mouvement(cellSelected, row, col);
                     if(hasPlayed == 2){
-                        if(cellSelected instanceof Pion) cellSelected.setPremierCoup(false);
+                        if(cellSelected instanceof Pion) ((Pion) cellSelected).setPremierCoup(false);
                         isWhitePlaying = !isWhitePlaying;
                         cellSelected = null;
                         nodeSelected.getStyleClass().remove("selectedCell");
