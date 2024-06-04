@@ -187,19 +187,24 @@ public class ChessController implements Initializable {
     }
 
     public void handleCellClick(int row, int col) {
+        if(cellSelected != null && plateau.getTableau().get(row).get(col) == cellSelected){
+            cellSelected = null;
+            nodeSelected.getStyleClass().remove("selected");
+            nodeSelected = null;
+            return;
+        }
         for(Node node : chessBoard.getChildren()) {
             if(GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                if(cellSelected != null && !node.getStyleClass().contains("selected")) {
-                    if(plateau.getTableau().get(row).get(col) == null || plateau.getTableau().get(row).get(col).estBlanc() != cellSelected.estBlanc()) {
-                        plateau.mouvement(cellSelected, row, col);
-                        cellSelected = null;
-                        nodeSelected.getStyleClass().remove("selected");
-                        nodeSelected = null;
-                    }
-                } else if(!node.getStyleClass().contains("selected") && plateau.getTableau().get(row).get(col) != null) {
-                    node.getStyleClass().add("selected");
+                if(cellSelected == null && plateau.getTableau().get(row).get(col) != null) {
                     cellSelected = plateau.getTableau().get(row).get(col);
                     nodeSelected = node;
+                    node.getStyleClass().add("selected");
+                    break;
+                } else if(cellSelected != null) {
+                    plateau.mouvement(cellSelected, row, col);
+                    cellSelected = null;
+                    nodeSelected.getStyleClass().remove("selected");
+                    nodeSelected = null;
                     break;
                 }
             } else {
@@ -208,6 +213,5 @@ public class ChessController implements Initializable {
         }
         clearAll();
         displayGame();
-        if(cellSelected != null) nodeSelected.getStyleClass().add("selected");
     }
 }
