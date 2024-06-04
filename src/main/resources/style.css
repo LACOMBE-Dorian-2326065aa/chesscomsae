@@ -1,5 +1,5 @@
-.buttonPlay:hover, .buttonTournoi:hover {
-    -fx-cursor: pointer;
+Button, ChoiceBox {
+    -fx-cursor: hand;
 }
 
 .main {
