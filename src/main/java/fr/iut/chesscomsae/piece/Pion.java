@@ -12,6 +12,7 @@ public class Pion extends Piece {
 
     public Pion(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
+        premierCoups = true;
     }
 
     @Override
@@ -20,7 +21,7 @@ public class Pion extends Piece {
         return ligne == getLigne() && colonne == getColonne() - 1;
     }
 
-
+    @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         int[] deplacement;
         ArrayList<int[]> mouvements = null;
