@@ -31,7 +31,7 @@ public class Pion extends Piece {
         if (estBlanc()) {
             // Ajout des mouvements possibles en avant pour le pion blanc
             for (int i = 1; i <= deplacement; ++i) {
-                if (getLigne() - i > 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
+                if (getLigne() - i >= 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
                     mouvements.add(new int[]{getLigne() - i, getColonne()});
                 }else {
                     break;
@@ -39,8 +39,8 @@ public class Pion extends Piece {
             }
 
             // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion blanc
-            if (tableau.get(getLigne() - 1).get(getColonne() - 1) != null && tableau.get(getLigne() - 1).get(getColonne() - 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
-            if (tableau.get(getLigne() - 1).get(getColonne() + 1) != null && tableau.get(getLigne() - 1).get(getColonne() + 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
+            if (getLigne() - 1 >= 0 && tableau.get(getLigne() - 1).get(getColonne() - 1) != null && tableau.get(getLigne() - 1).get(getColonne() - 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
+            if (getLigne() - 1 >= 0 && tableau.get(getLigne() - 1).get(getColonne() + 1) != null && tableau.get(getLigne() - 1).get(getColonne() + 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
 
         }else {
             // Ajout des mouvements possibles en avant pour le pion noir
@@ -53,8 +53,8 @@ public class Pion extends Piece {
             }
 
             // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion noir
-            if (tableau.get(getLigne()+1).get(getColonne()-1) != null && tableau.get(getLigne() + 1).get(getColonne()-1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()-1});
-            if (tableau.get(getLigne()+1).get(getColonne()+1) != null && tableau.get(getLigne() + 1).get(getColonne()+1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()+1});
+            if (getLigne() + 1 < 8 && tableau.get(getLigne()+1).get(getColonne()-1) != null && tableau.get(getLigne() + 1).get(getColonne()-1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()-1});
+            if (getLigne() + 1 < 8 && tableau.get(getLigne()+1).get(getColonne()+1) != null && tableau.get(getLigne() + 1).get(getColonne()+1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()+1});
 
         }
         return mouvements;
@@ -62,10 +62,6 @@ public class Pion extends Piece {
 
     public void setPremierCoup(boolean premierCoup) {
         this.premierCoup = premierCoup;
-    }
-
-    public boolean getPremierCoup() {
-        return premierCoup;
     }
 
 
