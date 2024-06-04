@@ -11,7 +11,7 @@ public abstract class Piece {
     private int colonne;
     private final boolean estBlanc;
     private final Joueur joueur;
-
+    
     /**
      * Constructeur de la classe Piece
      * @author Hugo Valente
