@@ -37,8 +37,8 @@ public class Cavalier extends Piece{
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
         // On vérifie les 8 mouvements possibles du cavalier
+        int[] mouvement = new int[2];
         for (int i = 0; i < 8; ++i) {
-            int[] mouvement = new int[2];
             switch (i) {
                 case 0 -> {
                     mouvement[0] = getLigne() + 2;
