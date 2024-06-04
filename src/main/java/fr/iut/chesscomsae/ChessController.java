@@ -189,6 +189,7 @@ public class ChessController implements Initializable {
     }
 
     public void handleCellClick(int row, int col) {
+        clearMoves();
         if(plateau.getTableau().get(row).get(col) != null && ((isWhitePlaying && cellSelected == null && !plateau.getTableau().get(row).get(col).estBlanc()) || (!isWhitePlaying && cellSelected == null && plateau.getTableau().get(row).get(col).estBlanc()))) return;
         if(cellSelected != null && plateau.getTableau().get(row).get(col) == cellSelected){
             cellSelected = null;
@@ -202,17 +203,23 @@ public class ChessController implements Initializable {
                     cellSelected = plateau.getTableau().get(row).get(col);
                     nodeSelected = node;
                     node.getStyleClass().add("selected");
-                    //displayMoves(cellSelected);
+                    displayMoves(cellSelected);
                     break;
                 } else if(cellSelected != null) {
                     Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
                     plateau.mouvement(cellSelected, row, col);
                     if(cellSelected.getColonne() != previousCellSelected.getColonne() || cellSelected.getLigne() != previousCellSelected.getLigne()){
                         isWhitePlaying = !isWhitePlaying;
+                        cellSelected = null;
+                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected = null;
+                    } else {
+                        cellSelected = plateau.getTableau().get(row).get(col);
+                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected = node;
+                        node.getStyleClass().add("selected");
+                        displayMoves(cellSelected);
                     }
-                    cellSelected = null;
-                    nodeSelected.getStyleClass().remove("selected");
-                    nodeSelected = null;
                     break;
                 }
             } else {
@@ -226,10 +233,22 @@ public class ChessController implements Initializable {
     public void displayMoves(Piece piece) {
         ArrayList<int[]> moves = piece.mouvementsPossibles(plateau);
         for(Node node : chessBoard.getChildren()) {
-            int[] coos = {GridPane.getRowIndex(node), GridPane.getColumnIndex(node)};
-            System.out.println(coos + " " + moves);
-            if (node instanceof Pane && moves.contains(coos)) {
-                node.getStyleClass().add("movable");
+            if (node instanceof Pane) {
+                for(int[] move : moves) {
+                    if(GridPane.getRowIndex(node) == move[0] && GridPane.getColumnIndex(node) == move[1]) {
+                        if(plateau.getTableau().get(move[0]).get(move[1]) == null) node.getStyleClass().add("movable");
+                        else node.getStyleClass().add("killable");
+                    }
+                }
+            }
+        }
+    }
+
+    public void clearMoves() {
+        for(Node node : chessBoard.getChildren()) {
+            if (node instanceof Pane) {
+                node.getStyleClass().remove("movable");
+                node.getStyleClass().remove("killable");
             }
         }
     }

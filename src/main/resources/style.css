@@ -176,5 +176,13 @@
 }
 
 .movable {
-    -fx-background-color: #000;
+    -fx-border-color: #FE8F01;
+    -fx-border-style: dashed;
+    -fx-border-width: 5px;
+}
+
+.killable {
+    -fx-border-color: #F06969;
+    -fx-border-style: dashed;
+    -fx-border-width: 5px;
 }
