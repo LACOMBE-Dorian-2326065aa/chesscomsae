@@ -102,7 +102,7 @@ public class Plateau {
                 isMoveLegal = true;
             }
         }
-        isMoveLegal = true;
+
         if (tableau.get(x).get(y) != null && tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return 1; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien et on renvoie 0
         else if(isMoveLegal) {
             tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
