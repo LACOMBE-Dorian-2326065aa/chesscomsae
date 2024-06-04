@@ -16,61 +16,47 @@ public class Pion extends Piece {
     }
 
     @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        if (estBlanc()) return ligne == getLigne() && colonne == getColonne() + 1;
-        return ligne == getLigne() && colonne == getColonne() - 1;
-    }
-
-    @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
-        int[] deplacement;
-        ArrayList<int[]> mouvements = null;
 
-        switch (premierCoups ? 2 : 1) {
-            // Si c'est le premier deplacement du pion, il peut avancer de deux cases
-            case 2:
-                if (estBlanc()) {
-                    deplacement = new int[]{getLigne(), getColonne() + 2};
-                } else {
-                    deplacement = new int[]{getLigne(), getColonne() - 2};
-                }
-                if (plateau.getTableau().get(deplacement[0]).get(deplacement[1]) == null) {
-                    mouvements.add(deplacement);
-                }
-                // Maintenant on peut avancer que d'une case apres le premier deplacement du pion.
-            case 1:
-                if (estBlanc()) {
-                    deplacement = new int[]{getLigne(), getColonne() + 1};
-                } else {
-                    deplacement = new int[]{getLigne(), getColonne() - 1};
-                }
-                if (plateau.getTableau().get(deplacement[0]).get(deplacement[1]) == null) {
-                    mouvements.add(deplacement);
-                }
-                // Check la capture de la piece a gauche du pion
-                if (getColonne() > 0) {
-                    deplacement = new int[]{getLigne() - 1, getColonne() - 1};
-                    if (plateau.getTableau().get(deplacement[0]).get(deplacement[1]) != null &&
-                            plateau.getTableau().get(deplacement[0]).get(deplacement[1]).estBlanc() != this.estBlanc()) {
-                        mouvements.add(deplacement);
-                    }
-                }
-                //  Check la capture de la piece a droite du pion
-                if (getColonne() < 7) {
-                    deplacement = new int[]{getLigne() - 1, getColonne() + 1};
-                    if (plateau.getTableau().get(deplacement[0]).get(deplacement[1]) != null &&
-                            plateau.getTableau().get(deplacement[0]).get(deplacement[1]).estBlanc() != this.estBlanc()) {
-                        mouvements.add(deplacement);
-                    }
-                }
+        ArrayList<int[]> mouvements = new ArrayList<>();
+        ArrayList<ArrayList<Piece>> tableau = plateau.getTableau();
 
-                break;
+        int deplacement = 1;
+        // Regarde s'il s'agit du premier coup du pion
+        if (premierCoups) {
+            // Si oui, le pion peut avancer de 2 cases
+            premierCoups = false;
+            deplacement = 2;
         }
 
-        premierCoups = false; // premierCoups qui devient false après le premier déplacement
-        return mouvements;
-        
+        // S'il est noir, il doit avancer vers le bas
+        if (!estBlanc()) {
+            deplacement = -deplacement;
+        }
 
+        // Ajout des mouvements possible en ligne droite
+        for (int i = 1; i <= deplacement; ++i) {
+            if (tableau.get(getLigne() + i).get(getColonne()) == null) {
+                mouvements.add(new int[]{getLigne() + i, getColonne()});
+            } else {
+                break;
+            }
+        }
+        // Changement du déplacement possible
+        if (estBlanc()) {
+            deplacement = 1;
+        }else {
+            deplacement = -1;
+        }
+
+        // Ajout de la fonction pour manger en diagonale
+        for (int i = -1; i <= 1; ++i) {
+            if (i == 0) continue;
+            if (tableau.get(getLigne() + deplacement).get(getColonne()+i) != null && tableau.get(getLigne() + deplacement).get(getColonne()+i).estBlanc() != estBlanc()) {
+                mouvements.add(new int[]{getLigne()+deplacement, getColonne()+i});
+            }
+        }
+        return mouvements;
     }
 
 

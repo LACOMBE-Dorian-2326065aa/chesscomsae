@@ -12,11 +12,6 @@ public class Fou extends Piece {
     }
 
     @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        return Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
-    }
-
-    @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
 

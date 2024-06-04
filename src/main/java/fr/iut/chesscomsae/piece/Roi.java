@@ -11,10 +11,6 @@ public class Roi extends Piece {
         super(ligne, colonne, joueur);
     }
 
-    @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        return Math.abs(ligne - getColonne()) <= 1 && Math.abs(colonne - getLigne()) <= 1;
-    }
 
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {

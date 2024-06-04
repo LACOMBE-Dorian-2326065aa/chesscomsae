@@ -12,11 +12,6 @@ public class Cavalier extends Piece{
     }
 
     @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        return (Math.abs(ligne - getColonne()) == 2 && Math.abs(colonne - getLigne()) == 1) || (Math.abs(ligne - getColonne()) == 1 && Math.abs(colonne - getLigne()) == 2);
-    }
-
-    @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/cavalierBlanc.png" : "file:src/main/resources/pieces/cavalierNoir.png";
     }

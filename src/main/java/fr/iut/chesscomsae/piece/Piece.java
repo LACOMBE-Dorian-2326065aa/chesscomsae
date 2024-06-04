@@ -65,15 +65,6 @@ public abstract class Piece {
     }
 
     /**
-     * Permet de savoir si le déplacement est légal ou non
-     * @author Hugo Valente
-     * @param ligne Line de la pièce
-     * @param colonne Colonnes de la pièce
-     * @return Vrai si le déplacement est légal, faux sinon
-     */
-    public abstract boolean isMoveLegal(int ligne, int colonne);
-
-    /**
      * Permet d'obtenir l'image qui correspond à la pièce
      * @return L'image qui correspond à la pièce
      * @author Hugo Valente

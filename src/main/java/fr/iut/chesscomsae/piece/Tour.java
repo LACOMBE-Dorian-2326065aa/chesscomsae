@@ -11,49 +11,40 @@ public class Tour extends Piece {
         super(ligne, colonne, joueur);
     }
 
-    @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        return (colonne == getColonne() && ligne != getColonne())|| (colonne != getColonne() && ligne == getColonne());
-    }
 
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
-        ArrayList<ArrayList<Piece>> tableau = plateau.getTableau();
         // On vérifie pour les 4 sens possibles de la tour
-        for (int i = 0; i < 4; ++i) {
-            // Pour chaque sens possible
-            switch (i) {
-                // Sens vers le bas
-                case 0 -> {
-                    if (getLigne() + 1 > 7) continue;
-                    for (int j = getLigne() + 1; j < 8; ++j) {
-                        if (conditionLigne(plateau, mouvements, j)) break;
-                    }
-                }
-                // Sens vers le haut
-                case 1 -> {
-                    if (getLigne() - 1 < 0) continue;
-                    for (int j = getLigne() - 1; j >= 0; --j) {
-                        if (conditionLigne(plateau, mouvements, j)) break;
-                    }
-                }
-                // Sens vers la droite
-                case 2 -> {
-                    if (getColonne() + 1 > 7) continue;
-                    for (int j = getColonne() + 1; j < 8; ++j) {
-                        if (conditionColonne(plateau, mouvements, j)) break;
-                    }
-                }
-                // Sens vers la gauche
-                case 3 -> {
-                    if (getColonne() - 1 < 0) continue;
-                    for (int j = getColonne() - 1; j >= 0; --j) {
-                        if (conditionColonne(plateau, mouvements, j)) break;
-                    }
-                }
+
+        // Sens vers le bas
+        if (!(getLigne() + 1 > 7)) {
+            for (int j = getLigne() + 1; j < 8; ++j) {
+                if (conditionLigne(plateau, mouvements, j)) break;
             }
         }
+
+        // Sens vers le haut
+        if (!(getLigne() - 1 < 0)) {
+            for (int j = getLigne() - 1; j >= 0; --j) {
+                if (conditionLigne(plateau, mouvements, j)) break;
+            }
+        }
+
+        // Sens vers la droite
+        if (!(getColonne() + 1 > 7)) {
+            for (int j = getColonne() + 1; j < 8; ++j) {
+                if (conditionColonne(plateau, mouvements, j)) break;
+            }
+        }
+
+        // Sens vers la gauche
+        if (!(getColonne() - 1 < 0)) {
+            for (int j = getColonne() - 1; j >= 0; --j) {
+                if (conditionColonne(plateau, mouvements, j)) break;
+            }
+        }
+
         return mouvements;
     }
 

@@ -12,11 +12,6 @@ public class Reine extends Piece{
     }
 
     @Override
-    public boolean isMoveLegal(int ligne, int colonne) {
-        return ligne == getColonne() || colonne == getLigne() || Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
-    }
-
-    @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
 
