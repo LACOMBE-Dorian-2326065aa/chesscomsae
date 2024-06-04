@@ -30,7 +30,7 @@ public class Pion extends Piece {
         }
 
         // S'il est noir, il doit avancer vers le bas
-        if (!estBlanc()) {
+        if (estBlanc()) {
             deplacement = -deplacement;
         }
 
@@ -44,9 +44,9 @@ public class Pion extends Piece {
         }
         // Changement du déplacement possible
         if (estBlanc()) {
-            deplacement = 1;
-        }else {
             deplacement = -1;
+        }else {
+            deplacement = 1;
         }
 
         // Ajout de la fonction pour manger en diagonale
