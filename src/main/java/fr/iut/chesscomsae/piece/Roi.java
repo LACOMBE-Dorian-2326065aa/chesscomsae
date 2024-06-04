@@ -7,11 +7,24 @@ import java.util.ArrayList;
 
 public class Roi extends Piece {
 
+    /**
+     * Constructeur de la classe Roi
+     * @author Valent Hugo
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param joueur Joueur de la pièce
+     */
     public Roi(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 
 
+    /**
+     * Permet de récupérer les mouvements possibles de la pièce Roi sur le plateau
+     * @author Valent Hugo
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements possibles de la pièce Roi
+     */
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
@@ -33,11 +46,21 @@ public class Roi extends Piece {
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer l'image de la pièce Roi
+     * @author Valent Hugo
+     * @return Image de la pièce Roi
+     */
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/roiBlanc.png" : "file:src/main/resources/pieces/roiNoir.png";
     }
 
+    /**
+     * Permet de récupérer la valeur de la pièce Roi
+     * @author Valent Hugo
+     * @return Valeur de la pièce Roi
+     */
     @Override
     public String toString() {
         return "Roi[" + super.toString() + "]";
