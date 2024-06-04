@@ -1,6 +1,7 @@
 package fr.iut.chesscomsae;
 
 import fr.iut.chesscomsae.piece.Piece;
+import fr.iut.chesscomsae.piece.Pion;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,6 +63,7 @@ public class ChessController implements Initializable {
 
     private Piece cellSelected;
     private Node nodeSelected;
+    private boolean isWhitePlaying;
 
     /**
      * Initialise les données de la fenêtre
@@ -120,7 +122,7 @@ public class ChessController implements Initializable {
         nomLabel = new Label("Nom J1 :");
         nom = new TextField();
         valid = new Button("Valider");
-
+        isWhitePlaying = true;
         prenomLabel.getStyleClass().add("prenomLabel");
         prenom.getStyleClass().add("prenom");
         nomLabel.getStyleClass().add("nomLabel");
@@ -187,19 +189,29 @@ public class ChessController implements Initializable {
     }
 
     public void handleCellClick(int row, int col) {
+        if(plateau.getTableau().get(row).get(col) != null && ((isWhitePlaying && cellSelected == null && !plateau.getTableau().get(row).get(col).estBlanc()) || (!isWhitePlaying && cellSelected == null && plateau.getTableau().get(row).get(col).estBlanc()))) return;
+        if(cellSelected != null && plateau.getTableau().get(row).get(col) == cellSelected){
+            cellSelected = null;
+            nodeSelected.getStyleClass().remove("selected");
+            nodeSelected = null;
+            return;
+        }
         for(Node node : chessBoard.getChildren()) {
             if(GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                if(cellSelected != null && !node.getStyleClass().contains("selected")) {
-                    if(plateau.getTableau().get(row).get(col) == null || plateau.getTableau().get(row).get(col).estBlanc() != cellSelected.estBlanc()) {
-                        plateau.mouvement(cellSelected, row, col);
-                        cellSelected = null;
-                        nodeSelected.getStyleClass().remove("selected");
-                        nodeSelected = null;
-                    }
-                } else if(!node.getStyleClass().contains("selected") && plateau.getTableau().get(row).get(col) != null) {
-                    node.getStyleClass().add("selected");
+                if(cellSelected == null && plateau.getTableau().get(row).get(col) != null) {
                     cellSelected = plateau.getTableau().get(row).get(col);
                     nodeSelected = node;
+                    node.getStyleClass().add("selected");
+                    break;
+                } else if(cellSelected != null) {
+                    Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
+                    plateau.mouvement(cellSelected, row, col);
+                    if(cellSelected.getColonne() != previousCellSelected.getColonne() || cellSelected.getLigne() != previousCellSelected.getLigne()){
+                        isWhitePlaying = !isWhitePlaying;
+                    }
+                    cellSelected = null;
+                    nodeSelected.getStyleClass().remove("selected");
+                    nodeSelected = null;
                     break;
                 }
             } else {
@@ -208,6 +220,5 @@ public class ChessController implements Initializable {
         }
         clearAll();
         displayGame();
-        if(cellSelected != null) nodeSelected.getStyleClass().add("selected");
     }
 }
