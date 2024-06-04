@@ -1,6 +1,9 @@
 package fr.iut.chesscomsae;
 
 import fr.iut.chesscomsae.piece.*;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -90,15 +93,25 @@ public class Plateau {
      * Si il y a une pièce de meme couleur a l'endroit visé, rien ne se passe; sinon, on met a l'ancienne position de la pièce un élément null
      * puis met dans la case aux coordonnées voulues, la pièce. Enfin, met a jour les coordonnées de la pièce.
      */
-    public void mouvement (Piece piece, int x, int y) {
+    public int mouvement (Piece piece, int x, int y) {
         //if (!piece.isMoveLegal(x, y)) return; // Si le mouvement est illégal, alors rien ne se passe
-        if (tableau.get(x).get(y) != null && tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien
-        else {
+        boolean isMoveLegal = false;
+        ArrayList<int[]> moves = piece.mouvementsPossibles(this);
+        for(int[] move : moves) {
+            if(x == move[0] && y == move[1]) {
+                isMoveLegal = true;
+            }
+        }
+        isMoveLegal = true;
+        if (tableau.get(x).get(y) != null && tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return 1; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien et on renvoie 0
+        else if(isMoveLegal) {
             tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
             tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position, supprimant alors celle qui était ici avant
             piece.setLigne(x); // on met a jour la coordonnée x de la pièce
             piece.setColonne(y); // on met a jour la coordonnée y de la pièce
+            return 2;
         }
+        return 0;
     }
 
     /**

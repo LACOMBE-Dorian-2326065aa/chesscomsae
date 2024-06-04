@@ -207,18 +207,22 @@ public class ChessController implements Initializable {
                     break;
                 } else if(cellSelected != null) {
                     Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
-                    plateau.mouvement(cellSelected, row, col);
-                    if(cellSelected.getColonne() != previousCellSelected.getColonne() || cellSelected.getLigne() != previousCellSelected.getLigne()){
+                    int hasPlayed = plateau.mouvement(cellSelected, row, col);
+                    if(hasPlayed == 2){
                         isWhitePlaying = !isWhitePlaying;
                         cellSelected = null;
                         nodeSelected.getStyleClass().remove("selected");
                         nodeSelected = null;
-                    } else {
+                    } else if(hasPlayed == 1) {
                         cellSelected = plateau.getTableau().get(row).get(col);
                         nodeSelected.getStyleClass().remove("selected");
                         nodeSelected = node;
                         node.getStyleClass().add("selected");
                         displayMoves(cellSelected);
+                    } else {
+                        cellSelected = null;
+                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected = null;
                     }
                     break;
                 }

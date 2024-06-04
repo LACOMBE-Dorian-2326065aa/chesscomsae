@@ -18,8 +18,57 @@ public class Reine extends Piece{
 
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
-        // TODO
-        return null;
+        ArrayList<int[]> mouvements = new ArrayList<>();
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()+i});
+            } else if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i).estBlanc() != estBlanc()) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()+i});
+                break;
+            } else {
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+            } else if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i).estBlanc() != estBlanc()) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+                break;
+            } else {
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+            } else if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i).estBlanc() != estBlanc()) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+                break;
+            } else {
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+            } else if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i).estBlanc() != estBlanc()) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+                break;
+            } else {
+                break;
+            }
+        }
+
+        return mouvements;
     }
 
     @Override
