@@ -1,5 +1,6 @@
 package fr.iut.chesscomsae;
 
+import fr.iut.chesscomsae.piece.Piece;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -53,6 +55,7 @@ public class ChessController implements Initializable {
 
     private Joueur j1;
     private Joueur j2;
+    private Plateau plateau;
 
     /**
      * Initialise les données de la fenêtre
@@ -108,6 +111,7 @@ public class ChessController implements Initializable {
      */
     public void play() {
         buttonPlay.setDisable(true);
+        choiceBox.setDisable(true);
 
         prenomLabel = new Label("Prénom J1 :");
         prenom = new TextField();
@@ -139,7 +143,23 @@ public class ChessController implements Initializable {
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
             nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
             nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
+            displayGame();
         }
+    }
 
+    public void displayGame() {
+        plateau = new Plateau(j1, j2);
+        plateau.init();
+        ArrayList<ArrayList<Piece>> partie = plateau.getTableau();
+        for(int i = 0; i < partie.size(); i++) {
+            for(int j = 0; j < partie.get(i).size(); j++) {
+                if(partie.get(i).get(j) == null) continue;
+                Image newPieceImg = new Image(partie.get(i).get(j).getImage());
+                ImageView newPiece = new ImageView(newPieceImg);
+                newPiece.setFitHeight(75);
+                newPiece.setFitWidth(75);
+                chessBoard.add(newPiece, j, i);
+            }
+        }
     }
 }
