@@ -86,15 +86,19 @@ public class Plateau {
      * @param piece De type Piece, c'est la pièce que le joueur souhaite bouger
      * @param x De type int, c'est l'index de la ligne vers laquelle le joueur souhaite bouger sa pièce
      * @param y De type int, c'est l'index de la colonne vers laquelle le joueur souhaite bouger sa pièce
-     * mouvement, vérifie si le mouvement est légal, si c'est le cas, met a l'ancienne position de la pièce un élément null
+     * mouvement, vérifie si le mouvement est légal, si c'est le cas, il y a une autre condition.
+     * Si il y a une pièce de meme couleur a l'endroit visé, rien ne se passe; sinon, on met a l'ancienne position de la pièce un élément null
      * puis met dans la case aux coordonnées voulues, la pièce. Enfin, met a jour les coordonnées de la pièce.
      */
     public void mouvement (Piece piece, int x, int y) {
         if (!piece.isMoveLegal(x, y)) return; // Si le mouvement est illégal, alors rien ne se passe
-        tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
-        tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position
-        piece.setLigne(x);
-        piece.setColonne(y);
+        if (tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien
+        else {
+            tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
+            tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position, supprimant alors celle qui était ici avant
+            piece.setLigne(x); // on met a jour la coordonnée x de la pièce
+            piece.setColonne(y); // on met a jour la coordonnée y de la pièce
+        }
     }
 
     /**
