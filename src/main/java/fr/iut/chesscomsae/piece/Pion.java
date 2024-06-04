@@ -25,7 +25,6 @@ public class Pion extends Piece {
         // Regarde s'il s'agit du premier coup du pion
         if (premierCoups) {
             // Si oui, le pion peut avancer de 2 cases
-            premierCoups = false;
             deplacement = 2;
         }
 
@@ -59,6 +58,14 @@ public class Pion extends Piece {
 
         }
         return mouvements;
+    }
+
+    public void setPremierCoups(boolean premierCoups) {
+        this.premierCoups = premierCoups;
+    }
+
+    public boolean getPremierCoups() {
+        return premierCoups;
     }
 
 
