@@ -174,3 +174,7 @@
 .selected {
     -fx-background-color: #f5f682;
 }
+
+.movable {
+    -fx-background-color: #000;
+}
