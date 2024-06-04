@@ -7,10 +7,24 @@ import java.util.ArrayList;
 
 public class Fou extends Piece {
 
+    /**
+     * Constructeur de la classe Fou
+     * @author Valente Hugo
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param joueur Joueur de la pièce
+     */
     public Fou(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 
+    /**
+     * Permet de récupérer les mouvements possibles de la pièce Fou sur le plateau
+     * @author Lacombe Dorian
+     * @author Valente Hugo
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements possibles de la pièce Fou
+     */
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
@@ -66,11 +80,21 @@ public class Fou extends Piece {
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer le nom de la pièce Fou
+     * @author Valente Hugo
+     * @return Nom de la pièce Fou
+     */
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/fouBlanc.png" : "file:src/main/resources/pieces/fouNoir.png";
     }
 
+    /**
+     * Permet de récupérer le nom de la pièce Fou
+     * @author Valente Hugo
+     * @return Nom de la pièce Fou
+     */
     @Override
     public String toString() {
         return "Fou[" + super.toString() + "]";

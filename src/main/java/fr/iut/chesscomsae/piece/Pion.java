@@ -7,14 +7,31 @@ import java.util.ArrayList;
 
 public class Pion extends Piece {
 
+    /**
+     * Attribut de la classe Pion
+     */
     private boolean premierCoup;
 
-
+    /**
+     * Constructeur de la classe Pion
+     * @author Turmo Baptiste
+     * @author Valente Hugo
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param joueur Joueur de la pièce
+     */
     public Pion(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
         premierCoup = true;
     }
 
+    /**
+     * Permet de récupérer les mouvements possibles du pion sur le plateau de jeu
+     * @author Turmo Baptiste
+     * @author Valente Hugo
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements possibles du pion
+     */
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
 
@@ -60,16 +77,29 @@ public class Pion extends Piece {
         return mouvements;
     }
 
+    /**
+     * Permet de savoir si le pion est en position de promotion
+     * @author Lacombe Dorian
+     */
     public void setPremierCoup(boolean premierCoup) {
         this.premierCoup = premierCoup;
     }
 
-
+    /**
+     * Permet d'obtenir l'image qui correspond au pion
+     * @author Valente Hugo
+     * @return L'image qui correspond au pion
+     */
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/pionBlanc.png" : "file:src/main/resources/pieces/pionNoir.png";
     }
 
+    /**
+     * Permet de récupérer le nom de la pièce Pion
+     * @author Valente Hugo
+     * @return Nom de la pièce Pion
+     */
     @Override
     public String toString() {
         return "Pion[" + super.toString() + "]";

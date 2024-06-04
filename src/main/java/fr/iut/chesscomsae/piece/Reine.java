@@ -7,10 +7,25 @@ import java.util.ArrayList;
 
 public class Reine extends Piece{
 
+    /**
+     * Constructeur de la classe Reine
+     * @author Lacombe Dorian
+     * @author Valente Hugo
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param joueur Joueur de la pièce
+     */
     public Reine(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 
+    /**
+     * Permet de récupérer les mouvements possibles de la pièce Reine sur le plateau
+     * @author Lacombe Dorian
+     * @author Valente Hugo
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements possibles de la pièce Reine
+     */
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
@@ -68,33 +83,30 @@ public class Reine extends Piece{
                 if (conditionLigne(plateau, mouvements, j)) break;
             }
         }
-
         // Sens vers le haut
         if (!(getLigne() - 1 < 0)) {
             for (int j = getLigne() - 1; j >= 0; --j) {
                 if (conditionLigne(plateau, mouvements, j)) break;
             }
         }
-
         // Sens vers la droite
         if (!(getColonne() + 1 > 7)) {
             for (int j = getColonne() + 1; j < 8; ++j) {
                 if (conditionColonne(plateau, mouvements, j)) break;
             }
         }
-
         // Sens vers la gauche
         if (!(getColonne() - 1 < 0)) {
             for (int j = getColonne() - 1; j >= 0; --j) {
                 if (conditionColonne(plateau, mouvements, j)) break;
             }
         }
-
         return mouvements;
     }
 
     /**
      * Permet de vérifier si la colonne est valide pour le mouvement de la reine
+     * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
      * @param j Colonne
@@ -114,6 +126,7 @@ public class Reine extends Piece{
 
     /**
      * Permet de vérifier si la ligne est valide pour le mouvement de la reine
+     * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
      * @param j Ligne
@@ -131,11 +144,22 @@ public class Reine extends Piece{
         return false;
     }
 
+
+    /**
+     * Permet d'obtenir l'image qui correspond à la pièce Reine
+     * @author Valente Hugo
+     * @return L'image qui correspond à la pièce Reine
+     */
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/reineBlanc.png" : "file:src/main/resources/pieces/reineNoir.png";
     }
 
+    /**
+     * Permet d'obtenir le nom de la pièce Reine
+     * @author Valente Hugo
+     * @return Le nom de la pièce Reine
+     */
     @Override
     public String toString() {
         return "Reine[" + super.toString() + "]";

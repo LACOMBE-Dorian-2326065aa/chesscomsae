@@ -7,15 +7,32 @@ import java.util.ArrayList;
 
 public class Cavalier extends Piece{
 
+    /**
+     * Constructeur de la classe Cavalier
+     * @author Valent Hugo
+     * @param ligne Ligne de la pièce
+     * @param colonne Colonne de la pièce
+     * @param joueur Joueur de la pièce
+     */
     public Cavalier(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
     }
 
+    /**
+     * Permet de récupérer l'image de la pièce
+     * @author Valent Hugo
+     * @return Image de la pièce
+     */
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/cavalierBlanc.png" : "file:src/main/resources/pieces/cavalierNoir.png";
     }
 
+    /**
+     * Permet de récupérer les mouvements possibles de la pièce Cavalier sur le plateau
+     * @author Valente Hugo
+     * @return Liste des mouvements possibles de la pièce Cavalier
+     */
     @Override
     public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
@@ -69,6 +86,11 @@ public class Cavalier extends Piece{
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer le nom de la pièce Cavalier
+     * @author Valente Hugo
+     * @return Nom de la pièce Cavalier
+     */
     @Override
     public String toString() {
         return "Cavalier[" + super.toString() + "]";
