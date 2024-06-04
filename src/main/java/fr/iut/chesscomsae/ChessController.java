@@ -193,7 +193,7 @@ public class ChessController implements Initializable {
         if(plateau.getTableau().get(row).get(col) != null && ((isWhitePlaying && cellSelected == null && !plateau.getTableau().get(row).get(col).estBlanc()) || (!isWhitePlaying && cellSelected == null && plateau.getTableau().get(row).get(col).estBlanc()))) return;
         if(cellSelected != null && plateau.getTableau().get(row).get(col) == cellSelected){
             cellSelected = null;
-            nodeSelected.getStyleClass().remove("selected");
+            nodeSelected.getStyleClass().remove("selectedCell");
             nodeSelected = null;
             return;
         }
@@ -202,7 +202,7 @@ public class ChessController implements Initializable {
                 if(cellSelected == null && plateau.getTableau().get(row).get(col) != null) {
                     cellSelected = plateau.getTableau().get(row).get(col);
                     nodeSelected = node;
-                    node.getStyleClass().add("selected");
+                    node.getStyleClass().add("selectedCell");
                     displayMoves(cellSelected);
                     break;
                 } else if(cellSelected != null) {
@@ -211,23 +211,23 @@ public class ChessController implements Initializable {
                     if(hasPlayed == 2){
                         isWhitePlaying = !isWhitePlaying;
                         cellSelected = null;
-                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected.getStyleClass().remove("selectedCell");
                         nodeSelected = null;
                     } else if(hasPlayed == 1) {
                         cellSelected = plateau.getTableau().get(row).get(col);
-                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected.getStyleClass().remove("selectedCell");
                         nodeSelected = node;
-                        node.getStyleClass().add("selected");
+                        node.getStyleClass().add("selectedCell");
                         displayMoves(cellSelected);
                     } else {
                         cellSelected = null;
-                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected.getStyleClass().remove("selectedCell");
                         nodeSelected = null;
                     }
                     break;
                 }
             } else {
-                node.getStyleClass().remove("selected");
+                node.getStyleClass().remove("selectedCell");
             }
         }
         clearAll();
