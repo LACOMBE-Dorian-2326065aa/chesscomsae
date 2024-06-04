@@ -4,6 +4,7 @@ import fr.iut.chesscomsae.piece.Piece;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -57,6 +60,9 @@ public class ChessController implements Initializable {
     private Joueur j2;
     private Plateau plateau;
 
+    private Piece cellSelected;
+    private Node nodeSelected;
+
     /**
      * Initialise les données de la fenêtre
      * @author Dorian Lacombe
@@ -81,15 +87,12 @@ public class ChessController implements Initializable {
             for(int j = 0; j < 8; j++) {
                 Pane pane = new Pane();
 
-                Color color;
                 if((i+j) % 2 != 0) {
-                    color = Color.rgb(115,149,82);
+                    pane.getStyleClass().add("chess-pane-1");
                 } else {
-                    color = Color.rgb(235,236,208);
+                    pane.getStyleClass().add("chess-pane-2");
                 }
 
-                Rectangle rect = new Rectangle(75, 75, color);
-                pane.getChildren().add(rect);
                 chessBoard.add(pane, j, i);
             }
         }
@@ -112,7 +115,6 @@ public class ChessController implements Initializable {
     public void play() {
         buttonPlay.setDisable(true);
         choiceBox.setDisable(true);
-
         prenomLabel = new Label("Prénom J1 :");
         prenom = new TextField();
         nomLabel = new Label("Nom J1 :");
@@ -143,13 +145,14 @@ public class ChessController implements Initializable {
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
             nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
             nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
+            plateau = new Plateau(j1, j2);
+            plateau.init();
             displayGame();
+            handleClicks();
         }
     }
 
     public void displayGame() {
-        plateau = new Plateau(j1, j2);
-        plateau.init();
         ArrayList<ArrayList<Piece>> partie = plateau.getTableau();
         for(int i = 0; i < partie.size(); i++) {
             for(int j = 0; j < partie.get(i).size(); j++) {
@@ -161,5 +164,50 @@ public class ChessController implements Initializable {
                 chessBoard.add(newPiece, j, i);
             }
         }
+    }
+
+    public void clearAll() {
+        List<Node> childrenToRemove = new ArrayList<>();
+        for (Node node : chessBoard.getChildren()) {
+            if (node instanceof ImageView) {
+                childrenToRemove.add(node);
+            }
+        }
+        chessBoard.getChildren().removeAll(childrenToRemove);
+    }
+
+
+    public void handleClicks() {
+        chessBoard.setOnMouseClicked(event -> {
+            int col = (int) (event.getX() / 75);
+            int row = (int) (event.getY() / 75);
+
+            handleCellClick(row, col);
+        });
+    }
+
+    public void handleCellClick(int row, int col) {
+        for(Node node : chessBoard.getChildren()) {
+            if(GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+                if(cellSelected != null && !node.getStyleClass().contains("selected")) {
+                    if(plateau.getTableau().get(row).get(col) == null || plateau.getTableau().get(row).get(col).estBlanc() != cellSelected.estBlanc()) {
+                        plateau.mouvement(cellSelected, row, col);
+                        cellSelected = null;
+                        nodeSelected.getStyleClass().remove("selected");
+                        nodeSelected = null;
+                    }
+                } else if(!node.getStyleClass().contains("selected") && plateau.getTableau().get(row).get(col) != null) {
+                    node.getStyleClass().add("selected");
+                    cellSelected = plateau.getTableau().get(row).get(col);
+                    nodeSelected = node;
+                    break;
+                }
+            } else {
+                node.getStyleClass().remove("selected");
+            }
+        }
+        clearAll();
+        displayGame();
+        if(cellSelected != null) nodeSelected.getStyleClass().add("selected");
     }
 }

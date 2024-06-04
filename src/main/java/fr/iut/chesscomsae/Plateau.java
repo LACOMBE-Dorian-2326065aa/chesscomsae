@@ -91,8 +91,8 @@ public class Plateau {
      * puis met dans la case aux coordonnées voulues, la pièce. Enfin, met a jour les coordonnées de la pièce.
      */
     public void mouvement (Piece piece, int x, int y) {
-        if (!piece.isMoveLegal(x, y)) return; // Si le mouvement est illégal, alors rien ne se passe
-        if (tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien
+        //if (!piece.isMoveLegal(x, y)) return; // Si le mouvement est illégal, alors rien ne se passe
+        if (tableau.get(x).get(y) != null && tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien
         else {
             tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
             tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position, supprimant alors celle qui était ici avant

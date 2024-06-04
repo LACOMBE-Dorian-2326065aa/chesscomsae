@@ -158,3 +158,19 @@
     -fx-background-radius: 10px;
     -fx-effect: dropshadow(gaussian, #45753c, 0, 0, 0, 5);
 }
+
+.chess-pane-1 {
+    -fx-background-color: rgb(115,149,82);
+    -fx-min-width: 75px;
+    -fx-min-height: 75px;
+}
+
+.chess-pane-2 {
+    -fx-background-color: rgb(235,236,208);
+    -fx-min-width: 75px;
+    -fx-min-height: 75px;
+}
+
+.selected {
+    -fx-background-color: #f5f682;
+}
