@@ -1,6 +1,9 @@
 package fr.iut.chesscomsae.piece;
 
 import fr.iut.chesscomsae.Joueur;
+import fr.iut.chesscomsae.Plateau;
+
+import java.util.ArrayList;
 
 public abstract class Piece {
 
@@ -76,6 +79,13 @@ public abstract class Piece {
      * @author Hugo Valente
      */
     public abstract String getImage();
+
+    /**
+     * Permet d'obtenir les mouvements possibles de la pièce
+     * @param plateau Plateau de jeu
+     * @return Les mouvements possibles de la pièce
+     */
+    public abstract ArrayList<int[]> mouvementPossible(Plateau plateau);
 
     /**
      * Permet d'obtenir le joueur qui correspond à la pièce

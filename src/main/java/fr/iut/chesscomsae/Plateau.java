@@ -101,6 +101,64 @@ public class Plateau {
         }
     }
 
+    public ArrayList<Piece> piecesBlanches () {
+        ArrayList<Piece> piecesBlanches = new ArrayList<Piece>();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j)  {
+                if (tableau.get(i).get(j) == null) continue;
+                else if (tableau.get(i).get(j).estBlanc()) {
+                    piecesBlanches.add(tableau.get(i).get(j));
+                }
+            }
+        }
+        return piecesBlanches;
+    }
+
+    public ArrayList<Piece> piecesNoires () {
+        ArrayList<Piece> piecesNoires = new ArrayList<Piece>();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j)  {
+                if (tableau.get(i).get(j) == null) continue;
+                else if (!tableau.get(i).get(j).estBlanc()) {
+                    piecesNoires.add(tableau.get(i).get(j));
+                }
+            }
+        }
+        return piecesNoires;
+    }
+
+    public ArrayList<Integer> coordonnees (ArrayList<Piece> listePiece) {
+        ArrayList<Integer> coordonnees = new ArrayList<Integer>();
+        for (Piece piece : listePiece) {
+            for (int i = 0; i < piece.mouvementsPossibles(tableau).size(); ++i) {
+                if (coordonnees.contains(piece.mouvementsPossibles(tableau).get(i))) continue;
+                else {
+                    coordonnees.add(piece.mouvementsPossibles(tableau).get(i));
+                }
+            }
+        }
+        return coordonnees;
+    }
+
+/*
+    // ArrayList<int> mouvementsPossibles(Plateau plateau)
+    public boolean echecEtMat () {
+        for (i : roi.mouvementsPossibles(tableau)) {
+
+        }
+    }
+
+    si une des coordonnées possibles du roi blanc != de toutes les coordonnées possibles des pièces noires {
+        return false;
+    }
+    sinon return true;
+
+    si une des coordonnées possibles du roi noir != de toutes les coordonnées possibles des pièces blanches {
+        return false;
+    }
+    sinon return true;
+*/
+
     /**
      * @author Quentin Fournier
      * getTableau, affiche les éléments, pièces, présentes sur le plateau
