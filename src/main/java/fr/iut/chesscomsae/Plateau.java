@@ -101,6 +101,11 @@ public class Plateau {
         }
     }
 
+    /**
+     * @author Quentin Fournier
+     * piecesBlanches, crée une liste contenant les pièces blanches présentes sur le plateau
+     * @return la liste piecesBlanches contenant des pieces de type Piece dont isWhite = true, étant présentes sur le plateau de jeu
+     */
     public ArrayList<Piece> piecesBlanches () {
         ArrayList<Piece> piecesBlanches = new ArrayList<Piece>();
         for (int i = 0; i < 8; ++i) {
@@ -114,6 +119,11 @@ public class Plateau {
         return piecesBlanches;
     }
 
+    /**
+     * @author Quentin Fournier
+     * piecesNoires, crée une liste contenant les pièces noires présentes sur le plateau
+     * @return la liste piecesNoires contenant des pieces de type Piece dont isWhite = false, étant présentes sur le plateau de jeu
+     */
     public ArrayList<Piece> piecesNoires () {
         ArrayList<Piece> piecesNoires = new ArrayList<Piece>();
         for (int i = 0; i < 8; ++i) {
@@ -127,13 +137,19 @@ public class Plateau {
         return piecesNoires;
     }
 
-    public ArrayList<Integer> coordonnees (ArrayList<Piece> listePiece) {
-        ArrayList<Integer> coordonnees = new ArrayList<Integer>();
+    /**
+     * @author Quentin Fournier
+     * @param listePiece, une ArrayList composée de pieces de type Piece
+     * piecesBlanches, crée une liste contenant les pièces blanches présentes sur le plateau
+     * @return la liste piecesBlanches contenant des pieces de type Piece étant présentes sur le plateau de jeu
+     */
+    public ArrayList<int[]> coordonnees (ArrayList<Piece> listePiece) {
+        ArrayList<int[]> coordonnees = new ArrayList<int[]>();
         for (Piece piece : listePiece) {
-            for (int i = 0; i < piece.mouvementsPossibles(tableau).size(); ++i) {
-                if (coordonnees.contains(piece.mouvementsPossibles(tableau).get(i))) continue;
+            for (int i = 0; i < piece.mouvementsPossibles(this).size(); ++i) {
+                if (coordonnees.contains(piece.mouvementsPossibles(this).get(i))) continue;
                 else {
-                    coordonnees.add(piece.mouvementsPossibles(tableau).get(i));
+                    coordonnees.add(piece.mouvementsPossibles(this).get(i));
                 }
             }
         }
