@@ -98,6 +98,11 @@ public class ChessController implements Initializable {
                 chessBoard.add(pane, j, i);
             }
         }
+        Joueur jFictif1 = new Joueur(null, null, true);
+        Joueur jFictif2 = new Joueur(null, null, false);
+        Plateau plateauFictif = new Plateau(jFictif1, jFictif2);
+        plateauFictif.init();
+        displayGame(plateauFictif);
     }
 
     public void createBindings() {
@@ -147,14 +152,15 @@ public class ChessController implements Initializable {
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
             nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
             nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
+            clearAll();
             plateau = new Plateau(j1, j2);
             plateau.init();
-            displayGame();
+            displayGame(plateau);
             handleClicks();
         }
     }
 
-    public void displayGame() {
+    public void displayGame(Plateau plateau) {
         ArrayList<ArrayList<Piece>> partie = plateau.getTableau();
         for(int i = 0; i < partie.size(); i++) {
             for(int j = 0; j < partie.get(i).size(); j++) {
@@ -177,7 +183,6 @@ public class ChessController implements Initializable {
         }
         chessBoard.getChildren().removeAll(childrenToRemove);
     }
-
 
     public void handleClicks() {
         chessBoard.setOnMouseClicked(event -> {
@@ -232,7 +237,7 @@ public class ChessController implements Initializable {
             }
         }
         clearAll();
-        displayGame();
+        displayGame(plateau);
     }
 
     public void displayMoves(Piece piece) {
