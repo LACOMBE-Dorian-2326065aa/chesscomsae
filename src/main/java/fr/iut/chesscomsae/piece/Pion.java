@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class Pion extends Piece {
 
-    private boolean premierCoups;
+    private boolean premierCoup;
 
 
     public Pion(int ligne, int colonne, Joueur joueur) {
         super(ligne, colonne, joueur);
-        premierCoups = true;
+        premierCoup = true;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Pion extends Piece {
 
         int deplacement = 1;
         // Regarde s'il s'agit du premier coup du pion
-        if (premierCoups) {
+        if (premierCoup) {
             // Si oui, le pion peut avancer de 2 cases
             deplacement = 2;
         }
@@ -60,12 +60,12 @@ public class Pion extends Piece {
         return mouvements;
     }
 
-    public void setPremierCoups(boolean premierCoups) {
-        this.premierCoups = premierCoups;
+    public void setPremierCoup(boolean premierCoup) {
+        this.premierCoup = premierCoup;
     }
 
-    public boolean getPremierCoups() {
-        return premierCoups;
+    public boolean getPremierCoup() {
+        return premierCoup;
     }
 
 
