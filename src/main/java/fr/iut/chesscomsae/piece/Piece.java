@@ -85,7 +85,7 @@ public abstract class Piece {
      * @param plateau Plateau de jeu
      * @return Les mouvements possibles de la pièce
      */
-    public abstract ArrayList<int[]> mouvementPossible(Plateau plateau);
+    public abstract ArrayList<int[]> mouvementsPossibles(Plateau plateau);
 
     /**
      * Permet d'obtenir le joueur qui correspond à la pièce

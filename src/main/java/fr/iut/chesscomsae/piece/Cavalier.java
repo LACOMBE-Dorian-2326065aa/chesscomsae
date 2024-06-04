@@ -22,7 +22,7 @@ public class Cavalier extends Piece{
     }
 
     @Override
-    public ArrayList<int[]> mouvementPossible(Plateau plateau) {
+    public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
         // On vérifie les 8 mouvements possibles du cavalier
         for (int i = 0; i < 8; ++i) {

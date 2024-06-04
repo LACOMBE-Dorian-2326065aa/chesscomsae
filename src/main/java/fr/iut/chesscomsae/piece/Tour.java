@@ -17,7 +17,7 @@ public class Tour extends Piece {
     }
 
     @Override
-    public ArrayList<int[]> mouvementPossible(Plateau plateau) {
+    public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
         ArrayList<ArrayList<Piece>> tableau = plateau.getTableau();
         // On vérifie pour les 4 sens possibles de la tour
