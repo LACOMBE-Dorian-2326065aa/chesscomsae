@@ -29,32 +29,40 @@ public class Pion extends Piece {
             deplacement = 2;
         }
 
-        // S'il est noir, il doit avancer vers le bas
         if (estBlanc()) {
-            deplacement = -deplacement;
-        }
-
-        // Ajout des mouvements possible en ligne droite
-        for (int i = 1; i <= deplacement; ++i) {
-            if (tableau.get(getLigne() + i).get(getColonne()) == null) {
-                mouvements.add(new int[]{getLigne() + i, getColonne()});
-            } else {
-                break;
+            // Ajout des mouvements possibles en avant pour le pion blanc
+            for (int i = 1; i <= deplacement; ++i) {
+                if (getLigne() - i > 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
+                    mouvements.add(new int[]{getLigne() - i, getColonne()});
+                }else if (tableau.get(getLigne()-i).get(getColonne()) != null && tableau.get(getLigne() - i).get(getColonne()).estBlanc() != estBlanc()) {
+                    mouvements.add(new int[]{getLigne() - i, getColonne()});
+                    break;
+                }else {
+                    break;
+                }
             }
-        }
-        // Changement du déplacement possible
-        if (estBlanc()) {
-            deplacement = -1;
+
+            // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion blanc
+            if (tableau.get(getLigne() - 1).get(getColonne() - 1) != null && tableau.get(getLigne() - 1).get(getColonne() - 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
+            if (tableau.get(getLigne() - 1).get(getColonne() + 1) != null && tableau.get(getLigne() - 1).get(getColonne() + 1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
+
         }else {
-            deplacement = 1;
-        }
-
-        // Ajout de la fonction pour manger en diagonale
-        for (int i = -1; i <= 1; ++i) {
-            if (i == 0) continue;
-            if (tableau.get(getLigne() + deplacement).get(getColonne()+i) != null && tableau.get(getLigne() + deplacement).get(getColonne()+i).estBlanc() != estBlanc()) {
-                mouvements.add(new int[]{getLigne()+deplacement, getColonne()+i});
+            // Ajout des mouvements possibles en avant pour le pion noir
+            for (int i = 1; i <= deplacement; ++i) {
+                if (getLigne() + i < 8 && tableau.get(getLigne()+i).get(getColonne()) == null) {
+                    mouvements.add(new int[]{getLigne()+i, getColonne()});
+                } else if (tableau.get(getLigne()+i).get(getColonne()) != null && tableau.get(getLigne() + i).get(getColonne()).estBlanc() != estBlanc()) {
+                    mouvements.add(new int[]{getLigne()+i, getColonne()});
+                    break;
+                }else {
+                    break;
+                }
             }
+
+            // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion noir
+            if (tableau.get(getLigne()+1).get(getColonne()-1) != null && tableau.get(getLigne() + 1).get(getColonne()-1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()-1});
+            if (tableau.get(getLigne()+1).get(getColonne()+1) != null && tableau.get(getLigne() + 1).get(getColonne()+1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()+1});
+
         }
         return mouvements;
     }
