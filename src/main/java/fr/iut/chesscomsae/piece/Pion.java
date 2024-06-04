@@ -21,8 +21,7 @@ public class Pion extends Piece {
     }
 
 
-    public ArrayList<int[]> mouvementPossible(Plateau plateau) {
-        ArrayList<int[]> mouvement = new ArrayList<>();
+    public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
         int[] deplacement;
         ArrayList<int[]> mouvements = null;
 

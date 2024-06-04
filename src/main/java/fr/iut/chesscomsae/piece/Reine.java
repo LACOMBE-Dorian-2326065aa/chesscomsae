@@ -1,6 +1,9 @@
 package fr.iut.chesscomsae.piece;
 
 import fr.iut.chesscomsae.Joueur;
+import fr.iut.chesscomsae.Plateau;
+
+import java.util.ArrayList;
 
 public class Reine extends Piece{
 
@@ -11,6 +14,12 @@ public class Reine extends Piece{
     @Override
     public boolean isMoveLegal(int ligne, int colonne) {
         return ligne == getColonne() || colonne == getLigne() || Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
+    }
+
+    @Override
+    public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
+        // TODO
+        return null;
     }
 
     @Override

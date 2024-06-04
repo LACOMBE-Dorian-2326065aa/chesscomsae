@@ -1,6 +1,9 @@
 package fr.iut.chesscomsae.piece;
 
 import fr.iut.chesscomsae.Joueur;
+import fr.iut.chesscomsae.Plateau;
+
+import java.util.ArrayList;
 
 public class Fou extends Piece {
 
@@ -13,6 +16,11 @@ public class Fou extends Piece {
         return Math.abs(ligne - getColonne()) == Math.abs(colonne - getLigne());
     }
 
+    @Override
+    public ArrayList<int[]> mouvementsPossibles(Plateau plateau) {
+        // TODO
+        return null;
+    }
     @Override
     public String getImage() {
         return estBlanc() ? "file:src/main/resources/pieces/fouBlanc.png" : "file:src/main/resources/pieces/fouNoir.png";
