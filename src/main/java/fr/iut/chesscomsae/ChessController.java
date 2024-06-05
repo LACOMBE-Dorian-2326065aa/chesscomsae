@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -17,9 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -92,6 +91,8 @@ public class ChessController implements Initializable {
     private ArrayList<Node> newGameContent;
     private ArrayList<Node> gamesContent;
     private ArrayList<Node> playersContent;
+
+    private Joueur[] playersList;
 
 
     /**
@@ -483,7 +484,36 @@ public class ChessController implements Initializable {
         boxRight.getChildren().clear();
         boxRight.getChildren().addAll(playersContent);
         playersContent = null;
+        loadPlayers();
+    }
 
+    public void loadPlayers() {
+        boxRight.getChildren().clear();
+        playersList = new Joueur[]{j1, j2};
+        for(Joueur j : playersList) {
+            if(j == null) continue;
+            HBox playerInList = new HBox();
+            playerInList.getStyleClass().add("playerInList");
+            Image img = new Image("file:src/main/resources/img/profile_picture.png");
+            ImageView imgV = new ImageView(img);
+            imgV.setFitHeight(30);
+            imgV.setFitWidth(30);
+            Label jLabelPrenom = new Label(j.getPrenom());
+            Label jLabelNom = new Label(j.getNom());
+            Label jLabelWon = new Label(Integer.toString(j.getNombrePartiesGagnees()));
+            Label jLabelPlayed = new Label(Integer.toString(j.getNombrePartiesJouees()));
+            jLabelWon.getStyleClass().add("stat");
+            jLabelPlayed.getStyleClass().add("stat");
+            jLabelPrenom.setAlignment(Pos.CENTER);
+            jLabelNom.setAlignment(Pos.CENTER);
+            jLabelPlayed.setAlignment(Pos.CENTER);
+            jLabelWon.setAlignment(Pos.CENTER);
+            playerInList.getChildren().addAll(imgV, jLabelPrenom, jLabelNom, jLabelWon, jLabelPlayed);
+            boxRight.getChildren().add(playerInList);
+        }
+        Region rg = new Region();
+        VBox.setVgrow(rg, Priority.ALWAYS);
+        boxRight.getChildren().add(rg);
     }
 
 }

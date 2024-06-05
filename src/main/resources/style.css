@@ -41,14 +41,14 @@ Button, ChoiceBox {
 }
 
 .menuRight {
-    -fx-min-width: 120px;
+    -fx-min-width: 133.333333333px;
     -fx-alignment: CENTER;
     -fx-background-color: #21201d;
     -fx-padding: 15px;
 }
 
 .menuRightActual {
-    -fx-min-width: 120px;
+    -fx-min-width: 133.333333333px;
     -fx-alignment: CENTER;
     -fx-background-color: #262522;
     -fx-padding: 15px;
@@ -69,7 +69,7 @@ Button, ChoiceBox {
 }
 
 .boxRight {
-    -fx-min-width: 360px;
+    -fx-min-width: 400px;
     -fx-min-height: 635px;
     -fx-background-color: #262522;
     -fx-alignment: CENTER;
@@ -242,4 +242,23 @@ Button, ChoiceBox {
 .bottomButtons {
     -fx-spacing: 10;
     -fx-alignment: CENTER;
+}
+
+.playerInList {
+    -fx-alignment: CENTER;
+    -fx-min-width: 355px;
+    -fx-spacing: 1;
+    -fx-background-color: #3b3a35;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
+
+.playerInList Label {
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-min-width: 130px;
+}
+
+.stat {
+    -fx-min-width: 20px;
 }
