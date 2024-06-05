@@ -235,10 +235,12 @@ public class Plateau {
 
     public boolean testEchecEtMat(boolean isWhitePlaying) {
         ArrayList<int[]> movesRoi = new ArrayList<>();
+        ArrayList<int[]> movesRoiSave = new ArrayList<>();
         movesRoi.addAll(roiNoir.mouvementsPossibles(this));
+        movesRoiSave.addAll(roiNoir.mouvementsPossibles(this));
         int[] roiPos = new int[]{roiNoir.getLigne(), roiNoir.getColonne()};
-        movesRoi.add(roiPos);
 
+        ArrayList<Piece> killer = new ArrayList<>();
         ArrayList<int[]> toRemove = new ArrayList<>();
 
         for (Piece piece : piecesBlanches()) {
@@ -247,15 +249,20 @@ public class Plateau {
             for (int[] movePiece : movesPiece) {
                 for (int[] moveRoi : movesRoi) {
                     if (comparerCoordonnees(movePiece, moveRoi)) toRemove.add(moveRoi);
+                    if (comparerCoordonnees(movePiece, roiPos)) killer.add(piece);
                 }
             }
         }
         movesRoi.removeAll(toRemove);
+        // AJOUTER UNE FONCTION A CHAQUE PIECE QUI TROUVE LE CHEMIN POUR TUER LE ROI ET APRES COMPARER CES POSITIONS A CELLES POSSIBLES DES PIECES ENNEMIES POUR VOIR SI ELLES PPEUVENT BLOQUER
         for(int[] move : movesRoi) {
             System.out.println(move[0] + " " + move[1]);
         }
+
+
+        System.out.println(killer.size());
         System.out.println(movesRoi.size());
-        return movesRoi.size() == 0;
+        return movesRoi.size() == 0 && killer.size() > 0;
     }
 
     /**
@@ -265,6 +272,10 @@ public class Plateau {
      */
     public ArrayList<ArrayList<Piece>> getTableau() {
         return tableau;
+    }
+
+    public void setTableau(ArrayList<ArrayList<Piece>> tableau) {
+        this.tableau = tableau;
     }
 
 }
