@@ -2,8 +2,6 @@ package fr.iut.chesscomsae;
 
 import com.google.gson.annotations.Expose;
 
-import java.io.*;
-
 public class Joueur {
 
     /**
