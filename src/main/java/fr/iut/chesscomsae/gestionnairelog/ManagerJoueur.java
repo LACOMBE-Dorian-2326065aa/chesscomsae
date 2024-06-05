@@ -45,6 +45,7 @@ public class ManagerJoueur extends ManagerFichier {
      * @return la liste des joueurs
      */
     public boolean joueurExiste(Joueur joueur) {
+        if (joueur == null) return false;
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         for (JsonObject e : jsonObjects) {
             if (e.get(NOM).getAsString().equals(joueur.getNom()) && e.get(PRENOM).getAsString().equals(joueur.getPrenom())) {
@@ -74,6 +75,7 @@ public class ManagerJoueur extends ManagerFichier {
      * @param joueur le joueur à ajouter
      */
     public void ajouterJoueur(Joueur joueur) {
+        if (joueur == null) return;
         if (joueurExiste(joueur)) {
             System.out.println("Le joueur "+ joueur.getPrenom() + " " + joueur.getNom() + " existe déjà");
             miseAJourJoueur(joueur);
@@ -109,7 +111,8 @@ public class ManagerJoueur extends ManagerFichier {
                 e.addProperty(PARTIES_JOUEES, totalPartiesJouees);
                 e.addProperty(PARTIES_GAGNEES, totalPartiesGagnees);
                 listeJsonObjectVersFichier(jsonObjects, CHEMIN);
-
+                miseAJourJoueur(joueur);
+                break;
             }
         }
 
@@ -139,6 +142,5 @@ public class ManagerJoueur extends ManagerFichier {
         }
         return joueurs;
     }
-
 
 }

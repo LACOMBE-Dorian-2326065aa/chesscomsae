@@ -1,6 +1,7 @@
 package fr.iut.chesscomsae;
 
 import com.google.gson.JsonObject;
+import fr.iut.chesscomsae.gestionnairelog.ManagerFichier;
 import fr.iut.chesscomsae.gestionnairelog.ManagerJoueur;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +21,9 @@ public class ManagerTest {
 
     @Test
     public void testEcriture() {
-        ManagerJoueur managerJoueur = new ManagerJoueur(null, null);
-        ArrayList<JsonObject> jsonObject = ManagerJoueur.fichierVersListeJsonObject("joueurs.json");
+        ManagerFichier managerFichier = new ManagerFichier();
+        String chemin = "test.json";
+        ArrayList<JsonObject> jsonObject = ManagerJoueur.fichierVersListeJsonObject(chemin);
 
         JsonObject e = new JsonObject();
         e.addProperty("nom", "test");
@@ -31,7 +33,7 @@ public class ManagerTest {
 
         jsonObject.add(e);
 
-        managerJoueur.listeJsonObjectVersFichier(jsonObject, "joueurs.json");
+        managerFichier.listeJsonObjectVersFichier(jsonObject, chemin);
     }
 
     @Test
@@ -46,10 +48,12 @@ public class ManagerTest {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("test", "test", false);
         ManagerJoueur managerJoueur = new ManagerJoueur(joueurBlanc, joueurNoir);
-        managerJoueur.ajouterJoueur(joueurNoir);
-        managerJoueur.ajouterJoueur(joueurBlanc);
-        managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, 1);
-        managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, 1);
+        managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, joueurBlanc.getNombrePartiesGagnees()+1);
+        int valeurGagnees = joueurBlanc.getNombrePartiesGagnees();
+        int valeurJouees = joueurBlanc.getNombrePartiesJouees();
+        managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, joueurBlanc.getNombrePartiesGagnees()+5);
+        assert joueurBlanc.getNombrePartiesGagnees() == valeurGagnees + 5;
+        assert joueurBlanc.getNombrePartiesJouees() == valeurJouees + 50;
     }
 
     @Test
