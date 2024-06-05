@@ -2,6 +2,8 @@ package fr.iut.chesscomsae;
 
 import fr.iut.chesscomsae.piece.Piece;
 import fr.iut.chesscomsae.piece.Pion;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
@@ -21,7 +23,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -73,6 +77,7 @@ public class ChessController implements Initializable {
     private Label nomLabel;
     private TextField nom;
     private Button valid;
+    private Button againstBot;
 
     private Joueur j1;
     private Joueur j2;
@@ -91,6 +96,7 @@ public class ChessController implements Initializable {
     private ArrayList<Node> newGameContent;
     private ArrayList<Node> gamesContent;
     private ArrayList<Node> playersContent;
+    private ArrayList<Piece> piecesNoires;
 
     private Joueur[] playersList;
 
@@ -169,21 +175,33 @@ public class ChessController implements Initializable {
         nomLabel = new Label("Nom J1 :");
         nom = new TextField();
         valid = new Button("Valider");
+        againstBot = new Button("Jouer vs BOT");
         isWhitePlaying = true;
         prenomLabel.getStyleClass().add("prenomLabel");
         prenom.getStyleClass().add("prenom");
         nomLabel.getStyleClass().add("nomLabel");
         nom.getStyleClass().add("nom");
         valid.getStyleClass().add("valid");
+        againstBot.getStyleClass().add("againstBot");
         if(j1 == null && j2 == null) {
-            newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid);
+            newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid, againstBot);
             valid.onActionProperty().set(actionEvent -> validation(true));
+            againstBot.onActionProperty().set(actionEvent -> playAgainstBot());
         } else {
             initGame();
         }
 
         closePopup.onActionProperty().set(actionEvent -> closePopup());
         rematch.onActionProperty().set(actionEvent -> rematch());
+    }
+
+    public void playAgainstBot() {
+        j1 = new Joueur(nom.getText(), prenom.getText(), true);
+        j2 = new Joueur("BOT", "", false);
+        nom.setText("");
+        prenom.setText("");
+        newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid, againstBot);
+        initGame();
     }
 
     /**
@@ -301,7 +319,6 @@ public class ChessController implements Initializable {
                     displayMoves(cellSelected);
                     break;
                 } else if(cellSelected != null) {
-                    Piece previousCellSelected = new Pion(cellSelected.getLigne(), cellSelected.getColonne(), new Joueur("", "", true));
                     int hasPlayed = plateau.mouvement(cellSelected, row, col);
                     if(hasPlayed == 2){
                         if(cellSelected instanceof Pion) ((Pion) cellSelected).setPremierCoup(false);
@@ -328,6 +345,32 @@ public class ChessController implements Initializable {
         }
         clearAll();
         displayGame(plateau);
+
+        if(j2.getPrenom().equals("") && j2.getNom().equals("BOT") && !isWhitePlaying) {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                piecesNoires = plateau.piecesNoires();
+                ArrayList<Piece> toRemove = new ArrayList<>();
+                ArrayList<ArrayList<int[]>> listMoves = new ArrayList<>();
+                for (Piece p : piecesNoires) {
+                    if(p.mouvementsPossibles(plateau).size() > 0) listMoves.addAll(Collections.singleton(p.mouvementsPossibles(plateau)));
+                    else toRemove.add(p);
+                }
+                piecesNoires.removeAll(toRemove);
+                Random random = new Random();
+                int randomInt = random.nextInt((piecesNoires.size()));
+                ArrayList<int[]> moveListChosen = listMoves.get(randomInt);
+                int randomInt2 = random.nextInt((moveListChosen.size()));
+                int[] moveChosen = moveListChosen.get(randomInt2);
+                plateau.mouvement(piecesNoires.get(randomInt), moveChosen[0], moveChosen[1]);
+                if(piecesNoires.get(randomInt) instanceof Pion) ((Pion) piecesNoires.get(randomInt)).setPremierCoup(false);
+                isWhitePlaying = true;
+
+                clearAll();
+                displayGame(plateau);
+            }));
+            timeline.setCycleCount(1);
+            timeline.play();
+        }
     }
 
     /**
@@ -373,7 +416,7 @@ public class ChessController implements Initializable {
                 Platform.runLater(() -> {
                     if (isWhitePlaying) {
                         //subTime1--;
-                        subTime1 -= 20;
+                        subTime1--;
                         if (subTime1 <= -1) {
                             subTime1 = 59;
                             time1--;
