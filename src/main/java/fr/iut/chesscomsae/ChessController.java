@@ -2,6 +2,7 @@ package fr.iut.chesscomsae;
 
 import fr.iut.chesscomsae.piece.Piece;
 import fr.iut.chesscomsae.piece.Pion;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,10 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ChessController implements Initializable {
@@ -64,6 +62,11 @@ public class ChessController implements Initializable {
     private Piece cellSelected;
     private Node nodeSelected;
     private boolean isWhitePlaying;
+
+    private int time1;
+    private int subTime1;
+    private int time2;
+    private int subTime2;
 
     /**
      * Initialise les données de la fenêtre
@@ -167,6 +170,11 @@ public class ChessController implements Initializable {
             plateau.init();
             displayGame(plateau);
             handleClicks();
+            time1 = Integer.parseInt(timerMe.getText().substring(0, 2));
+            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 2));
+            subTime1 = 0;
+            subTime2 = 0;
+            timerLoop();
         }
     }
 
@@ -299,6 +307,43 @@ public class ChessController implements Initializable {
                 node.getStyleClass().remove("killable");
             }
         }
+    }
+
+    public void timerLoop() {
+        timerMe.textProperty().unbind();
+        timerEnnemy.textProperty().unbind();
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (isWhitePlaying) {
+                        subTime1--;
+                        if (subTime1 == -1) {
+                            subTime1 = 59;
+                            time1--;
+                            if (time1 == -1) {
+                                time1 = 0;
+                                subTime1 = 0;
+                            }
+                        }
+                    } else {
+                        subTime2--;
+                        if (subTime2 == -1) {
+                            subTime2 = 59;
+                            time2--;
+                            if (time2 == -1) {
+                                time2 = 0;
+                                subTime2 = 0;
+                            }
+                        }
+                    }
+                    timerMe.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time1, subTime1)));
+                    timerEnnemy.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time2, subTime2)));
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
 }
