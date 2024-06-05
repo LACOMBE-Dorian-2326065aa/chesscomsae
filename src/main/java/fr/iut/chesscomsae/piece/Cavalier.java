@@ -142,6 +142,12 @@ public class Cavalier extends Piece{
         return mouvements;
     }
 
+    public ArrayList<int[]> getPathToKing(Plateau plateau) {
+        ArrayList<int[]> path = new ArrayList<>();
+        path.add(new int[]{getLigne(), getColonne()});
+        return path;
+    }
+
     /**
      * Permet de récupérer le nom de la pièce Cavalier
      * @author Valente Hugo

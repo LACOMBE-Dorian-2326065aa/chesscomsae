@@ -134,6 +134,66 @@ public class Fou extends Piece {
         return mouvements;
     }
 
+    public ArrayList<int[]> getPathToKing(Plateau plateau) {
+        ArrayList<int[]> mouvements = new ArrayList<>();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+            } else {
+                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+                if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()+i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+            } else {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+                if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()+i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+            } else {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+                if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()-i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+            } else {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+                if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()-i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Permet de récupérer le nom de la pièce Fou
      * @author Valente Hugo

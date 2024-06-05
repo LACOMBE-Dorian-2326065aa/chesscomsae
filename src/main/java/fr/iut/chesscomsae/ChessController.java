@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -182,6 +183,7 @@ public class ChessController implements Initializable {
         nomLabel.getStyleClass().add("nomLabel");
         nom.getStyleClass().add("nom");
         valid.getStyleClass().add("valid");
+        valid.disableProperty().bind(Bindings.createBooleanBinding(() -> prenom.getText().equals("") || nom.getText().equals(""), prenom.textProperty(), nom.textProperty()));
         againstBot.getStyleClass().add("againstBot");
         if(j1 == null && j2 == null) {
             newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid, againstBot);
@@ -216,6 +218,7 @@ public class ChessController implements Initializable {
             nomLabel.setText("Nom J2 :");
             nom.setText("");
             prenom.setText("");
+            valid.setText("Commencer");
             newButtons.getChildren().remove(againstBot);
             valid.onActionProperty().set(actionEvent -> validation(false));
         } else {
@@ -347,7 +350,10 @@ public class ChessController implements Initializable {
         clearAll();
         displayGame(plateau);
 
-        System.out.println(plateau.testEchecEtMat(isWhitePlaying));
+        if(plateau.testEchecEtMat(isWhitePlaying)) {
+            initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie ! Échec et mat !");
+            return;
+        }
 
         if(j2.getPrenom().equals("") && j2.getNom().equals("BOT") && !isWhitePlaying) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {

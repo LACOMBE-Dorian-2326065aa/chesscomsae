@@ -73,6 +73,10 @@ public class Roi extends Piece {
         return mouvements;
     }
 
+    public ArrayList<int[]> getPathToKing(Plateau plateau) {
+        return null;
+    }
+
     /**
      * Permet de récupérer l'image de la pièce Roi
      * @author Valent Hugo

@@ -170,6 +170,66 @@ public class Tour extends Piece {
         return false;
     }
 
+    public ArrayList<int[]> getPathToKing(Plateau plateau) {
+        ArrayList<int[]> mouvements = new ArrayList<>();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()) == null) {
+                mouvements.add(new int[]{getLigne() + i, getColonne()});
+            } else {
+                mouvements.add(new int[]{getLigne() + i, getColonne()});
+                if(plateau.getTableau().get(getLigne()+i).get(getColonne()) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()});
+            } else {
+                mouvements.add(new int[]{getLigne()-i,getColonne()});
+                if(plateau.getTableau().get(getLigne()-i).get(getColonne()) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne(),getColonne()-i});
+            } else {
+                mouvements.add(new int[]{getLigne(),getColonne()-i});
+                if(plateau.getTableau().get(getLigne()).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()).get(getColonne()-i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        mouvements.clear();
+
+        mouvements.add(new int[]{getLigne(), getColonne()});
+        for(int i = 1; i < 8; i++) {
+            if(getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne(),getColonne()+i});
+            } else {
+                mouvements.add(new int[]{getLigne(),getColonne()+i});
+                if(plateau.getTableau().get(getLigne()).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()).get(getColonne()+i).estBlanc() != estBlanc()) return mouvements;
+                break;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Permet de récupérer le chemin de l'image de la pièce Tour en fonction de sa couleur
      * @author Valente Hugo

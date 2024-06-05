@@ -85,6 +85,8 @@ public abstract class Piece {
      */
     public abstract ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau);
 
+    public abstract ArrayList<int[]> getPathToKing(Plateau plateau);
+
     /**
      * Permet d'obtenir le joueur qui correspond à la pièce
      * @author Hugo Valente

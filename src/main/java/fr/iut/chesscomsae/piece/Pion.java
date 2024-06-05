@@ -129,6 +129,12 @@ public class Pion extends Piece {
         return mouvements;
     }
 
+    public ArrayList<int[]> getPathToKing(Plateau plateau) {
+        ArrayList<int[]> path = new ArrayList<>();
+        path.add(new int[]{getLigne(), getColonne()});
+        return path;
+    }
+
     /**
      * Permet de savoir si le pion est en position de promotion
      * @author Lacombe Dorian

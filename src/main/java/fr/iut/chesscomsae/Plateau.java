@@ -254,7 +254,28 @@ public class Plateau {
             }
         }
         movesRoi.removeAll(toRemove);
-        // AJOUTER UNE FONCTION A CHAQUE PIECE QUI TROUVE LE CHEMIN POUR TUER LE ROI ET APRES COMPARER CES POSITIONS A CELLES POSSIBLES DES PIECES ENNEMIES POUR VOIR SI ELLES PPEUVENT BLOQUER
+
+        ArrayList<Piece> killToRemove = new ArrayList<>();
+
+        for (Piece piece : piecesNoires()) {
+            if(piece instanceof Roi) continue;
+            ArrayList<int[]> movesPiece = new ArrayList<>();
+            movesPiece.addAll(piece.mouvementsPossibles(this));
+            for (int[] movePiece : movesPiece) {
+                for (Piece pieceKiller : killer) {
+                    if(pieceKiller.getPathToKing(this) == null) continue;
+                    for (int[] moveKill : pieceKiller.getPathToKing(this)) {
+                        if (comparerCoordonnees(movePiece, moveKill)) killToRemove.add(pieceKiller);
+                    }
+                }
+            }
+        }
+
+        // RESTE A GERER LES MOUVEMENTS POSSIBLES CHIANTS DU PION QUI GÊNENT
+        // + DETECTEUR D'ECHEC TOUT COURT POUR EMPECHER DES PIECES DE BOUGER TOUT CA
+
+        killer.removeAll(killToRemove);
+
         for(int[] move : movesRoi) {
             System.out.println(move[0] + " " + move[1]);
         }
