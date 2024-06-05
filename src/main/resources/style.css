@@ -41,18 +41,26 @@ Button, ChoiceBox {
 }
 
 .menuRight {
-    -fx-min-width: 120px;
+    -fx-min-width: 133.333333333px;
     -fx-alignment: CENTER;
     -fx-background-color: #21201d;
     -fx-padding: 15px;
 }
 
 .menuRightActual {
-    -fx-min-width: 120px;
+    -fx-min-width: 133.333333333px;
     -fx-alignment: CENTER;
     -fx-background-color: #262522;
     -fx-padding: 15px;
+}
+
+.firstMenuRight {
     -fx-background-radius: 10px 0 0 0;
+}
+
+.menuRight:hover, .menuRightActual:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
 }
 
 .labelRight {
@@ -61,7 +69,7 @@ Button, ChoiceBox {
 }
 
 .boxRight {
-    -fx-min-width: 360px;
+    -fx-min-width: 400px;
     -fx-min-height: 635px;
     -fx-background-color: #262522;
     -fx-alignment: CENTER;
@@ -163,6 +171,16 @@ Button, ChoiceBox {
     -fx-effect: dropshadow(gaussian, #45753c, 0, 0, 0, 5);
 }
 
+.againstBot {
+    -fx-background-color: #e87f1a;
+    -fx-padding: 5px 50px;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-font-size: 1.5em;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, #a86a27, 0, 0, 0, 5);
+}
+
 .chess-pane-1 {
     -fx-background-color: rgb(115,149,82);
     -fx-min-width: 75px;
@@ -234,4 +252,23 @@ Button, ChoiceBox {
 .bottomButtons {
     -fx-spacing: 10;
     -fx-alignment: CENTER;
+}
+
+.playerInList {
+    -fx-alignment: CENTER;
+    -fx-min-width: 355px;
+    -fx-spacing: 1;
+    -fx-background-color: #3b3a35;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
+
+.playerInList Label {
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-min-width: 130px;
+}
+
+.stat {
+    -fx-min-width: 20px;
 }

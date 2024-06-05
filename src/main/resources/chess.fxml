@@ -57,29 +57,29 @@
         </VBox>
 
         <VBox>
-            <HBox>
-                <VBox styleClass="menuRightActual">
+            <HBox styleClass="menuRightButtons">
+                <VBox styleClass="menuRightActual, firstMenuRight" fx:id="buttonNewGame">
                     <ImageView fitWidth="25" fitHeight="25">
                         <Image url="@./img/new_game.png"></Image>
                     </ImageView>
                     <Label styleClass="labelRight">Nouvelle partie</Label>
                 </VBox>
 
-                <VBox styleClass="menuRight">
+                <VBox styleClass="menuRight" fx:id="buttonGames">
                     <ImageView fitWidth="25" fitHeight="25">
                         <Image url="@./img/chess_board.png"></Image>
                     </ImageView>
                     <Label styleClass="labelRight">Parties</Label>
                 </VBox>
 
-                <VBox styleClass="menuRight">
+                <VBox styleClass="menuRight" fx:id="buttonPlayers">
                     <ImageView fitWidth="25" fitHeight="25">
                         <Image url="@./img/players.png"></Image>
                     </ImageView>
                     <Label styleClass="labelRight">Joueurs</Label>
                 </VBox>
             </HBox>
-            <VBox styleClass="boxRight">
+            <VBox styleClass="boxRight" fx:id="boxRight">
                 <ChoiceBox fx:id="choiceBox" VBox.vgrow="ALWAYS" styleClass="choiceBox">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
