@@ -108,6 +108,10 @@ public class Plateau {
         if (tableau.get(x).get(y) != null && tableau.get(x).get(y).estBlanc() == piece.estBlanc()) return 1; // Si il y a une pièce de meme couleur dans la case visée, on ne fait rien et on renvoie 0
         else if(isMoveLegal) {
             tableau.get(piece.getLigne()).set(piece.getColonne(), null); // On met a null l'ancienne position de la pièce dans le tableau
+            if(piece.estBlanc() && piece instanceof Pion && x == 0)
+                piece = new Reine(x, y, piece.getJoueur());
+            else if(!piece.estBlanc() && piece instanceof Pion && x == 7)
+                piece = new Reine(x, y, piece.getJoueur());
             tableau.get(x).set(y, piece); // On met la pièce a sa nouvelle position, supprimant alors celle qui était ici avant
             piece.setLigne(x); // on met a jour la coordonnée x de la pièce
             piece.setColonne(y); // on met a jour la coordonnée y de la pièce
