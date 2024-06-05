@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.ImageView?>
@@ -13,102 +12,114 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<HBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="fr.iut.chesscomsae.ChessController" styleClass="main">
-    <VBox>
-        <HBox>
-            <ImageView fitWidth="50" fitHeight="50">
-                <Image url="@./img/profile_picture.png"></Image>
-            </ImageView>
-            <Label styleClass="nickname" fx:id="nicknameEnnemy">Adversaire</Label>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="timerEnnemy" styleClass="timer">10:00</Label>
-        </HBox>
+<?import javafx.scene.layout.StackPane?>
 
-        <GridPane fx:id="chessBoard"></GridPane>
-
-        <HBox>
-            <ImageView fitWidth="50" fitHeight="50">
-                <Image url="@./img/profile_picture2.png"></Image>
-            </ImageView>
-            <Label styleClass="nickname" fx:id="nicknameMe">Adversaire</Label>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="timerMe" styleClass="timer2">10:00</Label>
-        </HBox>
-
-    </VBox>
-
-    <VBox styleClass="settings">
-        <ImageView fitWidth="25" fitHeight="25">
-            <Image url="@./img/settings.png"></Image>
-        </ImageView>
-
-        <ImageView fitWidth="25" fitHeight="25">
-            <Image url="@./img/full_screen.png"></Image>
-        </ImageView>
-
-        <ImageView fitWidth="25" fitHeight="25">
-            <Image url="@./img/rectangle.png"></Image>
-        </ImageView>
-
-        <ImageView fitWidth="25" fitHeight="25">
-            <Image url="@./img/double_fleches.png"></Image>
-        </ImageView>
-    </VBox>
-
-    <VBox>
-        <HBox>
-            <VBox styleClass="menuRightActual">
-                <ImageView fitWidth="25" fitHeight="25">
-                    <Image url="@./img/new_game.png"></Image>
-                </ImageView>
-                <Label styleClass="labelRight">Nouvelle partie</Label>
-            </VBox>
-
-            <VBox styleClass="menuRight">
-                <ImageView fitWidth="25" fitHeight="25">
-                    <Image url="@./img/chess_board.png"></Image>
-                </ImageView>
-                <Label styleClass="labelRight">Parties</Label>
-            </VBox>
-
-            <VBox styleClass="menuRight">
-                <ImageView fitWidth="25" fitHeight="25">
-                    <Image url="@./img/players.png"></Image>
-                </ImageView>
-                <Label styleClass="labelRight">Joueurs</Label>
-            </VBox>
-        </HBox>
-        <VBox styleClass="boxRight">
-            <ChoiceBox fx:id="choiceBox" VBox.vgrow="ALWAYS" styleClass="choiceBox">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="5 min"/>
-                        <String fx:value="10 min"/>
-                        <String fx:value="20 min"/>
-                    </FXCollections>
-                </items>
-            </ChoiceBox>
-            <Button styleClass="buttonPlay" onAction="#play" fx:id="buttonPlay">Jouer</Button>
-            <VBox fx:id="newButtons" styleClass="newButtons"></VBox>
-            <Region VBox.vgrow="ALWAYS"/>
-            <Button styleClass="buttonTournoi">
-                <graphic>
-                    <ImageView fitWidth="46" fitHeight="40" styleClass="imageTournoi">
-                        <Image url="@./img/medal.png"></Image>
-                    </ImageView>
-                </graphic>
-                Tournois
-            </Button>
-            <Region VBox.vgrow="ALWAYS"/>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="fr.iut.chesscomsae.ChessController" styleClass="main">
+    <HBox alignment="CENTER" spacing="20.0">
+        <VBox>
             <HBox>
-                <ImageView fitWidth="30" fitHeight="30" styleClass="annonces">
-                    <Image url="@./img/annonces.png"></Image>
+                <ImageView fitWidth="50" fitHeight="50" styleClass="profile-picture">
+                    <Image url="@./img/profile_picture.png"></Image>
                 </ImageView>
-                <Label styleClass="playing" fx:id="labelPlaying">{nb}</Label>
-                <Label styleClass="secondary">JOUENT</Label>
-                <Label styleClass="games" fx:id="labelGames">{nb}</Label>
-                <Label styleClass="secondary">PARTIES</Label>
+                <Label styleClass="nickname" fx:id="nicknameEnnemy">Adversaire</Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="timerEnnemy" styleClass="timer">10:00</Label>
+            </HBox>
+
+            <GridPane fx:id="chessBoard"></GridPane>
+
+            <HBox>
+                <ImageView fitWidth="50" fitHeight="50" styleClass="profile-picture">
+                    <Image url="@./img/profile_picture2.png"></Image>
+                </ImageView>
+                <Label styleClass="nickname" fx:id="nicknameMe">Moi</Label>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="timerMe" styleClass="timer2">10:00</Label>
             </HBox>
         </VBox>
+
+        <VBox styleClass="settings">
+            <ImageView fitWidth="25" fitHeight="25">
+                <Image url="@./img/settings.png"></Image>
+            </ImageView>
+
+            <ImageView fitWidth="25" fitHeight="25">
+                <Image url="@./img/full_screen.png"></Image>
+            </ImageView>
+
+            <ImageView fitWidth="25" fitHeight="25">
+                <Image url="@./img/rectangle.png"></Image>
+            </ImageView>
+
+            <ImageView fitWidth="25" fitHeight="25">
+                <Image url="@./img/double_fleches.png"></Image>
+            </ImageView>
+        </VBox>
+
+        <VBox>
+            <HBox>
+                <VBox styleClass="menuRightActual">
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <Image url="@./img/new_game.png"></Image>
+                    </ImageView>
+                    <Label styleClass="labelRight">Nouvelle partie</Label>
+                </VBox>
+
+                <VBox styleClass="menuRight">
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <Image url="@./img/chess_board.png"></Image>
+                    </ImageView>
+                    <Label styleClass="labelRight">Parties</Label>
+                </VBox>
+
+                <VBox styleClass="menuRight">
+                    <ImageView fitWidth="25" fitHeight="25">
+                        <Image url="@./img/players.png"></Image>
+                    </ImageView>
+                    <Label styleClass="labelRight">Joueurs</Label>
+                </VBox>
+            </HBox>
+            <VBox styleClass="boxRight">
+                <ChoiceBox fx:id="choiceBox" VBox.vgrow="ALWAYS" styleClass="choiceBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1 min"/>
+                            <String fx:value="5 min"/>
+                            <String fx:value="10 min"/>
+                            <String fx:value="20 min"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <Button styleClass="buttonPlay" onAction="#play" fx:id="buttonPlay">Jouer</Button>
+                <VBox fx:id="newButtons" styleClass="newButtons"></VBox>
+                <Region VBox.vgrow="ALWAYS"/>
+                <Button styleClass="buttonTournoi">
+                    <graphic>
+                        <ImageView fitWidth="46" fitHeight="40" styleClass="imageTournoi">
+                            <Image url="@./img/medal.png"></Image>
+                        </ImageView>
+                    </graphic>
+                    Tournois
+                </Button>
+                <Region VBox.vgrow="ALWAYS"/>
+                <HBox>
+                    <ImageView fitWidth="30" fitHeight="30" styleClass="annonces">
+                        <Image url="@./img/annonces.png"></Image>
+                    </ImageView>
+                    <Label styleClass="playing" fx:id="labelPlaying">{nb}</Label>
+                    <Label styleClass="secondary">JOUENT</Label>
+                    <Label styleClass="games" fx:id="labelGames">{nb}</Label>
+                    <Label styleClass="secondary">PARTIES</Label>
+                </HBox>
+            </VBox>
+        </VBox>
+    </HBox>
+
+    <VBox alignment="CENTER" styleClass="centeredBox" fx:id="popup">
+        <Label text="Centered Box" styleClass="centeredLabel" fx:id="popupLabel"/>
+        <HBox styleClass="bottomButtons">
+            <Button fx:id="closePopup" styleClass="closePopup">Fermer</Button>
+            <Button fx:id="rematch" styleClass="rematch">Revanche</Button>
+        </HBox>
     </VBox>
-</HBox>
+</StackPane>

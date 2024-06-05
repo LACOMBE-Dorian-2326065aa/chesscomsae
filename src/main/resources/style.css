@@ -14,6 +14,10 @@ Button, ChoiceBox {
     -fx-font-size: 1em;
 }
 
+.profile-picture {
+    -fx-border-radius: 10px;
+}
+
 .timer {
     -fx-text-fill: #ccc;
     -fx-background-color: #2f2d2a;
@@ -185,4 +189,49 @@ Button, ChoiceBox {
     -fx-border-color: #F06969;
     -fx-border-style: dashed;
     -fx-border-width: 5px;
+}
+
+.centeredBox {
+    -fx-alignment: CENTER;
+    -fx-padding: 10px 25px;
+    -fx-background-color: #302e2b;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    visibility: hidden;
+    -fx-max-height: 80px;
+    -fx-max-width: 400px;
+    -fx-border-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}
+
+.centeredLabel {
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-font-size: 1.2em;
+    -fx-text-alignment: CENTER;
+    -fx-min-height: 50px;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.closePopup {
+    -fx-background-color: #F06969;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-padding: 5px 10px;
+}
+
+.rematch {
+    -fx-background-color: #81b64c;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-padding: 5px 10px;
+}
+
+.bottomButtons {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
 }
