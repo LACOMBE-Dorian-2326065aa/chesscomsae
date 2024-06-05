@@ -12,6 +12,8 @@ public class Plateau {
     private ArrayList<ArrayList<Piece>> tableau;
     private Joueur joueurBlanc;
     private Joueur joueurNoir;
+    public Roi roiBlanc;
+    public Roi roiNoir;
 
     /**
      * @author Quentin Fournier
@@ -68,10 +70,10 @@ public class Plateau {
                 }
                 // Création de nouveaux rois aux cases correspondantes
                 else if (i==0 && j==4) {
-                    tableau.get(i).set(j, new Roi(i, j, joueurNoir)); // Roi noir
+                    tableau.get(i).set(j, roiNoir = new Roi(i, j, joueurNoir)); // Roi noir
                 }
                 else if (i==7 && j==4) {
-                    tableau.get(i).set(j, new Roi(i, j, joueurBlanc)); // Roi blanc
+                    tableau.get(i).set(j, roiBlanc = new Roi(i, j, joueurBlanc)); // Roi blanc
                 }
                 // Création de nouveaux pions aux cases correspondantes
                 else if (i==1) {
@@ -169,24 +171,63 @@ public class Plateau {
         return coordonnees;
     }
 
-/*
-    // ArrayList<int> mouvementsPossibles(Plateau plateau)
-    public boolean echecEtMat () {
-        for (i : roi.mouvementsPossibles(tableau)) {
+    public int[] getCoordonnees (Piece piece) {
+        int[] coordonnees = new int[]{piece.getLigne(),piece.getColonne()};
+        return coordonnees;
+    }
 
+    private boolean comparerCoordonnees(int[] coord, int[] coord2) {
+        return coord[0] == coord2[0] && coord[1] ==coord2[1];
+    }
+
+    // pour piece : chaque pièce adverse
+    // pour i : chaque déplacement possible de cette pièce
+    // pour j : chaque déplacement possible du roi
+    // Si comparerCoordonnees(i, j) -> return false (le roi peut bouger)
+
+    public boolean echecEtMat (boolean isWhitePlaying) {
+        System.out.println("la con de smr");
+        if (isWhitePlaying == true) {
+            if (!piecesBlanches().contains(roiBlanc)) return true; // Si le roi blanc n'existe plus, alors il y a échec et mat
+            else {
+                for (Piece piece : piecesNoires()) {
+                    System.out.println("pièces noires : " + piece);
+                    for (int[] i : piece.mouvementsPossibles(this)) {
+                        System.out.println("piece : " + piece + " " + piece.mouvementsPossibles(this));
+                        for (int[] j : roiBlanc.mouvementsPossibles(this)) {
+                            System.out.println("roi blanc : " + getCoordonnees(roiBlanc));
+                            System.out.println("déplacements possibles roi blanc : " + roiBlanc.mouvementsPossibles(this));
+                            System.out.println(j);
+                            System.out.println("comp : " + comparerCoordonnees(i,j));
+                            if (!comparerCoordonnees(i, j)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        else {
+            if (!piecesNoires().contains(roiNoir)) return true; // Si le roi noir n'existe plus, alors il y a échec et mat
+            else {
+                for (Piece piece2 : piecesBlanches()) {
+                    System.out.println("pièces noires : " + piece2);
+                    for (int[] k : piece2.mouvementsPossibles(this)) {
+                        System.out.println("piece : " + piece2 + " " + piece2.mouvementsPossibles(this));
+                        for (int[] l : roiNoir.mouvementsPossibles(this)) {
+                            System.out.println(l);
+                            System.out.println("comp : " + comparerCoordonnees(k,l));
+                            if (!comparerCoordonnees(k, l)) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
         }
     }
-
-    si une des coordonnées possibles du roi blanc != de toutes les coordonnées possibles des pièces noires {
-        return false;
-    }
-    sinon return true;
-
-    si une des coordonnées possibles du roi noir != de toutes les coordonnées possibles des pièces blanches {
-        return false;
-    }
-    sinon return true;
-*/
 
     /**
      * @author Quentin Fournier
