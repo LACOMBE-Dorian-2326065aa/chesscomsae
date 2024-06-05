@@ -190,19 +190,19 @@ public class Plateau {
     // Si comparerCoordonnees(i, j) -> return false (le roi peut bouger)
 
     public boolean echecEtMat (boolean isWhitePlaying) {
-        System.out.println("la con de smr");
+        //System.out.println("la con de smr");
         if (isWhitePlaying == true) {
             if (!piecesBlanches().contains(roiBlanc)) return true; // Si le roi blanc n'existe plus, alors il y a échec et mat
             else {
                 for (Piece piece : piecesNoires()) {
-                    System.out.println("pièces noires : " + piece);
+                    //System.out.println("pièces noires : " + piece);
                     for (int[] i : piece.mouvementsPossibles(this)) {
-                        System.out.println("piece : " + piece + " " + piece.mouvementsPossibles(this));
+                        //System.out.println("piece : " + piece + " " + piece.mouvementsPossibles(this));
                         for (int[] j : roiBlanc.mouvementsPossibles(this)) {
-                            System.out.println("roi blanc : " + getCoordonnees(roiBlanc));
-                            System.out.println("déplacements possibles roi blanc : " + roiBlanc.mouvementsPossibles(this));
-                            System.out.println(j);
-                            System.out.println("comp : " + comparerCoordonnees(i,j));
+                            //System.out.println("roi blanc : " + getCoordonnees(roiBlanc));
+                            //System.out.println("déplacements possibles roi blanc : " + roiBlanc.mouvementsPossibles(this));
+                            //System.out.println(j);
+                            //System.out.println("comp : " + comparerCoordonnees(i,j));
                             if (!comparerCoordonnees(i, j)) {
                                 return false;
                             }
@@ -216,12 +216,12 @@ public class Plateau {
             if (!piecesNoires().contains(roiNoir)) return true; // Si le roi noir n'existe plus, alors il y a échec et mat
             else {
                 for (Piece piece2 : piecesBlanches()) {
-                    System.out.println("pièces noires : " + piece2);
+                    //System.out.println("pièces noires : " + piece2);
                     for (int[] k : piece2.mouvementsPossibles(this)) {
-                        System.out.println("piece : " + piece2 + " " + piece2.mouvementsPossibles(this));
+                        //System.out.println("piece : " + piece2 + " " + piece2.mouvementsPossibles(this));
                         for (int[] l : roiNoir.mouvementsPossibles(this)) {
-                            System.out.println(l);
-                            System.out.println("comp : " + comparerCoordonnees(k,l));
+                            //System.out.println(l);
+                            //System.out.println("comp : " + comparerCoordonnees(k,l));
                             if (!comparerCoordonnees(k, l)) {
                                 return false;
                             }
@@ -231,6 +231,31 @@ public class Plateau {
                 return true;
             }
         }
+    }
+
+    public boolean testEchecEtMat(boolean isWhitePlaying) {
+        ArrayList<int[]> movesRoi = new ArrayList<>();
+        movesRoi.addAll(roiNoir.mouvementsPossibles(this));
+        int[] roiPos = new int[]{roiNoir.getLigne(), roiNoir.getColonne()};
+        movesRoi.add(roiPos);
+
+        ArrayList<int[]> toRemove = new ArrayList<>();
+
+        for (Piece piece : piecesBlanches()) {
+            ArrayList<int[]> movesPiece = new ArrayList<>();
+            movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
+            for (int[] movePiece : movesPiece) {
+                for (int[] moveRoi : movesRoi) {
+                    if (comparerCoordonnees(movePiece, moveRoi)) toRemove.add(moveRoi);
+                }
+            }
+        }
+        movesRoi.removeAll(toRemove);
+        for(int[] move : movesRoi) {
+            System.out.println(move[0] + " " + move[1]);
+        }
+        System.out.println(movesRoi.size());
+        return movesRoi.size() == 0;
     }
 
     /**

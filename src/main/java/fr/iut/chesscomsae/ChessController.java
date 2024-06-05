@@ -174,7 +174,7 @@ public class ChessController implements Initializable {
         prenom = new TextField();
         nomLabel = new Label("Nom J1 :");
         nom = new TextField();
-        valid = new Button("Valider");
+        valid = new Button("Jouer vs J2");
         againstBot = new Button("Jouer vs BOT");
         isWhitePlaying = true;
         prenomLabel.getStyleClass().add("prenomLabel");
@@ -216,6 +216,7 @@ public class ChessController implements Initializable {
             nomLabel.setText("Nom J2 :");
             nom.setText("");
             prenom.setText("");
+            newButtons.getChildren().remove(againstBot);
             valid.onActionProperty().set(actionEvent -> validation(false));
         } else {
             j2 = new Joueur(nom.getText(), prenom.getText(), false);
@@ -345,6 +346,8 @@ public class ChessController implements Initializable {
         }
         clearAll();
         displayGame(plateau);
+
+        System.out.println(plateau.testEchecEtMat(isWhitePlaying));
 
         if(j2.getPrenom().equals("") && j2.getNom().equals("BOT") && !isWhitePlaying) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {

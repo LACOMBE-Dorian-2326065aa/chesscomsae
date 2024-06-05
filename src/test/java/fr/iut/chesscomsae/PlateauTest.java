@@ -26,8 +26,6 @@ class PlateauTest {
         ArrayList<int[]> list = plateau.coordonnees(plateau.piecesBlanches());
         System.out.println("coordonnées possibles des pièces blanches présentes sur le plateau : " + list);
         System.out.println(plateau.echecEtMat(true));
-
-        System.out.println(plateau.con());
     }
     
 }
