@@ -2,16 +2,21 @@ package fr.iut.chesscomsae;
 
 import fr.iut.chesscomsae.piece.Piece;
 import fr.iut.chesscomsae.piece.Pion;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -19,10 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ChessController implements Initializable {
@@ -50,6 +52,22 @@ public class ChessController implements Initializable {
     private Label nicknameMe;
     @FXML
     private Label nicknameEnnemy;
+    @FXML
+    private VBox popup;
+    @FXML
+    private Label popupLabel;
+    @FXML
+    private Button closePopup;
+    @FXML
+    private Button rematch;
+    @FXML
+    private VBox boxRight;
+    @FXML
+    private VBox buttonGames;
+    @FXML
+    private VBox buttonNewGame;
+    @FXML
+    private VBox buttonPlayers;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -65,6 +83,17 @@ public class ChessController implements Initializable {
     private Node nodeSelected;
     private boolean isWhitePlaying;
 
+    private int time1;
+    private int subTime1;
+    private int time2;
+    private int subTime2;
+    private Timer timer;
+
+    private ArrayList<Node> newGameContent;
+    private ArrayList<Node> gamesContent;
+    private ArrayList<Node> playersContent;
+
+
     /**
      * Initialise les données de la fenêtre
      * @author Dorian Lacombe
@@ -79,6 +108,13 @@ public class ChessController implements Initializable {
         choiceBox.getSelectionModel().select("10 min");
         labelPlaying.setText(Integer.toString(ThreadLocalRandom.current().nextInt(100000, 200001)));
         labelGames.setText(Integer.toString(ThreadLocalRandom.current().nextInt(13000000, 14000001)));
+
+        buttonGames.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowGames());
+        buttonNewGame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowNewGame());
+        buttonPlayers.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowPlayers());
+
+        gamesContent = new ArrayList<>();
+        playersContent = new ArrayList<>();
     }
 
     /**
@@ -112,11 +148,11 @@ public class ChessController implements Initializable {
      */
     public void createBindings() {
         timerMe.textProperty().bind(Bindings.createStringBinding(() -> {
-            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05") : "00:00";
+            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05").replace("1:", "01:") : "00:00";
         }, choiceBox.getSelectionModel().selectedItemProperty()));
 
         timerEnnemy.textProperty().bind(Bindings.createStringBinding(() -> {
-            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05") : "00:00";
+            return choiceBox.getSelectionModel().getSelectedItem() != null ? choiceBox.getSelectionModel().getSelectedItem().replace(" min", ":00").replace("5", "05").replace("1:", "01:") : "00:00";
         }, choiceBox.getSelectionModel().selectedItemProperty()));
     }
 
@@ -138,10 +174,15 @@ public class ChessController implements Initializable {
         nomLabel.getStyleClass().add("nomLabel");
         nom.getStyleClass().add("nom");
         valid.getStyleClass().add("valid");
+        if(j1 == null && j2 == null) {
+            newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid);
+            valid.onActionProperty().set(actionEvent -> validation(true));
+        } else {
+            initGame();
+        }
 
-        newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid);
-
-        valid.onActionProperty().set(actionEvent -> validation(true));
+        closePopup.onActionProperty().set(actionEvent -> closePopup());
+        rematch.onActionProperty().set(actionEvent -> rematch());
     }
 
     /**
@@ -160,14 +201,28 @@ public class ChessController implements Initializable {
         } else {
             j2 = new Joueur(nom.getText(), prenom.getText(), false);
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
-            nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
-            nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
-            clearAll();
-            plateau = new Plateau(j1, j2);
-            plateau.init();
-            displayGame(plateau);
-            handleClicks();
+            initGame();
         }
+    }
+
+    public void initGame() {
+        nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
+        nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
+        clearAll();
+        plateau = new Plateau(j1, j2);
+        plateau.init();
+        displayGame(plateau);
+        handleClicks();
+        if(!timerMe.getText().substring(0, 2).contains(":")) {
+            time1 = Integer.parseInt(timerMe.getText().substring(0, 2));
+            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 2));
+        } else {
+            time1 = Integer.parseInt(timerMe.getText().substring(0, 1));
+            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 1));
+        }
+        subTime1 = 0;
+        subTime2 = 0;
+        timerLoop();
     }
 
     /**
@@ -305,6 +360,136 @@ public class ChessController implements Initializable {
                 node.getStyleClass().remove("killable");
             }
         }
+    }
+
+    public void timerLoop() {
+        timerMe.textProperty().unbind();
+        timerEnnemy.textProperty().unbind();
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (isWhitePlaying) {
+                        //subTime1--;
+                        subTime1 -= 20;
+                        if (subTime1 <= -1) {
+                            subTime1 = 59;
+                            time1--;
+                            if (time1 == -1) {
+                                time1 = 0;
+                                subTime1 = 0;
+                            }
+                        }
+                    } else {
+                        subTime2--;
+                        if (subTime2 <= -1) {
+                            subTime2 = 59;
+                            time2--;
+                            if (time2 == -1) {
+                                time2 = 0;
+                                subTime2 = 0;
+                            }
+                        }
+                    }
+                    timerMe.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time1, subTime1)));
+                    timerEnnemy.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time2, subTime2)));
+
+                    if(time1 == 0 && subTime1 == 0 && isWhitePlaying) {
+                        initEnd(j2.getPrenom() + " " + j2.getNom() + " a gagné la partie grâce au temps !");
+                    } else if(time2 == 0 && subTime2 == 0 && !isWhitePlaying) {
+                        initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie grâce au temps !");
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public void initEnd(String msg) {
+        popupLabel.setText(msg);
+        popup.getStyleClass().add("visible");
+        popupLabel.setWrapText(true);
+        timer.cancel();
+        timer.purge();
+        chessBoard.setOnMouseClicked(null);
+        if(nodeSelected != null)
+            nodeSelected.getStyleClass().remove("selectedCell");
+        clearMoves();
+        cellSelected = null;
+        nodeSelected = null;
+    }
+
+    public void closePopup() {
+        popup.getStyleClass().remove("visible");
+        buttonPlay.setDisable(false);
+        choiceBox.setDisable(false);
+        createBindings();
+        j1 = null;
+        j2 = null;
+        nicknameMe.setText("Moi");
+        nicknameEnnemy.setText("Adversaire");
+    }
+
+    public void rematch() {
+        popup.getStyleClass().remove("visible");
+        createBindings();
+        play();
+    }
+
+    public void windowNewGame() {
+        if(newGameContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().add("menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRight");
+        buttonGames.getStyleClass().add("menuRight");
+        if(gamesContent == null) {
+            gamesContent = new ArrayList<>(boxRight.getChildren());
+        }else if(playersContent == null) {
+            playersContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(newGameContent);
+        newGameContent = null;
+    }
+
+    public void windowGames() {
+        if(gamesContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonGames.getStyleClass().add("menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRight");
+        buttonNewGame.getStyleClass().add("menuRight");
+        if(newGameContent == null) {
+            newGameContent = new ArrayList<>(boxRight.getChildren());
+        }else if(playersContent == null) {
+            playersContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(gamesContent);
+        gamesContent = null;
+    }
+
+    public void windowPlayers() {
+        if(playersContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRightActual");
+        buttonGames.getStyleClass().add("menuRight");
+        buttonNewGame.getStyleClass().add("menuRight");
+        if(newGameContent == null) {
+            newGameContent = new ArrayList<>(boxRight.getChildren());
+        }else if(gamesContent == null) {
+            gamesContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(playersContent);
+        playersContent = null;
+
     }
 
 }

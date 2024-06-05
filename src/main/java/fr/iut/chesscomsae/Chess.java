@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
@@ -13,7 +14,7 @@ import java.net.URL;
 public class Chess extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        HBox root = FXMLLoader.load(getClass().getClassLoader().getResource("chess.fxml"));
+        StackPane root = FXMLLoader.load(getClass().getClassLoader().getResource("chess.fxml"));
         Scene scene = new Scene(root, 1080, 720);
 
         String css = getClass().getClassLoader().getResource("style.css").toExternalForm();
