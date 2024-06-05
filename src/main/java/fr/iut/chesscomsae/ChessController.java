@@ -232,6 +232,12 @@ public class ChessController implements Initializable {
      * @author Dorian Lacombe
      */
     public void displayGame(Plateau plateau) {
+
+        System.out.println("joueur blanc joue : " + isWhitePlaying);
+        System.out.println("echec et mat : " + plateau.echecEtMat(isWhitePlaying));
+        System.out.println("coord roi noir : " + plateau.getCoordonnees(plateau.roiNoir)[0] + "," + plateau.getCoordonnees(plateau.roiNoir)[1]);
+        System.out.println("roi noir immobile : " + plateau.coordonnees(plateau.piecesBlanches()).contains(plateau.getCoordonnees(plateau.roiNoir)) + "\n");
+
         ArrayList<ArrayList<Piece>> partie = plateau.getTableau();
         for(int i = 0; i < partie.size(); i++) {
             for(int j = 0; j < partie.get(i).size(); j++) {
