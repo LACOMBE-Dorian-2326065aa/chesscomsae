@@ -3,9 +3,7 @@ package fr.iut.chesscomsae.gestionnairelog;
 import com.google.gson.*;
 import fr.iut.chesscomsae.Joueur;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

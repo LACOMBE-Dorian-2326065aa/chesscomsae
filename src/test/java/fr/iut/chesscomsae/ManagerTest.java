@@ -1,9 +1,6 @@
 package fr.iut.chesscomsae;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import fr.iut.chesscomsae.gestionnairelog.ManagerFichier;
 import fr.iut.chesscomsae.gestionnairelog.ManagerJoueur;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +10,7 @@ public class ManagerTest {
 
     @Test
     public void testReadFileToJson() {
-        ManagerJoueur managerJoueur = new ManagerJoueur(null, null);
-        ArrayList<JsonObject> jsonObject = managerJoueur.fichierVersListeJsonObject("joueurs.json");
+        ArrayList<JsonObject> jsonObject = ManagerJoueur.fichierVersListeJsonObject("joueurs.json");
 
         JsonObject e = new JsonObject();
 
@@ -25,7 +21,7 @@ public class ManagerTest {
     @Test
     public void testEcriture() {
         ManagerJoueur managerJoueur = new ManagerJoueur(null, null);
-        ArrayList<JsonObject> jsonObject = managerJoueur.fichierVersListeJsonObject("joueurs.json");
+        ArrayList<JsonObject> jsonObject = ManagerJoueur.fichierVersListeJsonObject("joueurs.json");
 
         JsonObject e = new JsonObject();
         e.addProperty("nom", "test");
@@ -65,7 +61,7 @@ public class ManagerTest {
     public void testRecuperationJoueurBis() {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
-        ManagerJoueur managerJoueur = new ManagerJoueur(joueurBlanc, joueurNoir);
+        new ManagerJoueur(joueurBlanc, joueurNoir);
         System.out.println(joueurBlanc.getNombrePartiesJouees());
     }
 
