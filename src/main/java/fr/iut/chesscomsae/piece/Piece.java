@@ -79,6 +79,13 @@ public abstract class Piece {
     public abstract ArrayList<int[]> mouvementsPossibles(Plateau plateau);
 
     /**
+     * Permet d'obtenir les mouvements possibles de la pièce, y compris ceux pouvant portéger un allié du roi ennemi
+     * @param plateau Plateau de jeu
+     * @return Les mouvements possibles de la pièce
+     */
+    public abstract ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau);
+
+    /**
      * Permet d'obtenir le joueur qui correspond à la pièce
      * @author Hugo Valente
      * @return Le joueur de la pièce

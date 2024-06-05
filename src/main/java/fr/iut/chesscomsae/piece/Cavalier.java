@@ -87,6 +87,62 @@ public class Cavalier extends Piece{
     }
 
     /**
+     * Permet de récupérer les mouvements possibles de la pièce Cavalier sur le plateau, y compris les protections d'alliés
+     * @author Valente Hugo
+     * @return Liste des mouvements possibles de la pièce Cavalier
+     */
+    @Override
+    public ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau) {
+        ArrayList<int[]> mouvements = new ArrayList<>();
+        // On vérifie les 8 mouvements possibles du cavalier
+        for (int i = 0; i < 8; ++i) {
+            int[] mouvement = new int[2];
+            switch (i) {
+                case 0 -> {
+                    mouvement[0] = getLigne() + 2;
+                    mouvement[1] = getColonne() + 1;
+                }
+                case 1 -> {
+                    mouvement[0] = getLigne() + 2;
+                    mouvement[1] = getColonne() - 1;
+                }
+                case 2 -> {
+                    mouvement[0] = getLigne() - 2;
+                    mouvement[1] = getColonne() + 1;
+                }
+                case 3 -> {
+                    mouvement[0] = getLigne() - 2;
+                    mouvement[1] = getColonne() - 1;
+                }
+                case 4 -> {
+                    mouvement[0] = getLigne() + 1;
+                    mouvement[1] = getColonne() + 2;
+                }
+                case 5 -> {
+                    mouvement[0] = getLigne() + 1;
+                    mouvement[1] = getColonne() - 2;
+                }
+                case 6 -> {
+                    mouvement[0] = getLigne() - 1;
+                    mouvement[1] = getColonne() + 2;
+                }
+                case 7 -> {
+                    mouvement[0] = getLigne() - 1;
+                    mouvement[1] = getColonne() - 2;
+                }
+            }
+            // Vérifie si le mouvement est possible pour savoir si le mouvement doit être ajouté au mouvement possible
+            if (mouvement[0] >= 0
+                    && mouvement[0] < 8
+                    && mouvement[1] >= 0
+                    && mouvement[1] < 8) {
+                mouvements.add(mouvement);
+            }
+        }
+        return mouvements;
+    }
+
+    /**
      * Permet de récupérer le nom de la pièce Cavalier
      * @author Valente Hugo
      * @return Nom de la pièce Cavalier

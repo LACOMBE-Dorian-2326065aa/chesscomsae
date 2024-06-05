@@ -81,6 +81,60 @@ public class Fou extends Piece {
     }
 
     /**
+     * Permet de récupérer les mouvements possibles de la pièce Fou sur le plateau, y compris les protections d'alliés
+     * @author Lacombe Dorian
+     * @author Valente Hugo
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements possibles de la pièce Fou
+     */
+    @Override
+    public ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau) {
+        ArrayList<int[]> mouvements = new ArrayList<>();
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+            } else {
+                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() + i > 7) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+            } else {
+                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() - i < 0 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+            } else {
+                mouvements.add(new int[]{getLigne()-i,getColonne()-i});
+                break;
+            }
+        }
+
+        for(int i = 1; i < 8; i++) {
+            if(getLigne() + i > 7 || getColonne() - i < 0) break;
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+            } else {
+                mouvements.add(new int[]{getLigne()+i,getColonne()-i});
+                break;
+            }
+        }
+
+        return mouvements;
+    }
+
+    /**
      * Permet de récupérer le nom de la pièce Fou
      * @author Valente Hugo
      * @return Nom de la pièce Fou

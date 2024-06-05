@@ -1,6 +1,7 @@
 package fr.iut.chesscomsae;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,6 @@ class PlateauTest {
         ArrayList<int[]> list = plateau.coordonnees(plateau.piecesBlanches());
         System.out.println("coordonnées possibles des pièces blanches présentes sur le plateau : " + list);
         System.out.println(plateau.echecEtMat(true));
-
     }
     
 }
