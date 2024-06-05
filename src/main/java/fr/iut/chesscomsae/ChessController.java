@@ -4,15 +4,19 @@ import fr.iut.chesscomsae.piece.Piece;
 import fr.iut.chesscomsae.piece.Pion;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -56,6 +60,14 @@ public class ChessController implements Initializable {
     private Button closePopup;
     @FXML
     private Button rematch;
+    @FXML
+    private VBox boxRight;
+    @FXML
+    private VBox buttonGames;
+    @FXML
+    private VBox buttonNewGame;
+    @FXML
+    private VBox buttonPlayers;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -77,6 +89,11 @@ public class ChessController implements Initializable {
     private int subTime2;
     private Timer timer;
 
+    private ArrayList<Node> newGameContent;
+    private ArrayList<Node> gamesContent;
+    private ArrayList<Node> playersContent;
+
+
     /**
      * Initialise les données de la fenêtre
      * @author Dorian Lacombe
@@ -91,6 +108,13 @@ public class ChessController implements Initializable {
         choiceBox.getSelectionModel().select("10 min");
         labelPlaying.setText(Integer.toString(ThreadLocalRandom.current().nextInt(100000, 200001)));
         labelGames.setText(Integer.toString(ThreadLocalRandom.current().nextInt(13000000, 14000001)));
+
+        buttonGames.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowGames());
+        buttonNewGame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowNewGame());
+        buttonPlayers.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowPlayers());
+
+        gamesContent = new ArrayList<>();
+        playersContent = new ArrayList<>();
     }
 
     /**
@@ -405,6 +429,61 @@ public class ChessController implements Initializable {
         popup.getStyleClass().remove("visible");
         createBindings();
         play();
+    }
+
+    public void windowNewGame() {
+        if(newGameContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().add("menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRight");
+        buttonGames.getStyleClass().add("menuRight");
+        if(gamesContent == null) {
+            gamesContent = new ArrayList<>(boxRight.getChildren());
+        }else if(playersContent == null) {
+            playersContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(newGameContent);
+        newGameContent = null;
+    }
+
+    public void windowGames() {
+        if(gamesContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonGames.getStyleClass().add("menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRight");
+        buttonNewGame.getStyleClass().add("menuRight");
+        if(newGameContent == null) {
+            newGameContent = new ArrayList<>(boxRight.getChildren());
+        }else if(playersContent == null) {
+            playersContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(gamesContent);
+        gamesContent = null;
+    }
+
+    public void windowPlayers() {
+        if(playersContent == null) return;
+        buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonNewGame.getStyleClass().removeAll("menuRight", "menuRightActual");
+        buttonPlayers.getStyleClass().add("menuRightActual");
+        buttonGames.getStyleClass().add("menuRight");
+        buttonNewGame.getStyleClass().add("menuRight");
+        if(newGameContent == null) {
+            newGameContent = new ArrayList<>(boxRight.getChildren());
+        }else if(gamesContent == null) {
+            gamesContent = new ArrayList<>(boxRight.getChildren());
+        }
+        boxRight.getChildren().clear();
+        boxRight.getChildren().addAll(playersContent);
+        playersContent = null;
+
     }
 
 }

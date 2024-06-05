@@ -52,7 +52,15 @@ Button, ChoiceBox {
     -fx-alignment: CENTER;
     -fx-background-color: #262522;
     -fx-padding: 15px;
+}
+
+.firstMenuRight {
     -fx-background-radius: 10px 0 0 0;
+}
+
+.menuRight:hover, .menuRightActual:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
 }
 
 .labelRight {
