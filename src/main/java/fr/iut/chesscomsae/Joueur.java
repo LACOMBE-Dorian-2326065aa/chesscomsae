@@ -1,13 +1,23 @@
 package fr.iut.chesscomsae;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
 import java.io.*;
 
-public class Joueur implements Serializable {
-    private String nom;
-    private String prenom;
-    private int nombrePartiesJouees;
-    private int nombrePartiesGagnees;
+public class Joueur {
+
+    @Expose
+    public String nom;
+    @Expose
+    public String prenom;
+    @Expose
+    public int nombrePartiesJouees;
+    @Expose
+    public int nombrePartiesGagnees;
     private boolean estBlanc;
+
 
 
 
@@ -17,6 +27,10 @@ public class Joueur implements Serializable {
         this.nombrePartiesJouees = 0;
         this.nombrePartiesGagnees = 0;
         this.estBlanc = estBlanc;
+    }
+
+    public Joueur(String nom, String prenom) {
+        this(nom, prenom, false);
     }
 
 
@@ -90,6 +104,11 @@ public class Joueur implements Serializable {
                 ", estBlanc=" + (estBlanc ? "true" : "false") +
                 ']';
     }
+
+    public String joueurToJson() {;
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create().toJson(this);
+    }
+
 }
 
 
