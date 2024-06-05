@@ -266,7 +266,7 @@ Button, ChoiceBox {
 .playerInList Label {
     -fx-text-fill: #fff;
     -fx-font-weight: 900;
-    -fx-min-width: 130px;
+    -fx-min-width: 115px;
 }
 
 .stat {
