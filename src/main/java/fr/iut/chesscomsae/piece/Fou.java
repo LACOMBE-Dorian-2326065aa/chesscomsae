@@ -79,6 +79,7 @@ public class Fou extends Piece {
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
 
+        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
         return mouvements;
     }
 
@@ -95,27 +96,27 @@ public class Fou extends Piece {
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() + i > 7 || getColonne() + i > 7) break;
-            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null) {
-                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null || (plateau.getTableau().get(getLigne()+i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()+i).estBlanc() != estBlanc())) {
+                mouvements.add(new int[]{getLigne()+i,getColonne()+i});
             } else {
-                mouvements.add(new int[]{getLigne() + i, getColonne() + i});
+                mouvements.add(new int[]{getLigne()+i,getColonne()+i});
                 break;
             }
         }
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() - i < 0 || getColonne() + i > 7) break;
-            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null) {
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null || (plateau.getTableau().get(getLigne()-i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()+i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()-i,getColonne()+i});
             } else {
-                mouvements.add(new int[]{getLigne()-i,getColonne()+i});
+                mouvements.add(new int[]{getLigne() - i, getColonne() + i});
                 break;
             }
         }
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() - i < 0 || getColonne() - i < 0) break;
-            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null) {
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null || (plateau.getTableau().get(getLigne()-i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()-i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()-i,getColonne()-i});
             } else {
                 mouvements.add(new int[]{getLigne()-i,getColonne()-i});
@@ -125,7 +126,7 @@ public class Fou extends Piece {
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() + i > 7 || getColonne() - i < 0) break;
-            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null) {
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null || (plateau.getTableau().get(getLigne()+i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()-i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()+i,getColonne()-i});
             } else {
                 mouvements.add(new int[]{getLigne()+i,getColonne()-i});

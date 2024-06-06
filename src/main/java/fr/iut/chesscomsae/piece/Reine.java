@@ -103,8 +103,9 @@ public class Reine extends Piece{
         }
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
-        return mouvements;
 
+        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        return mouvements;
     }
 
     /**
@@ -120,7 +121,7 @@ public class Reine extends Piece{
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() + i > 7 || getColonne() + i > 7) break;
-            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null) {
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()+i) == null || (plateau.getTableau().get(getLigne()+i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()+i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()+i,getColonne()+i});
             } else {
                 mouvements.add(new int[]{getLigne()+i,getColonne()+i});
@@ -130,7 +131,7 @@ public class Reine extends Piece{
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() - i < 0 || getColonne() + i > 7) break;
-            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null) {
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()+i) == null || (plateau.getTableau().get(getLigne()-i).get(getColonne()+i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()+i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()-i,getColonne()+i});
             } else {
                 mouvements.add(new int[]{getLigne() - i, getColonne() + i});
@@ -140,7 +141,7 @@ public class Reine extends Piece{
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() - i < 0 || getColonne() - i < 0) break;
-            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null) {
+            if(plateau.getTableau().get(getLigne()-i).get(getColonne()-i) == null || (plateau.getTableau().get(getLigne()-i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()-i).get(getColonne()-i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()-i,getColonne()-i});
             } else {
                 mouvements.add(new int[]{getLigne()-i,getColonne()-i});
@@ -150,7 +151,7 @@ public class Reine extends Piece{
 
         for(int i = 1; i < 8; i++) {
             if(getLigne() + i > 7 || getColonne() - i < 0) break;
-            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null) {
+            if(plateau.getTableau().get(getLigne()+i).get(getColonne()-i) == null || (plateau.getTableau().get(getLigne()+i).get(getColonne()-i) instanceof Roi && plateau.getTableau().get(getLigne()+i).get(getColonne()-i).estBlanc() != estBlanc())) {
                 mouvements.add(new int[]{getLigne()+i,getColonne()-i});
             } else {
                 mouvements.add(new int[]{getLigne()+i,getColonne()-i});
@@ -181,6 +182,7 @@ public class Reine extends Piece{
                 if (conditionColonneEM(plateau, mouvements, j)) break;
             }
         }
+
         return mouvements;
     }
 
@@ -233,7 +235,7 @@ public class Reine extends Piece{
      * @return Vrai si la colonne est valide, faux sinon
      */
     private boolean conditionColonneEM(Plateau plateau, ArrayList<int[]> mouvements, int j) {
-        if (plateau.getTableau().get(getLigne()).get(j) == null) {
+        if (plateau.getTableau().get(getLigne()).get(j) == null || (plateau.getTableau().get(getLigne()).get(j) instanceof Roi && plateau.getTableau().get(getLigne()).get(j).estBlanc() != estBlanc())) {
             mouvements.add(new int[]{getLigne(), j});
         } else {
             mouvements.add(new int[]{getLigne(), j});
@@ -251,7 +253,7 @@ public class Reine extends Piece{
      * @return Vrai si la ligne est valide, faux sinon
      */
     private boolean conditionLigneEM(Plateau plateau, ArrayList<int[]> mouvements, int j) {
-        if (plateau.getTableau().get(j).get(getColonne()) == null) {
+        if (plateau.getTableau().get(j).get(getColonne()) == null || (plateau.getTableau().get(j).get(getColonne()) instanceof Roi && plateau.getTableau().get(j).get(getColonne()).estBlanc() != estBlanc())) {
             mouvements.add(new int[]{j, getColonne()});
         } else {
             mouvements.add(new int[]{j, getColonne()});

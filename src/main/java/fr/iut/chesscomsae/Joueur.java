@@ -85,6 +85,15 @@ public class Joueur {
     }
 
     /**
+     * Permets de changer le prénom du joueur
+     * @author Turmo Baptiste
+     * @param prenom le prénom du joueur
+     */
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    /**
      * Permet d'obtenir le nombre de parties jouées par un joueur
      * @author Turmo Baptiste
      * @return le nombre de parties jouées
@@ -118,16 +127,6 @@ public class Joueur {
      */
     public void setEstBlanc(boolean estBlanc) {
         this.estBlanc = estBlanc;
-    }
-
-    /**
-     * Permet de savoir si deux joueurs sont égaux sans prendre en compte la couleur du joueur
-     * @author Valente Hugo
-     * @param joueur le joueur à comparer
-     * @return true si les joueurs sont égaux, false sinon
-     */
-    public boolean egale(Joueur joueur) {
-        return this.nom.equals(joueur.nom) && this.prenom.equals(joueur.prenom);
     }
 
     /**

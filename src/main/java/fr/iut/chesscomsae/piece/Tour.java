@@ -53,6 +53,9 @@ public class Tour extends Piece {
             }
         }
 
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
+
+        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
         return mouvements;
     }
 
@@ -90,8 +93,6 @@ public class Tour extends Piece {
                 if (conditionColonneEM(plateau, mouvements, j)) break;
             }
         }
-
-        mouvements = plateau.filtreEchec(mouvements, estBlanc());
 
         return mouvements;
     }
@@ -145,7 +146,7 @@ public class Tour extends Piece {
      * @return Vrai si la colonne est valide, faux sinon
      */
     private boolean conditionColonneEM(Plateau plateau, ArrayList<int[]> mouvements, int j) {
-        if (plateau.getTableau().get(getLigne()).get(j) == null) {
+        if (plateau.getTableau().get(getLigne()).get(j) == null || (plateau.getTableau().get(getLigne()).get(j) instanceof Roi && plateau.getTableau().get(getLigne()).get(j).estBlanc() != estBlanc())) {
             mouvements.add(new int[]{getLigne(), j});
         } else {
             mouvements.add(new int[]{getLigne(), j});
@@ -155,15 +156,15 @@ public class Tour extends Piece {
     }
 
     /**
-     * Permet de vérifier si la ligne est valide pour le mouvement de la tour
-     * @author Valente Hugo
+     * Permet de vérifier si la ligne est valide pour le mouvement de la reine
+     * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
      * @param j Ligne
      * @return Vrai si la ligne est valide, faux sinon
      */
     private boolean conditionLigneEM(Plateau plateau, ArrayList<int[]> mouvements, int j) {
-        if (plateau.getTableau().get(j).get(getColonne()) == null) {
+        if (plateau.getTableau().get(j).get(getColonne()) == null || (plateau.getTableau().get(j).get(getColonne()) instanceof Roi && plateau.getTableau().get(j).get(getColonne()).estBlanc() != estBlanc())) {
             mouvements.add(new int[]{j, getColonne()});
         } else {
             mouvements.add(new int[]{j, getColonne()});

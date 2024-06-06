@@ -86,8 +86,8 @@ public class Cavalier extends Piece{
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
 
-        return mouvements;
-    }
+        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        return mouvements;    }
 
     /**
      * Permet de récupérer les mouvements possibles de la pièce Cavalier sur le plateau, y compris les protections d'alliés
