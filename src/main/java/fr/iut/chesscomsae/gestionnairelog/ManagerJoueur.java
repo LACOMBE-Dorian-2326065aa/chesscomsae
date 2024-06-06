@@ -4,6 +4,8 @@ import com.google.gson.*;
 import fr.iut.chesscomsae.Joueur;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +22,23 @@ public class ManagerJoueur extends ManagerFichier {
     private final static String NOM = "nom", PRENOM = "prenom", PARTIES_JOUEES = "nombrePartiesJouees", PARTIES_GAGNEES = "nombrePartiesGagnees";
 
     /**
-     * Tableau des joueurs en jeu
-     */
-
-    /**
      * Constructeur de la classe ManagerJoueur
      * @author Valente Hugo
      */
     public ManagerJoueur() {
         super();
+        File file = new File(CHEMIN);
+        if (!file.exists()) {
+            System.err.println("Le fichier " + CHEMIN + " n'existe pas");
+            try {
+                System.out.println("Création du fichier " + CHEMIN);
+                file.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Erreur lors de la création du fichier " + CHEMIN + " : " + e.getMessage());
+            }
+        }else {
+            System.out.println("Le fichier " + CHEMIN + " existe");
+        }
     }
 
     /**
@@ -54,36 +64,41 @@ public class ManagerJoueur extends ManagerFichier {
      */
     public static void miseAJourJoueur(Joueur joueur) {
         for (Joueur j : getJoueurs()) {
-            System.out.println(j.getNom() + " " + j.getPrenom() + " " + j.getNombrePartiesJouees() + " " + j.getNombrePartiesGagnees());
-            if (j.getNom().equals(joueur.getNom()) && j.getPrenom().equals(joueur.getPrenom())) {
+            if (j.getNom().equalsIgnoreCase(joueur.getNom()) && j.getPrenom().equalsIgnoreCase(joueur.getPrenom())) {
                 joueur.setNombrePartiesJouees(j.getNombrePartiesJouees());
                 joueur.setNombrePartiesGagnees(j.getNombrePartiesGagnees());
+                joueur.setNom(j.getNom());
+                joueur.setPrenom(j.getPrenom());
             }
         }
     }
 
     /**
      * Convertit un joueur en JsonObject
-     * @autor Valente Hugo
+     * @author Valente Hugo
      * @param joueur le joueur à convertir
      * @return le joueur converti en JsonObject
      */
     public static JsonObject joueurVersJsonObject(Joueur joueur) {
         JsonObject e = new JsonObject();
-        e.addProperty(NOM, joueur.getNom());
-        e.addProperty(PRENOM, joueur.getPrenom());
+        e.addProperty(NOM, joueur.getNom().replace(" ", ""));
+        e.addProperty(PRENOM, joueur.getPrenom().replace(" ", ""));
         e.addProperty(PARTIES_JOUEES, joueur.getNombrePartiesJouees());
         e.addProperty(PARTIES_GAGNEES, joueur.getNombrePartiesGagnees());
-        System.out.println(e.toString());
+        System.out.println(e);
         return e;
     }
     /**
-     * Ajoute un joueur dans le fichier .json associé aux joueurs
+     * Ajoute un joueur dans le fichier .json associé aux joueurs, met à jour les informations du joueur s'il existe déjà
      * @author Valente Hugo
      * @param joueur le joueur à ajouter
      */
     public void ajouterJoueur(Joueur joueur) {
         if (joueur == null) return;
+        if (joueur.getNom().equalsIgnoreCase(" ") && joueur.getPrenom().equalsIgnoreCase(" ")) {
+            joueur.setNom("Féroce");
+            joueur.setPrenom("Souris");
+        }
         if (joueurExiste(joueur)) {
             System.out.println("Le joueur "+ joueur.getPrenom() + " " + joueur.getNom() + " existe déjà");
             miseAJourJoueur(joueur);

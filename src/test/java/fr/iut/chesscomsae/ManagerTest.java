@@ -47,7 +47,6 @@ public class ManagerTest {
     @Test
     public void testVictoire() {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
-        Joueur joueurNoir = new Joueur("test", "test", false);
         ManagerJoueur managerJoueur = new ManagerJoueur();
         managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, joueurBlanc.getNombrePartiesGagnees()+1);
         int valeurGagnees = joueurBlanc.getNombrePartiesGagnees();
@@ -65,7 +64,6 @@ public class ManagerTest {
     @Test
     public void testRecuperationJoueurBis() {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
-        Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         ManagerJoueur.miseAJourJoueur(joueurBlanc);
         System.out.println(joueurBlanc.getNombrePartiesJouees());
     }
@@ -80,7 +78,7 @@ public class ManagerTest {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         ManagerParties managerParties = new ManagerParties();
-        managerParties.ajouterPartie(joueurBlanc, joueurNoir, joueurBlanc);
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir);
     }
 
     @Test
@@ -88,7 +86,7 @@ public class ManagerTest {
         Joueur joueurBlanc = new Joueur("Turmo", "Baptiste", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         ManagerParties managerParties = new ManagerParties();
-        managerParties.ajouterPartie(joueurBlanc, joueurNoir, joueurNoir);
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir);
     }
 
     @Test

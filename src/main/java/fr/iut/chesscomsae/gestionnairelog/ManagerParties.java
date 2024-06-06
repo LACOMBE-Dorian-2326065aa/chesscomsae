@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import fr.iut.chesscomsae.Joueur;
 import fr.iut.chesscomsae.Partie;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ManagerParties extends ManagerFichier{
@@ -14,6 +16,16 @@ public class ManagerParties extends ManagerFichier{
 
     public ManagerParties() {
         super();
+        File file = new File(CHEMIN);
+        if (!file.exists()) {
+            System.err.println("Le fichier " + CHEMIN + " n'existe pas");
+            try {
+                System.out.println("Création du fichier " + CHEMIN);
+                file.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Erreur lors de la création du fichier " + CHEMIN + " : " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -34,16 +46,14 @@ public class ManagerParties extends ManagerFichier{
 
     /**
      * Permet d'ajouter une partie au fichier .json associé aux parties
-     * @param joueurBlanc le joueur blanc
-     * @param joueurNoir le joueur noir
-     * @param gagnant le gagnant de la partie
+     * @param gagnant le joueur blanc
+     * @param perdant le joueur noir
      */
-    public void ajouterPartie(Joueur joueurBlanc, Joueur joueurNoir, Joueur gagnant) {
+    public void ajouterPartie(Joueur gagnant, Joueur perdant) {
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         JsonObject e = new JsonObject();
-        e.addProperty(JOUEUR_BLANC, joueurBlanc.getNom() + " " + joueurBlanc.getPrenom());
-        e.addProperty(JOUEUR_NOIR, joueurNoir.getNom() + " " + joueurNoir.getPrenom());
-        e.addProperty(GAGNANT, gagnant.getNom() + " " + gagnant.getPrenom());
+        e.addProperty(JOUEUR_BLANC, gagnant.getNom() + " " + gagnant.getPrenom());
+        e.addProperty(JOUEUR_NOIR, perdant.getNom() + " " + perdant.getPrenom());
         jsonObjects.add(e);
         listeJsonObjectVersFichier(jsonObjects, CHEMIN);
     }
