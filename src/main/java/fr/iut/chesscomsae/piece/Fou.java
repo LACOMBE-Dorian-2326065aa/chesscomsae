@@ -77,6 +77,8 @@ public class Fou extends Piece {
             }
         }
 
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
+
         return mouvements;
     }
 

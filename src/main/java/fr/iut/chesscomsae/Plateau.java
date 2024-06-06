@@ -233,6 +233,39 @@ public class Plateau {
         }
     }
 
+    public ArrayList<int[]> getPathsToKing(boolean isWhitePlaying) {
+        ArrayList<int[]> movesKiller = new ArrayList<>();
+        for (Piece pieceKiller : piecesBlanches()) {
+            if(pieceKiller.getPathToKing(this) == null || pieceKiller.getPathToKing(this).size() <= 1) continue;
+            for (int[] moveKill : pieceKiller.getPathToKing(this))
+            {
+                System.out.println(pieceKiller + " " + moveKill[0] + " " + moveKill[1]);
+                movesKiller.add(moveKill);
+            }
+        }
+
+        return movesKiller;
+    }
+
+    public ArrayList<int[]> filtreEchec(ArrayList<int[]> movesPossibles, boolean isWhitePlaying) {
+        for(int[] move : movesPossibles) {
+            System.out.println("Moves possibles initiaux : " + move[0] + " " + move[1]);
+        }
+        ArrayList<int[]> movesKiller = getPathsToKing(isWhitePlaying);
+        System.out.println("Nombre de moves kill" + movesKiller.size());
+        ArrayList<int[]> toFinal = new ArrayList<>();
+        for (int[] move : movesPossibles) {
+            for (int[] moveKill : movesKiller) {
+                if(comparerCoordonnees(move, moveKill)) toFinal.add(move);
+            }
+        }
+        for(int[] move : toFinal) {
+            System.out.println("Move finalement possible : " + move[0] + " " + move[1]);
+        }
+        if(toFinal.size() > 0) movesPossibles = toFinal;
+        return movesPossibles;
+    }
+
     public boolean testEchecEtMat(boolean isWhitePlaying) {
         ArrayList<int[]> movesRoi = new ArrayList<>();
         ArrayList<int[]> movesRoiSave = new ArrayList<>();
