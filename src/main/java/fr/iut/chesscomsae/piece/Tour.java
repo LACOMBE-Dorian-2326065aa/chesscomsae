@@ -91,6 +91,8 @@ public class Tour extends Piece {
             }
         }
 
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
+
         return mouvements;
     }
 

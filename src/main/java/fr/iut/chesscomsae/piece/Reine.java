@@ -101,7 +101,10 @@ public class Reine extends Piece{
                 if (conditionColonne(plateau, mouvements, j)) break;
             }
         }
+
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
         return mouvements;
+
     }
 
     /**

@@ -74,6 +74,9 @@ public class Pion extends Piece {
             if (getColonne() + 1 <= 7 && getLigne() + 1 < 8 && tableau.get(getLigne()+1).get(getColonne()+1) != null && tableau.get(getLigne() + 1).get(getColonne()+1).estBlanc() != estBlanc()) mouvements.add(new int[]{getLigne()+1, getColonne()+1});
 
         }
+
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
+
         return mouvements;
     }
 

@@ -83,6 +83,9 @@ public class Cavalier extends Piece{
                 mouvements.add(mouvement);
             }
         }
+
+        mouvements = plateau.filtreEchec(mouvements, estBlanc());
+
         return mouvements;
     }
 
@@ -145,6 +148,52 @@ public class Cavalier extends Piece{
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> path = new ArrayList<>();
         path.add(new int[]{getLigne(), getColonne()});
+        for (int i = 0; i < 8; ++i) {
+            int[] mouvement = new int[2];
+            switch (i) {
+                case 0 -> {
+                    mouvement[0] = getLigne() + 2;
+                    mouvement[1] = getColonne() + 1;
+                }
+                case 1 -> {
+                    mouvement[0] = getLigne() + 2;
+                    mouvement[1] = getColonne() - 1;
+                }
+                case 2 -> {
+                    mouvement[0] = getLigne() - 2;
+                    mouvement[1] = getColonne() + 1;
+                }
+                case 3 -> {
+                    mouvement[0] = getLigne() - 2;
+                    mouvement[1] = getColonne() - 1;
+                }
+                case 4 -> {
+                    mouvement[0] = getLigne() + 1;
+                    mouvement[1] = getColonne() + 2;
+                }
+                case 5 -> {
+                    mouvement[0] = getLigne() + 1;
+                    mouvement[1] = getColonne() - 2;
+                }
+                case 6 -> {
+                    mouvement[0] = getLigne() - 1;
+                    mouvement[1] = getColonne() + 2;
+                }
+                case 7 -> {
+                    mouvement[0] = getLigne() - 1;
+                    mouvement[1] = getColonne() - 2;
+                }
+            }
+            // Vérifie si le mouvement est possible pour savoir si le mouvement doit être ajouté au mouvement possible
+            if (mouvement[0] >= 0
+                    && mouvement[0] < 8
+                    && mouvement[1] >= 0
+                    && mouvement[1] < 8
+                    && plateau.getTableau().get(mouvement[0]).get(mouvement[1]) instanceof Roi
+                    && plateau.getTableau().get(mouvement[0]).get(mouvement[1]).estBlanc() != estBlanc()) {
+                path.add(mouvement);
+            }
+        }
         return path;
     }
 

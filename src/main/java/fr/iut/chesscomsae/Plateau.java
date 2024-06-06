@@ -234,8 +234,9 @@ public class Plateau {
     }
 
     public ArrayList<int[]> getPathsToKing(boolean isWhitePlaying) {
+        ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
         ArrayList<int[]> movesKiller = new ArrayList<>();
-        for (Piece pieceKiller : piecesBlanches()) {
+        for (Piece pieceKiller : pieces) {
             if(pieceKiller.getPathToKing(this) == null || pieceKiller.getPathToKing(this).size() <= 1) continue;
             for (int[] moveKill : pieceKiller.getPathToKing(this))
             {
@@ -259,24 +260,33 @@ public class Plateau {
                 if(comparerCoordonnees(move, moveKill)) toFinal.add(move);
             }
         }
-        for(int[] move : toFinal) {
+        for(int[] move : toFinal){
             System.out.println("Move finalement possible : " + move[0] + " " + move[1]);
         }
-        if(toFinal.size() > 0) movesPossibles = toFinal;
+        if(toFinal.size() > 0 || movesKiller.size() > 0) movesPossibles = toFinal;
         return movesPossibles;
     }
 
     public boolean testEchecEtMat(boolean isWhitePlaying) {
+        ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
+        ArrayList<Piece> pieces2 = isWhitePlaying ? piecesBlanches() : piecesNoires();
         ArrayList<int[]> movesRoi = new ArrayList<>();
         ArrayList<int[]> movesRoiSave = new ArrayList<>();
-        movesRoi.addAll(roiNoir.mouvementsPossibles(this));
-        movesRoiSave.addAll(roiNoir.mouvementsPossibles(this));
-        int[] roiPos = new int[]{roiNoir.getLigne(), roiNoir.getColonne()};
+        int[] roiPos;
+        if(!isWhitePlaying) {
+            movesRoi.addAll(roiNoir.mouvementsPossibles(this));
+            movesRoiSave.addAll(roiNoir.mouvementsPossibles(this));
+            roiPos = new int[]{roiNoir.getLigne(), roiNoir.getColonne()};
+        }else{
+            movesRoi.addAll(roiBlanc.mouvementsPossibles(this));
+            movesRoiSave.addAll(roiBlanc.mouvementsPossibles(this));
+            roiPos = new int[]{roiBlanc.getLigne(), roiBlanc.getColonne()};
+        }
 
         ArrayList<Piece> killer = new ArrayList<>();
         ArrayList<int[]> toRemove = new ArrayList<>();
 
-        for (Piece piece : piecesBlanches()) {
+        for (Piece piece : pieces) {
             ArrayList<int[]> movesPiece = new ArrayList<>();
             movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
             for (int[] movePiece : movesPiece) {
@@ -290,7 +300,7 @@ public class Plateau {
 
         ArrayList<Piece> killToRemove = new ArrayList<>();
 
-        for (Piece piece : piecesNoires()) {
+        for (Piece piece : pieces2) {
             if(piece instanceof Roi) continue;
             ArrayList<int[]> movesPiece = new ArrayList<>();
             movesPiece.addAll(piece.mouvementsPossibles(this));

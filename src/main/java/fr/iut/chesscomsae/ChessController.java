@@ -351,7 +351,8 @@ public class ChessController implements Initializable {
         displayGame(plateau);
 
         if(plateau.testEchecEtMat(isWhitePlaying)) {
-            initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie ! Échec et mat !");
+            if(!isWhitePlaying) initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie ! Échec et mat !");
+            else initEnd(j2.getPrenom() + " " + j2.getNom() + " a gagné la partie ! Échec et mat !");
             return;
         }
 
