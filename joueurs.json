@@ -1,0 +1,50 @@
+[
+  {
+    "nom": "cac4a",
+    "prenom": "prou45t",
+    "nombrePartiesJouees": 138,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "cac45a",
+    "prenom": "pr4out",
+    "nombrePartiesJouees": 138,
+    "nombrePartiesGagnees": 138
+  },
+  {
+    "nom": "li",
+    "prenom": "yous",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "BOT",
+    "prenom": "",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "prout",
+    "prenom": "caca",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 1
+  },
+  {
+    "nom": "Praud",
+    "prenom": "Pascal",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "Le Pen",
+    "prenom": "Marine",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "zef",
+    "prenom": "zef",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 0
+  }
+]
