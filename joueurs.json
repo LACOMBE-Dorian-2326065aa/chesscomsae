@@ -1,6 +1,5 @@
 [
   {
-<<<<<<< HEAD
     "nom": "cac4a",
     "prenom": "prou45t",
     "nombrePartiesJouees": 138,
@@ -25,20 +24,12 @@
     "nombrePartiesGagnees": 0
   },
   {
-    "nom": "prout",
-    "prenom": "caca",
-=======
     "nom": "Valente",
     "prenom": "Hugo",
->>>>>>> origin/main
     "nombrePartiesJouees": 1,
     "nombrePartiesGagnees": 1
   },
   {
-<<<<<<< HEAD
-    "nom": "Praud",
-    "prenom": "Pascal",
-=======
     "nom": "Lacombe",
     "prenom": "Dorian",
     "nombrePartiesJouees": 2,
@@ -47,16 +38,10 @@
   {
     "nom": "Fournier",
     "prenom": "Quentin",
->>>>>>> origin/main
     "nombrePartiesJouees": 1,
     "nombrePartiesGagnees": 0
   },
   {
-<<<<<<< HEAD
-    "nom": "Le Pen",
-    "prenom": "Marine",
-    "nombrePartiesJouees": 1,
-=======
     "nom": "GéoPrime",
     "prenom": "Clément",
     "nombrePartiesJouees": 1,
@@ -198,15 +183,10 @@
     "nom": "rgzr",
     "prenom": "yrzeg",
     "nombrePartiesJouees": 0,
->>>>>>> origin/main
     "nombrePartiesGagnees": 0
   },
   {
     "nom": "zef",
-<<<<<<< HEAD
-    "prenom": "zef",
-    "nombrePartiesJouees": 1,
-=======
     "prenom": "fzef",
     "nombrePartiesJouees": 0,
     "nombrePartiesGagnees": 0
@@ -383,7 +363,12 @@
     "nom": ":kl",
     "prenom": "k:l",
     "nombrePartiesJouees": 0,
->>>>>>> origin/main
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "rth",
+    "prenom": "rth",
+    "nombrePartiesJouees": 0,
     "nombrePartiesGagnees": 0
   }
 ]

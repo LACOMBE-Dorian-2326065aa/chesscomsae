@@ -595,21 +595,25 @@ public class ChessController implements Initializable {
 
         //while (joueurs.size()!=1) {
 
-            int index1 = r.nextInt(joueurs.size()-1);
-            int index2 = r.nextInt(joueurs.size()-1);
-            while (indexList.contains(index1)) index1 = r.nextInt(joueurs.size()-1);
-            while (index1 == index2 || indexList.contains(index2)) index2 = r.nextInt(joueurs.size()-1);
-            indexList.add(index1);
-            indexList.add(index2);
+        int index1 = r.nextInt(joueurs.size() - 1);
+        int index2 = r.nextInt(joueurs.size() - 1);
+        while (indexList.contains(index1)) index1 = r.nextInt(joueurs.size() - 1);
+        while (index1 == index2 || indexList.contains(index2)) index2 = r.nextInt(joueurs.size() - 1);
+        indexList.add(index1);
+        indexList.add(index2);
 
-            this.j1 = joueurs.get(index1);
-            this.j1.setEstBlanc(true);
-            this.j2 = joueurs.get(index2);
-            this.j2.setEstBlanc(false);
-            this.isWhitePlaying = true;
+        this.j1 = joueurs.get(index1);
+        this.j1.setEstBlanc(true);
+        this.j2 = joueurs.get(index2);
+        this.j2.setEstBlanc(false);
+        this.isWhitePlaying = true;
 
-            initGameTournoi();
+        System.out.println("index 1 : " + index1 + " , joueur 1 : " + joueurs.get(index1) + "index 2 : " + index1 + " , joueur 2 : " + joueurs.get(index2));
+        System.out.println(joueurs);
+        System.out.println(indexList);
 
+        initGameTournoi();
+        //}
 
     }
 

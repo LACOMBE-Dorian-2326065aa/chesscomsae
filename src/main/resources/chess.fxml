@@ -93,7 +93,7 @@
                 <Button styleClass="buttonPlay" onAction="#play" fx:id="buttonPlay">Jouer</Button>
                 <VBox fx:id="newButtons" styleClass="newButtons"></VBox>
                 <Region VBox.vgrow="ALWAYS"/>
-                <Button styleClass="buttonTournoi">
+                <Button styleClass="buttonTournoi" onAction="#tournoiBouton" fx:id="buttonTournoi">
                     <graphic>
                         <ImageView fitWidth="46" fitHeight="40" styleClass="imageTournoi">
                             <Image url="@./img/medal.png"></Image>
