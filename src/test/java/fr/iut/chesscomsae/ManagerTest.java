@@ -92,7 +92,7 @@ public class ManagerTest {
     @Test
     public void testLectureParties() {
         for (Partie partie : ManagerParties.getParties()) {
-            System.out.println(partie.getJoueurBlanc().getNom() + " " + partie.getJoueurBlanc().getPrenom() + " " + partie.getJoueurNoir().getNom() + " " + partie.getJoueurNoir().getPrenom() + " " + partie.getGagnant().getNom() + " " + partie.getGagnant().getPrenom());
+            System.out.println(partie.getJoueurGagnant().getNom() + " " + partie.getJoueurGagnant().getPrenom() + " " + partie.getJoueurPerdant().getNom() + " " + partie.getJoueurPerdant().getPrenom());
         }
     }
 

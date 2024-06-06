@@ -2,26 +2,21 @@ package fr.iut.chesscomsae;
 
 public class Partie {
 
-    private final Joueur joueurBlanc;
-    private final Joueur joueurNoir;
-    private final Joueur gagnant;
+    private final Joueur joueurGagnant;
+    private final Joueur joueurPerdant;
 
-    public Partie(Joueur joueurBlanc, Joueur joueurNoir, Joueur gagnant) {
-        this.joueurBlanc = joueurBlanc;
-        this.joueurNoir = joueurNoir;
-        this.gagnant = gagnant;
+    public Partie(Joueur joueurGagnant, Joueur joueurPerdant) {
+        this.joueurGagnant = joueurGagnant;
+        this.joueurPerdant = joueurPerdant;
     }
 
-    public Joueur getJoueurBlanc() {
-        return joueurBlanc;
+    public Joueur getJoueurGagnant() {
+        return joueurGagnant;
     }
 
-    public Joueur getJoueurNoir() {
-        return joueurNoir;
+    public Joueur getJoueurPerdant() {
+        return joueurPerdant;
     }
 
-    public Joueur getGagnant() {
-        return gagnant;
-    }
 
 }
