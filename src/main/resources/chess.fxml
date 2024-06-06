@@ -122,4 +122,11 @@
             <Button fx:id="rematch" styleClass="rematch">Revanche</Button>
         </HBox>
     </VBox>
+
+    <VBox alignment="CENTER" styleClass="centeredBox" fx:id="popupTournoi">
+        <Label text="Centered Box" styleClass="centeredLabel" fx:id="popupTournoiLabel"/>
+        <HBox styleClass="bottomButtons">
+            <Button fx:id="popupSuivant" styleClass="popupSuivant">Suivant</Button>
+        </HBox>
+    </VBox>
 </StackPane>

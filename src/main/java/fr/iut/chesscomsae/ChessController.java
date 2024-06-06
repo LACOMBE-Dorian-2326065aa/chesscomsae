@@ -58,7 +58,9 @@ public class ChessController implements Initializable {
     @FXML
     private VBox popupTournoi;
     @FXML
-    private Label popupLabelTournoi;
+    private Label popupTournoiLabel;
+    @FXML
+    private Button popupSuivant;
     @FXML
     private Button closePopup;
     @FXML
@@ -104,6 +106,7 @@ public class ChessController implements Initializable {
     private Partie[] gamesList;
 
     private ManagerJoueur managerJoueur;
+    private boolean modeTournoi;
 
 
     /**
@@ -128,6 +131,7 @@ public class ChessController implements Initializable {
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
         managerJoueur = new ManagerJoueur();
+        modeTournoi = false;
     }
 
     /**
@@ -361,9 +365,13 @@ public class ChessController implements Initializable {
         clearAll();
         displayGame(plateau);
 
-        if(plateau.testEchecEtMat(isWhitePlaying)) {
+        if(plateau.testEchecEtMat(isWhitePlaying) && !modeTournoi) {
             if(!isWhitePlaying) initEnd(j1, j2);
             else initEnd(j2, j1);
+            return;
+        } else if(plateau.testEchecEtMat(isWhitePlaying) && modeTournoi) {
+            if(!isWhitePlaying) tournoiEndMsg(j1, j2);
+            else tournoiEndMsg(j2, j1);
             return;
         }
 
@@ -502,6 +510,7 @@ public class ChessController implements Initializable {
 
     public void rematch() {
         popup.getStyleClass().remove("visible");
+        popupTournoi.setVisible(false);
         createBindings();
         play();
     }
@@ -646,8 +655,8 @@ public class ChessController implements Initializable {
         System.out.println("index 1 : " + index1 + " , joueur 1 : " + joueurs.get(index1) + "index 2 : " + index1 + " , joueur 2 : " + joueurs.get(index2));
         System.out.println(joueurs);
         System.out.println(indexList);
-
-        initGameTournoi();
+        modeTournoi = true;
+        initGame();
         //}
 
     }
@@ -672,10 +681,11 @@ public class ChessController implements Initializable {
     }
 
     public void tournoiEndMsg (Joueur winner, Joueur loser) {
-        popupLabelTournoi.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
+        popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
         popupTournoi.setVisible(true);
         popupTournoi.getStyleClass().add("visible");
-        popupLabelTournoi.setWrapText(true);
+        popupTournoiLabel.setWrapText(true);
+        popupSuivant.onActionProperty().set(actionEvent -> rematch());
 
         timer.cancel();
         timer.purge();
@@ -689,6 +699,7 @@ public class ChessController implements Initializable {
         managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
     }
 
+    /**
     public void initGameTournoi () {
         nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
         nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
@@ -751,6 +762,6 @@ public class ChessController implements Initializable {
             }
         };
         timer.scheduleAtFixedRate(task, 1000, 1000);
-    }
+    }**/
 
 }
