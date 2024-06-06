@@ -36,8 +36,8 @@ public class ManagerParties extends ManagerFichier{
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         ArrayList<Partie> parties = new ArrayList<>();
         for (JsonObject e : jsonObjects) {
-            Joueur joueurGagnant = new Joueur(e.get(JOUEUR_GAGNANT).getAsString().split(" ")[0], e.get(JOUEUR_GAGNANT).getAsString().split(" ")[1]);
-            Joueur joueurPerdant = new Joueur(e.get(JOUEUR_PERDANT).getAsString().split(" ")[0], e.get(JOUEUR_PERDANT).getAsString().split(" ")[1]);
+            Joueur joueurGagnant = new Joueur(e.get(JOUEUR_GAGNANT).getAsString().split("/§/")[0], e.get(JOUEUR_GAGNANT).getAsString().split("/§/")[1]);
+            Joueur joueurPerdant = new Joueur(e.get(JOUEUR_PERDANT).getAsString().split("/§/")[0], e.get(JOUEUR_PERDANT).getAsString().split("/§/")[1]);
             parties.add(new Partie(joueurGagnant, joueurPerdant));
         }
         return parties;
@@ -51,8 +51,8 @@ public class ManagerParties extends ManagerFichier{
     public void ajouterPartie(Joueur gagnant, Joueur perdant) {
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         JsonObject e = new JsonObject();
-        e.addProperty(JOUEUR_GAGNANT, gagnant.getNom() + " " + gagnant.getPrenom());
-        e.addProperty(JOUEUR_PERDANT, perdant.getNom() + " " + perdant.getPrenom());
+        e.addProperty(JOUEUR_GAGNANT, gagnant.getNom() + "/§/" + gagnant.getPrenom());
+        e.addProperty(JOUEUR_PERDANT, perdant.getNom() + "/§/" + perdant.getPrenom());
         jsonObjects.add(e);
         listeJsonObjectVersFichier(jsonObjects, CHEMIN);
     }

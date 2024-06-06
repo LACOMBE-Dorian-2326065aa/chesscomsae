@@ -95,7 +95,7 @@ public class ManagerJoueur extends ManagerFichier {
      */
     public void ajouterJoueur(Joueur joueur) {
         if (joueur == null) return;
-        if (joueur.getNom().replace(" ", "@").startsWith("@") && joueur.getPrenom().replace(" ", "@").startsWith("@")) {
+        if (joueur.getNom().startsWith(" ") && joueur.getPrenom().startsWith(" ")) {
             joueur.setNom("Féroce");
             joueur.setPrenom("Souris");
         }
