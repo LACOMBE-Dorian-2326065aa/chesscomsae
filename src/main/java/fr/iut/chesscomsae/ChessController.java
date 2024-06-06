@@ -62,6 +62,10 @@ public class ChessController implements Initializable {
     @FXML
     private Label popupLabel;
     @FXML
+    private VBox popupTournoi;
+    @FXML
+    private Label popupLabelTournoi;
+    @FXML
     private Button closePopup;
     @FXML
     private Button rematch;
@@ -73,6 +77,8 @@ public class ChessController implements Initializable {
     private VBox buttonNewGame;
     @FXML
     private VBox buttonPlayers;
+    @FXML
+    private Button buttonTournoi;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -585,6 +591,131 @@ public class ChessController implements Initializable {
         Region rg = new Region();
         VBox.setVgrow(rg, Priority.ALWAYS);
         boxRight.getChildren().add(rg);
+    }
+
+    public void tournoi (int nombreJoueurs, ArrayList<Joueur> joueurs) {
+        Random r = new Random();
+        ArrayList<Integer> indexList = new ArrayList<Integer>();
+
+        //while (joueurs.size()!=1) {
+
+            int index1 = r.nextInt(joueurs.size()-1);
+            int index2 = r.nextInt(joueurs.size()-1);
+            while (indexList.contains(index1)) index1 = r.nextInt(joueurs.size()-1);
+            while (index1 == index2 || indexList.contains(index2)) index2 = r.nextInt(joueurs.size()-1);
+            indexList.add(index1);
+            indexList.add(index2);
+
+            this.j1 = joueurs.get(index1);
+            this.j1.setEstBlanc(true);
+            this.j2 = joueurs.get(index2);
+            this.j2.setEstBlanc(false);
+            this.isWhitePlaying = true;
+
+            initGameTournoi();
+
+
+    }
+
+    public void tournoiBouton () {
+        ArrayList<Joueur> joueurs = new ArrayList<>();
+        Joueur jo1 = new Joueur("prout", "caca");
+        Joueur jo2 = new Joueur("Le Pen", "Marine");
+        Joueur jo3 = new Joueur("Praud", "Pascal");
+        Joueur jo4 = new Joueur("vavae", "tutu");
+        joueurs.add(jo1);
+        joueurs.add(jo2);
+        joueurs.add(jo3);
+        joueurs.add(jo4);
+
+        buttonPlay.setVisible(false);
+        choiceBox.setVisible(false);
+        buttonTournoi.setVisible(false);
+
+
+        tournoi(4, joueurs);
+    }
+
+    public void tournoiEndMsg (Joueur winner, Joueur loser) {
+        popupLabelTournoi.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
+        popupTournoi.setVisible(true);
+        popupTournoi.getStyleClass().add("visible");
+        popupLabelTournoi.setWrapText(true);
+
+        timer.cancel();
+        timer.purge();
+        chessBoard.setOnMouseClicked(null);
+        if(nodeSelected != null)
+            nodeSelected.getStyleClass().remove("selectedCell");
+        clearMoves();
+        cellSelected = null;
+        nodeSelected = null;
+        managerJoueur.modifieJoueurInformation(winner, winner.getNombrePartiesJouees()+1, winner.getNombrePartiesGagnees()+1);
+        managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
+    }
+
+    public void initGameTournoi () {
+        nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
+        nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
+        clearAll();
+        plateau = new Plateau(j1, j2);
+        plateau.init();
+        displayGame(plateau);
+        handleClicks();
+        if(!timerMe.getText().substring(0, 2).contains(":")) {
+            time1 = Integer.parseInt(timerMe.getText().substring(0, 2));
+            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 2));
+        } else {
+            time1 = Integer.parseInt(timerMe.getText().substring(0, 1));
+            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 1));
+        }
+        subTime1 = 0;
+        subTime2 = 0;
+        timerLoopTournoi();
+    }
+
+    public void timerLoopTournoi() {
+        timerMe.textProperty().unbind();
+        timerEnnemy.textProperty().unbind();
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (isWhitePlaying) {
+                        //subTime1--;
+                        subTime1--;
+                        if (subTime1 <= -1) {
+                            subTime1 = 59;
+                            time1--;
+                            if (time1 == -1) {
+                                time1 = 0;
+                                subTime1 = 0;
+                            }
+                        }
+                    } else {
+                        subTime2--;
+                        if (subTime2 <= -1) {
+                            subTime2 = 59;
+                            time2--;
+                            if (time2 == -1) {
+                                time2 = 0;
+                                subTime2 = 0;
+                            }
+                        }
+                    }
+                    timerMe.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time1, subTime1)));
+                    timerEnnemy.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time2, subTime2)));
+
+                    if(time1 == 0 && subTime1 == 0 && isWhitePlaying) {
+                        tournoiEndMsg(j2, j1);
+                    } else if(time2 == 0 && subTime2 == 0 && !isWhitePlaying) {
+                        tournoiEndMsg(j1, j2);
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
 }
