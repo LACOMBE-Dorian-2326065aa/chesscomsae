@@ -5,7 +5,6 @@ import fr.iut.chesscomsae.Joueur;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ManagerJoueur extends ManagerFichier {
@@ -23,20 +22,13 @@ public class ManagerJoueur extends ManagerFichier {
     /**
      * Tableau des joueurs en jeu
      */
-    private static final Joueur[] joueursEnJeu = new Joueur[2];
 
     /**
      * Constructeur de la classe ManagerJoueur
      * @author Valente Hugo
-     * @param joueurBlanc le joueur blanc
-     * @param joueurNoir le joueur noir
      */
-    public ManagerJoueur(Joueur joueurBlanc, Joueur joueurNoir) {
+    public ManagerJoueur() {
         super();
-        joueursEnJeu[0] = joueurBlanc;
-        joueursEnJeu[1] = joueurNoir;
-        ajouterJoueur(joueurBlanc);
-        ajouterJoueur(joueurNoir);
     }
 
     /**
@@ -57,11 +49,12 @@ public class ManagerJoueur extends ManagerFichier {
 
     /**
      * Met à jour les informations d'un joueur s'il existe déjà dans le fichier .json associé aux joueurs
-     * @autor Valente Hugo
+     * @author Valente Hugo
      * @param joueur le joueur à mettre à jour
      */
-    private void miseAJourJoueur(Joueur joueur) {
+    public static void miseAJourJoueur(Joueur joueur) {
         for (Joueur j : getJoueurs()) {
+            System.out.println(j.getNom() + " " + j.getPrenom() + " " + j.getNombrePartiesJouees() + " " + j.getNombrePartiesGagnees());
             if (j.getNom().equals(joueur.getNom()) && j.getPrenom().equals(joueur.getPrenom())) {
                 joueur.setNombrePartiesJouees(j.getNombrePartiesJouees());
                 joueur.setNombrePartiesGagnees(j.getNombrePartiesGagnees());
@@ -69,6 +62,12 @@ public class ManagerJoueur extends ManagerFichier {
         }
     }
 
+    /**
+     * Convertit un joueur en JsonObject
+     * @autor Valente Hugo
+     * @param joueur le joueur à convertir
+     * @return le joueur converti en JsonObject
+     */
     public static JsonObject joueurVersJsonObject(Joueur joueur) {
         JsonObject e = new JsonObject();
         e.addProperty(NOM, joueur.getNom());
@@ -133,15 +132,7 @@ public class ManagerJoueur extends ManagerFichier {
             Joueur joueur = new Joueur(e.get(NOM).getAsString(), e.get(PRENOM).getAsString());
             joueur.setNombrePartiesJouees(e.get(PARTIES_JOUEES).getAsInt());
             joueur.setNombrePartiesGagnees(e.get(PARTIES_GAGNEES).getAsInt());
-            if (Arrays.stream(joueursEnJeu).toList().contains(joueur)){
-                for (Joueur j : joueursEnJeu) {
-                    if (j.equals(joueur)) {
-                        joueurs.add(j);
-                    }
-                }
-            }else {
-                joueurs.add(joueur);
-            }
+            joueurs.add(joueur);
         }
         return joueurs;
     }

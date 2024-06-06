@@ -39,7 +39,7 @@ public class ManagerTest {
 
     @Test
     public void testAjouterJoueur() {
-        ManagerJoueur managerJoueur = new ManagerJoueur(new Joueur("test", "test"), new Joueur("test", "test"));
+        ManagerJoueur managerJoueur = new ManagerJoueur();
         managerJoueur.ajouterJoueur(new Joueur("test", "test"));
         managerJoueur.ajouterJoueur(new Joueur("Lacombe", "Dorian"));
     }
@@ -48,7 +48,7 @@ public class ManagerTest {
     public void testVictoire() {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("test", "test", false);
-        ManagerJoueur managerJoueur = new ManagerJoueur(joueurBlanc, joueurNoir);
+        ManagerJoueur managerJoueur = new ManagerJoueur();
         managerJoueur.modifieJoueurInformation(joueurBlanc, joueurBlanc.getNombrePartiesJouees()+50, joueurBlanc.getNombrePartiesGagnees()+1);
         int valeurGagnees = joueurBlanc.getNombrePartiesGagnees();
         int valeurJouees = joueurBlanc.getNombrePartiesJouees();
@@ -66,7 +66,7 @@ public class ManagerTest {
     public void testRecuperationJoueurBis() {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
-        new ManagerJoueur(joueurBlanc, joueurNoir);
+        ManagerJoueur.miseAJourJoueur(joueurBlanc);
         System.out.println(joueurBlanc.getNombrePartiesJouees());
     }
 

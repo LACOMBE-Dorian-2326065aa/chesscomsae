@@ -16,6 +16,10 @@ public class ManagerParties extends ManagerFichier{
         super();
     }
 
+    /**
+     * Permet d'obtenir la liste des parties depuis le fichier .json associé aux parties
+     * @return la liste des parties
+     */
     public static ArrayList<Partie> getParties() {
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         ArrayList<Partie> parties = new ArrayList<>();
@@ -28,6 +32,12 @@ public class ManagerParties extends ManagerFichier{
         return parties;
     }
 
+    /**
+     * Permet d'ajouter une partie au fichier .json associé aux parties
+     * @param joueurBlanc le joueur blanc
+     * @param joueurNoir le joueur noir
+     * @param gagnant le gagnant de la partie
+     */
     public void ajouterPartie(Joueur joueurBlanc, Joueur joueurNoir, Joueur gagnant) {
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         JsonObject e = new JsonObject();
