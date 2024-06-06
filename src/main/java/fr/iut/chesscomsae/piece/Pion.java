@@ -48,7 +48,7 @@ public class Pion extends Piece {
         if (estBlanc()) {
             // Ajout des mouvements possibles en avant pour le pion blanc
             for (int i = 1; i <= deplacement; ++i) {
-                if (getLigne() - i >= 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
+                if (getLigne() - i >= 0 && tableau.get(getLigne()-i).get(getColonne()) == null  || (plateau.getTableau().get(getLigne()-1).get(getColonne()) instanceof Roi && plateau.getTableau().get(getLigne()-1).get(getColonne()).estBlanc() != estBlanc())) {
                     mouvements.add(new int[]{getLigne() - i, getColonne()});
                 }else {
                     break;
@@ -62,7 +62,7 @@ public class Pion extends Piece {
         }else {
             // Ajout des mouvements possibles en avant pour le pion noir
             for (int i = 1; i <= deplacement; ++i) {
-                if (getLigne() + i < 8 && tableau.get(getLigne()+i).get(getColonne()) == null) {
+                if (getLigne() + i < 8 && tableau.get(getLigne()+i).get(getColonne()) == null || (plateau.getTableau().get(getLigne()+1).get(getColonne()) instanceof Roi && plateau.getTableau().get(getLigne()+1).get(getColonne()).estBlanc() != estBlanc())) {
                     mouvements.add(new int[]{getLigne()+i, getColonne()});
                 }else {
                     break;
@@ -77,8 +77,8 @@ public class Pion extends Piece {
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
 
-        return mouvements;
-    }
+        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        return mouvements;    }
 
     /**
      * Permet de récupérer les mouvements possibles du pion sur le plateau de jeu, y compris les protections d'alliés
@@ -111,8 +111,8 @@ public class Pion extends Piece {
             }
 
             // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion blanc
-            if (getColonne() - 1 >= 0 && getLigne() - 1 >= 0 && tableau.get(getLigne() - 1).get(getColonne() - 1) != null) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
-            if (getColonne() + 1 <= 7 && getLigne() - 1 >= 0 && tableau.get(getLigne() - 1).get(getColonne() + 1) != null) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
+            if (getColonne() - 1 >= 0 && getLigne() - 1 >= 0) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
+            if (getColonne() + 1 <= 7 && getLigne() - 1 >= 0) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
 
         }else {
             // Ajout des mouvements possibles en avant pour le pion noir
@@ -129,6 +129,7 @@ public class Pion extends Piece {
             if (getColonne() + 1 <= 7 && getLigne() + 1 < 8) mouvements.add(new int[]{getLigne()+1, getColonne()+1});
 
         }
+
         return mouvements;
     }
 

@@ -43,6 +43,8 @@ public class Roi extends Piece {
             }
         }
 
+        mouvements = plateau.filtreEchecRoi(mouvements, estBlanc());
+
         return mouvements;
     }
 

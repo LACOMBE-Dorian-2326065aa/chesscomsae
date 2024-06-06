@@ -240,7 +240,6 @@ public class Plateau {
             if(pieceKiller.getPathToKing(this) == null || pieceKiller.getPathToKing(this).size() <= 1) continue;
             for (int[] moveKill : pieceKiller.getPathToKing(this))
             {
-                System.out.println(pieceKiller + " " + moveKill[0] + " " + moveKill[1]);
                 movesKiller.add(moveKill);
             }
         }
@@ -260,6 +259,26 @@ public class Plateau {
         return movesPossibles;
     }
 
+    public ArrayList<int[]> filtreEchecRoi(ArrayList<int[]> movesPossibles, boolean isWhitePlaying) {
+        ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
+        ArrayList<int[]> movesRoi = movesPossibles;
+
+        ArrayList<int[]> toRemove = new ArrayList<>();
+
+        for (Piece piece : pieces) {
+            ArrayList<int[]> movesPiece = new ArrayList<>();
+            movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
+            for (int[] movePiece : movesPiece) {
+                for (int[] moveRoi : movesRoi) {
+                    if (comparerCoordonnees(movePiece, moveRoi)) toRemove.add(moveRoi);
+                }
+            }
+        }
+        movesRoi.removeAll(toRemove);
+
+        return movesRoi;
+    }
+
     public boolean testEchecEtMat(boolean isWhitePlaying) {
         ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
         ArrayList<Piece> pieces2 = isWhitePlaying ? piecesBlanches() : piecesNoires();
@@ -275,6 +294,8 @@ public class Plateau {
             movesRoiSave.addAll(roiBlanc.mouvementsPossibles(this));
             roiPos = new int[]{roiBlanc.getLigne(), roiBlanc.getColonne()};
         }
+        movesRoi.add(roiPos);
+        movesRoiSave.add(roiPos);
 
         ArrayList<Piece> killer = new ArrayList<>();
         ArrayList<int[]> toRemove = new ArrayList<>();
@@ -312,14 +333,32 @@ public class Plateau {
 
         killer.removeAll(killToRemove);
 
-        for(int[] move : movesRoi) {
-            System.out.println(move[0] + " " + move[1]);
+        return movesRoi.size() == 0 && killer.size() > 0;
+    }
+
+    public boolean canPieceMove(Piece checkedPiece, boolean isWhitePlaying) {
+        tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), null);
+        ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
+        int[] roiPos;
+        if(!isWhitePlaying) {
+            roiPos = new int[]{roiNoir.getLigne(), roiNoir.getColonne()};
+        }else{
+            roiPos = new int[]{roiBlanc.getLigne(), roiBlanc.getColonne()};
         }
 
+        for(Piece piece : pieces) {
+            ArrayList<int[]> movesPiece = new ArrayList<>();
+            movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
+            for(int[] move : movesPiece) {
+                if(comparerCoordonnees(move, roiPos)) {
+                    tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), checkedPiece);
+                    return false;
+                }
+            }
+        }
 
-        System.out.println(killer.size());
-        System.out.println(movesRoi.size());
-        return movesRoi.size() == 0 && killer.size() > 0;
+        tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), checkedPiece);
+        return true;
     }
 
     /**
