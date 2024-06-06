@@ -53,6 +53,7 @@ public class ManagerFichier {
             FileWriter writer = new FileWriter(chemin);
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(jsonObjects));
             writer.close();
+            System.out.println("Fichier " + chemin + " écrit avec succès");
         } catch (IOException e) {
             System.err.println("Erreur lors de l'écriture du fichier " + chemin + " : " + e.getMessage());
         }

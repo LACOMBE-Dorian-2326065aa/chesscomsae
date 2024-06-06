@@ -121,6 +121,16 @@ public class Joueur {
     }
 
     /**
+     * Permet de savoir si deux joueurs sont égaux sans prendre en compte la couleur du joueur
+     * @author Valente Hugo
+     * @param joueur le joueur à comparer
+     * @return true si les joueurs sont égaux, false sinon
+     */
+    public boolean egale(Joueur joueur) {
+        return this.nom.equals(joueur.nom) && this.prenom.equals(joueur.prenom);
+    }
+
+    /**
      * Permet d'avoir une représentation textuelle d'un joueur
      * @author Turmo Baptiste
      * @return une chaîne de caractères représentant un joueur

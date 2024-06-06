@@ -3,6 +3,7 @@ package fr.iut.chesscomsae;
 import com.google.gson.JsonObject;
 import fr.iut.chesscomsae.gestionnairelog.ManagerFichier;
 import fr.iut.chesscomsae.gestionnairelog.ManagerJoueur;
+import fr.iut.chesscomsae.gestionnairelog.ManagerParties;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -67,6 +68,34 @@ public class ManagerTest {
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         new ManagerJoueur(joueurBlanc, joueurNoir);
         System.out.println(joueurBlanc.getNombrePartiesJouees());
+    }
+
+    @Test
+    public void testRecuperationJoueurTer() {
+        System.out.println(ManagerJoueur.getJoueurs());
+    }
+
+    @Test
+    public void testCreationParties() {
+        Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
+        Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
+        ManagerParties managerParties = new ManagerParties();
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir, joueurBlanc);
+    }
+
+    @Test
+    public void testCreationPartiesBis() {
+        Joueur joueurBlanc = new Joueur("Turmo", "Baptiste", true);
+        Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
+        ManagerParties managerParties = new ManagerParties();
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir, joueurNoir);
+    }
+
+    @Test
+    public void testLectureParties() {
+        for (Partie partie : ManagerParties.getParties()) {
+            System.out.println(partie.getJoueurBlanc().getNom() + " " + partie.getJoueurBlanc().getPrenom() + " " + partie.getJoueurNoir().getNom() + " " + partie.getJoueurNoir().getPrenom() + " " + partie.getGagnant().getNom() + " " + partie.getGagnant().getPrenom());
+        }
     }
 
 }

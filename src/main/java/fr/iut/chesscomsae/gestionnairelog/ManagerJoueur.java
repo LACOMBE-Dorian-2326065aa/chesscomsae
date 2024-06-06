@@ -69,6 +69,15 @@ public class ManagerJoueur extends ManagerFichier {
         }
     }
 
+    public static JsonObject joueurVersJsonObject(Joueur joueur) {
+        JsonObject e = new JsonObject();
+        e.addProperty(NOM, joueur.getNom());
+        e.addProperty(PRENOM, joueur.getPrenom());
+        e.addProperty(PARTIES_JOUEES, joueur.getNombrePartiesJouees());
+        e.addProperty(PARTIES_GAGNEES, joueur.getNombrePartiesGagnees());
+        System.out.println(e.toString());
+        return e;
+    }
     /**
      * Ajoute un joueur dans le fichier .json associé aux joueurs
      * @author Valente Hugo
@@ -82,12 +91,7 @@ public class ManagerJoueur extends ManagerFichier {
             return;
         }
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
-        JsonObject e = new JsonObject();
-        e.addProperty(NOM, joueur.getNom());
-        e.addProperty(PRENOM, joueur.getPrenom());
-        e.addProperty(PARTIES_JOUEES, joueur.getNombrePartiesJouees());
-        e.addProperty(PARTIES_GAGNEES, joueur.getNombrePartiesGagnees());
-        jsonObjects.add(e);
+        jsonObjects.add(joueurVersJsonObject(joueur));
         System.out.println("Joueur ajouté : " + joueur.getPrenom() + " " + joueur.getNom());
         listeJsonObjectVersFichier(jsonObjects, CHEMIN);
     }
@@ -103,7 +107,6 @@ public class ManagerJoueur extends ManagerFichier {
         if (!joueurExiste(joueur)) {
             ajouterJoueur(joueur);
         }
-
         ArrayList<JsonObject> jsonObjects = fichierVersListeJsonObject(CHEMIN);
         for (JsonObject e : jsonObjects) {
             if (e.get(NOM).getAsString().equals(joueur.getNom()) && e.get(PRENOM).getAsString().equals(joueur.getPrenom())) {
