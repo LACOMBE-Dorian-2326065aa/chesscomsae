@@ -26,7 +26,7 @@
   {
     "nom": "BOT",
     "prenom": "",
-    "nombrePartiesJouees": 5,
+    "nombrePartiesJouees": 6,
     "nombrePartiesGagnees": 0
   },
   {
@@ -338,6 +338,72 @@
   {
     "nom": ":kl",
     "prenom": "k:l",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "k:j",
+    "prenom": "uhj",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "jk:jk",
+    "prenom": "kj:",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": ";hj",
+    "prenom": "j;",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "k;",
+    "prenom": "h",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "ik",
+    "prenom": "i",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "ik",
+    "prenom": "ik",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "jk:j:",
+    "prenom": ":j:j:",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": ":jk",
+    "prenom": ":jk:jk",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "fez",
+    "prenom": "rfez",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 1
+  },
+  {
+    "nom": "bdfb",
+    "prenom": "dbfg",
+    "nombrePartiesJouees": 0,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "Féroce",
+    "prenom": "Souris",
     "nombrePartiesJouees": 0,
     "nombrePartiesGagnees": 0
   }

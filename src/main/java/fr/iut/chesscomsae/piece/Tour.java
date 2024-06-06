@@ -55,8 +55,9 @@ public class Tour extends Piece {
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
 
-        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
-        return mouvements;
+
+        return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        //return mouvements;
     }
 
     /**

@@ -337,7 +337,7 @@ public class Plateau {
     }
 
     public boolean canPieceMove(Piece checkedPiece, boolean isWhitePlaying) {
-        tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), null);
+        int nb = 0;
         ArrayList<Piece> pieces = isWhitePlaying ? piecesNoires() : piecesBlanches();
         int[] roiPos;
         if(!isWhitePlaying) {
@@ -345,20 +345,30 @@ public class Plateau {
         }else{
             roiPos = new int[]{roiBlanc.getLigne(), roiBlanc.getColonne()};
         }
-
         for(Piece piece : pieces) {
             ArrayList<int[]> movesPiece = new ArrayList<>();
             movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
             for(int[] move : movesPiece) {
                 if(comparerCoordonnees(move, roiPos)) {
-                    tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), checkedPiece);
-                    return false;
+                    nb++;
+                }
+            }
+        }
+        tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), null);
+
+        int nb2 = 0;
+        for(Piece piece : pieces) {
+            ArrayList<int[]> movesPiece = new ArrayList<>();
+            movesPiece.addAll(piece.mouvementsPossiblesEchecEtMat(this));
+            for(int[] move : movesPiece) {
+                if(comparerCoordonnees(move, roiPos)) {
+                    nb2++;
                 }
             }
         }
 
         tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), checkedPiece);
-        return true;
+        return nb == nb2;
     }
 
     /**
