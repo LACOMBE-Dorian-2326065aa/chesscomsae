@@ -76,9 +76,12 @@ public class Pion extends Piece {
         }
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
-
-        //return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
-        return mouvements;    }
+        System.out.println(mouvements.size());
+        System.out.println(plateau.canPieceMove(this, estBlanc()));
+        System.out.println("\n\n");
+        return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        //return mouvements;
+    }
 
     /**
      * Permet de récupérer les mouvements possibles du pion sur le plateau de jeu, y compris les protections d'alliés
