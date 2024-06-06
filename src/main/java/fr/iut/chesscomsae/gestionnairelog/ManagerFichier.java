@@ -10,15 +10,15 @@ public class ManagerFichier {
     /**
      * Lit un fichier et le convertit en JsonArray
      * @author Valente Hugo
-     * @param path le chemin du fichier
+     * @param chemin le chemin du fichier
      * @return le JsonArray correspondant au fichier
      */
-    private static JsonArray fichierVersJsonArray(String path) {
+    private static JsonArray fichierVersJsonArray(String chemin) {
         try {
-            FileReader reader = new FileReader(path);
+            FileReader reader = new FileReader(chemin);
             return new Gson().fromJson(reader, JsonArray.class);
         } catch (IOException e) {
-            System.err.println("Erreur lors de la lecture du fichier " + path + " : " + e.getMessage());
+            System.err.println("Erreur lors de la lecture du fichier " + chemin + " : " + e.getMessage());
         }
         return null;
     }
