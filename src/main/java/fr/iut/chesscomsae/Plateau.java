@@ -249,19 +249,12 @@ public class Plateau {
     }
 
     public ArrayList<int[]> filtreEchec(ArrayList<int[]> movesPossibles, boolean isWhitePlaying) {
-        for(int[] move : movesPossibles) {
-            System.out.println("Moves possibles initiaux : " + move[0] + " " + move[1]);
-        }
         ArrayList<int[]> movesKiller = getPathsToKing(isWhitePlaying);
-        System.out.println("Nombre de moves kill" + movesKiller.size());
         ArrayList<int[]> toFinal = new ArrayList<>();
         for (int[] move : movesPossibles) {
             for (int[] moveKill : movesKiller) {
                 if(comparerCoordonnees(move, moveKill)) toFinal.add(move);
             }
-        }
-        for(int[] move : toFinal){
-            System.out.println("Move finalement possible : " + move[0] + " " + move[1]);
         }
         if(toFinal.size() > 0 || movesKiller.size() > 0) movesPossibles = toFinal;
         return movesPossibles;

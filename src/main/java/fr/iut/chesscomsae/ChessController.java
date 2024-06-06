@@ -1,5 +1,6 @@
 package fr.iut.chesscomsae;
 
+import fr.iut.chesscomsae.gestionnairelog.ManagerJoueur;
 import fr.iut.chesscomsae.piece.Piece;
 import fr.iut.chesscomsae.piece.Pion;
 import javafx.animation.KeyFrame;
@@ -101,6 +102,8 @@ public class ChessController implements Initializable {
 
     private Joueur[] playersList;
 
+    private ManagerJoueur managerJoueur;
+
 
     /**
      * Initialise les données de la fenêtre
@@ -123,6 +126,7 @@ public class ChessController implements Initializable {
 
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
+        managerJoueur = new ManagerJoueur();
     }
 
     /**
@@ -185,6 +189,8 @@ public class ChessController implements Initializable {
         valid.getStyleClass().add("valid");
         valid.disableProperty().bind(Bindings.createBooleanBinding(() -> prenom.getText().equals("") || nom.getText().equals(""), prenom.textProperty(), nom.textProperty()));
         againstBot.getStyleClass().add("againstBot");
+        againstBot.disableProperty().bind(Bindings.createBooleanBinding(() -> prenom.getText().equals("") || nom.getText().equals(""), prenom.textProperty(), nom.textProperty()));
+
         if(j1 == null && j2 == null) {
             newButtons.getChildren().addAll(prenomLabel, prenom, nomLabel, nom, valid, againstBot);
             valid.onActionProperty().set(actionEvent -> validation(true));
@@ -200,6 +206,8 @@ public class ChessController implements Initializable {
     public void playAgainstBot() {
         j1 = new Joueur(nom.getText(), prenom.getText(), true);
         j2 = new Joueur("BOT", "", false);
+        managerJoueur.ajouterJoueur(j1);
+        managerJoueur.ajouterJoueur(j2);
         nom.setText("");
         prenom.setText("");
         newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid, againstBot);
@@ -214,6 +222,7 @@ public class ChessController implements Initializable {
     public void validation(boolean isJ1) {
         if(isJ1) {
             j1 = new Joueur(nom.getText(), prenom.getText(), true);
+            managerJoueur.ajouterJoueur(j1);
             prenomLabel.setText("Prénom J2 :");
             nomLabel.setText("Nom J2 :");
             nom.setText("");
@@ -223,6 +232,7 @@ public class ChessController implements Initializable {
             valid.onActionProperty().set(actionEvent -> validation(false));
         } else {
             j2 = new Joueur(nom.getText(), prenom.getText(), false);
+            managerJoueur.ajouterJoueur(j2);
             newButtons.getChildren().removeAll(prenom, prenomLabel, nom, nomLabel, valid);
             initGame();
         }
@@ -351,8 +361,8 @@ public class ChessController implements Initializable {
         displayGame(plateau);
 
         if(plateau.testEchecEtMat(isWhitePlaying)) {
-            if(!isWhitePlaying) initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie ! Échec et mat !");
-            else initEnd(j2.getPrenom() + " " + j2.getNom() + " a gagné la partie ! Échec et mat !");
+            if(!isWhitePlaying) initEnd(j1, j2);
+            else initEnd(j2, j1);
             return;
         }
 
@@ -450,9 +460,9 @@ public class ChessController implements Initializable {
                     timerEnnemy.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time2, subTime2)));
 
                     if(time1 == 0 && subTime1 == 0 && isWhitePlaying) {
-                        initEnd(j2.getPrenom() + " " + j2.getNom() + " a gagné la partie grâce au temps !");
+                        initEnd(j2, j1);
                     } else if(time2 == 0 && subTime2 == 0 && !isWhitePlaying) {
-                        initEnd(j1.getPrenom() + " " + j1.getNom() + " a gagné la partie grâce au temps !");
+                        initEnd(j1, j2);
                     }
                 });
             }
@@ -460,8 +470,8 @@ public class ChessController implements Initializable {
         timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
-    public void initEnd(String msg) {
-        popupLabel.setText(msg);
+    public void initEnd(Joueur winner, Joueur loser) {
+        popupLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
         popup.getStyleClass().add("visible");
         popupLabel.setWrapText(true);
         timer.cancel();
@@ -472,6 +482,8 @@ public class ChessController implements Initializable {
         clearMoves();
         cellSelected = null;
         nodeSelected = null;
+        managerJoueur.modifieJoueurInformation(winner, winner.getNombrePartiesJouees()+1, winner.getNombrePartiesGagnees()+1);
+        managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
     }
 
     public void closePopup() {
@@ -548,7 +560,7 @@ public class ChessController implements Initializable {
 
     public void loadPlayers() {
         boxRight.getChildren().clear();
-        playersList = new Joueur[]{j1, j2};
+        playersList = ManagerJoueur.getJoueurs().toArray(new Joueur[0]);
         for(Joueur j : playersList) {
             if(j == null) continue;
             HBox playerInList = new HBox();
