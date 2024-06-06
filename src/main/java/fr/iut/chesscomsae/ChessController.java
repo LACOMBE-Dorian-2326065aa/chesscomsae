@@ -101,6 +101,7 @@ public class ChessController implements Initializable {
     private ArrayList<Piece> piecesNoires;
 
     private Joueur[] playersList;
+    private Partie[] gamesList;
 
     private ManagerJoueur managerJoueur;
 
@@ -539,6 +540,7 @@ public class ChessController implements Initializable {
         boxRight.getChildren().clear();
         boxRight.getChildren().addAll(gamesContent);
         gamesContent = null;
+        loadGames();
     }
 
     public void windowPlayers() {
@@ -582,6 +584,39 @@ public class ChessController implements Initializable {
             jLabelPlayed.setAlignment(Pos.CENTER);
             jLabelWon.setAlignment(Pos.CENTER);
             playerInList.getChildren().addAll(imgV, jLabelPrenom, jLabelNom, jLabelWon, jLabelPlayed);
+            boxRight.getChildren().add(playerInList);
+        }
+        Region rg = new Region();
+        VBox.setVgrow(rg, Priority.ALWAYS);
+        boxRight.getChildren().add(rg);
+    }
+
+    public void loadGames() {
+        boxRight.getChildren().clear();
+        gamesList = ManagerParties.getParties().toArray(new Partie[0]);
+        for(Partie g : gamesList) {
+            if(g == null) continue;
+            HBox playerInList = new HBox();
+            playerInList.getStyleClass().add("gameInList");
+            Image img = new Image("file:src/main/resources/img/couronne.png");
+            ImageView imgV = new ImageView(img);
+            imgV.setFitHeight(30);
+            imgV.setFitWidth(30);
+            Label winnerLabelPrenom = new Label(g.getJoueurGagnant().getPrenom());
+            Label winnerLabelNom = new Label(g.getJoueurGagnant().getNom());
+            Label separator = new Label(" vs");
+            Label loserLabelPrenom = new Label(g.getJoueurPerdant().getPrenom());
+            Label loserLabelNom = new Label(g.getJoueurPerdant().getNom());
+            winnerLabelPrenom.setAlignment(Pos.CENTER);
+            winnerLabelNom.setAlignment(Pos.CENTER);
+            separator.setAlignment(Pos.CENTER);
+            loserLabelPrenom.setAlignment(Pos.CENTER);
+            loserLabelNom.setAlignment(Pos.CENTER);
+            Image image = new Image("file:src/main/resources/img/blesse.png");
+            ImageView imgV2 = new ImageView(image);
+            imgV2.setFitHeight(30);
+            imgV2.setFitWidth(30);
+            playerInList.getChildren().addAll(imgV, winnerLabelPrenom, winnerLabelNom, separator, loserLabelPrenom, loserLabelNom, imgV2);
             boxRight.getChildren().add(playerInList);
         }
         Region rg = new Region();

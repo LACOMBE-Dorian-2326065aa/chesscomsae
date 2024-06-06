@@ -269,6 +269,21 @@ Button, ChoiceBox {
     -fx-min-width: 115px;
 }
 
+.gameInList {
+    -fx-alignment: CENTER;
+    -fx-min-width: 355px;
+    -fx-spacing: 1;
+    -fx-background-color: #3b3a35;
+    -fx-padding: 10px 10px;
+    -fx-background-radius: 10px;
+}
+
+.gameInList Label {
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-min-width: 50px;
+}
+
 .stat {
     -fx-min-width: 20px;
 }
