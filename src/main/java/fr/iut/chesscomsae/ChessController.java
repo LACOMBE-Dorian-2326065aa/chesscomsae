@@ -130,6 +130,7 @@ public class ChessController implements Initializable {
 
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
+        newGameContent = null;
         managerJoueur = new ManagerJoueur();
         modeTournoi = false;
     }
@@ -214,7 +215,7 @@ public class ChessController implements Initializable {
      */
     public void playAgainstBot() {
         j1 = new Joueur(nom.getText(), prenom.getText(), true);
-        j2 = new Joueur("BOT", "", false);
+        j2 = new Joueur("BOT", " ", false);
         managerJoueur.ajouterJoueur(j1);
         managerJoueur.ajouterJoueur(j2);
         nom.setText("");
@@ -562,6 +563,7 @@ public class ChessController implements Initializable {
         boxRight.getChildren().addAll(newGameContent);
         newGameContent = null;
     }
+
     /**
      * Permet de prendre en charge le clic du bouton "Parties" pour afficher le contenu associé
      * @author Dorian Lacombe
