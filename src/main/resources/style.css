@@ -256,6 +256,13 @@ Button, ChoiceBox {
     -fx-padding: 5px 10px;
 }
 
+.popupFin {
+    -fx-background-color: #04ad0c;
+    -fx-text-fill: #fff;
+    -fx-font-weight: 900;
+    -fx-padding: 5px 10px;
+}
+
 .bottomButtons {
     -fx-spacing: 10;
     -fx-alignment: CENTER;
