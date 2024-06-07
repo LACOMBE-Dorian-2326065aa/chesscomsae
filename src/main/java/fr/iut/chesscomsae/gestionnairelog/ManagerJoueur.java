@@ -81,8 +81,8 @@ public class ManagerJoueur extends ManagerFichier {
      */
     public static JsonObject joueurVersJsonObject(Joueur joueur) {
         JsonObject e = new JsonObject();
-        e.addProperty(NOM, joueur.getNom().replace(" ", ""));
-        e.addProperty(PRENOM, joueur.getPrenom().replace(" ", ""));
+        e.addProperty(NOM, joueur.getNom());
+        e.addProperty(PRENOM, joueur.getPrenom());
         e.addProperty(PARTIES_JOUEES, joueur.getNombrePartiesJouees());
         e.addProperty(PARTIES_GAGNEES, joueur.getNombrePartiesGagnees());
         System.out.println(e);

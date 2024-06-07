@@ -20,6 +20,9 @@ public class Chess extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+
+        stage.setOnCloseRequest(e -> System.exit(0));
+
         StackPane root = FXMLLoader.load(getClass().getClassLoader().getResource("chess.fxml"));
         Scene scene = new Scene(root, 1080, 720);
 

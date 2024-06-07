@@ -78,7 +78,7 @@ public class ManagerTest {
         Joueur joueurBlanc = new Joueur("Lacombe", "Dorian", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         ManagerParties managerParties = new ManagerParties();
-        managerParties.ajouterPartie(joueurBlanc, joueurNoir);
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir, false);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ManagerTest {
         Joueur joueurBlanc = new Joueur("Turmo", "Baptiste", true);
         Joueur joueurNoir = new Joueur("Fournier", "Quentin", false);
         ManagerParties managerParties = new ManagerParties();
-        managerParties.ajouterPartie(joueurBlanc, joueurNoir);
+        managerParties.ajouterPartie(joueurBlanc, joueurNoir, false);
     }
 
     @Test
