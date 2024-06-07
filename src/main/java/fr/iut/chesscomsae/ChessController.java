@@ -328,6 +328,7 @@ public class ChessController implements Initializable {
      * @author Dorian Lacombe
      */
     public void handleCellClick(int row, int col) {
+        if(j2.getPrenom().equals(" ") && j2.getNom().equals("BOT") && !isWhitePlaying) return;
         clearMoves();
         if(plateau.getTableau().get(row).get(col) != null && ((isWhitePlaying && cellSelected == null && !plateau.getTableau().get(row).get(col).estBlanc()) || (!isWhitePlaying && cellSelected == null && plateau.getTableau().get(row).get(col).estBlanc()))) return;
         if(cellSelected != null && plateau.getTableau().get(row).get(col) == cellSelected){
