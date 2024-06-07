@@ -128,6 +128,7 @@ public class ChessController implements Initializable {
 
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
+        newGameContent = null;
         managerJoueur = new ManagerJoueur();
         modeTournoi = false;
     }
@@ -560,6 +561,7 @@ public class ChessController implements Initializable {
         boxRight.getChildren().addAll(newGameContent);
         newGameContent = null;
     }
+
     /**
      * Permet de prendre en charge le clic du bouton "Parties" pour afficher le contenu associé
      * @author Dorian Lacombe
