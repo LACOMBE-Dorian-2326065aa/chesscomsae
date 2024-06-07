@@ -8,6 +8,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -400,7 +402,7 @@ public class ChessController implements Initializable {
             return;
         }
 
-        if(j2.getPrenom().equals("") && j2.getNom().equals("BOT") && !isWhitePlaying) {
+        if(j2.getPrenom().equals(" ") && j2.getNom().equals("BOT") && !isWhitePlaying) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
                 piecesNoires = plateau.piecesNoires();
                 ArrayList<Piece> toRemove = new ArrayList<>();
@@ -777,9 +779,30 @@ public class ChessController implements Initializable {
         choiceBox.setVisible(false);
         buttonTournoi.setVisible(false);
 
+        HBox hBoxBoutons = new HBox();
+        Button quatreJoueurs = new Button("4 joueurs");
+        quatreJoueurs.onActionProperty().set(actionEvent ->{
+            tournoiJoueurs(4);
+        });
+        Button huitJoueurs = new Button("8 joueurs");
+        huitJoueurs.onActionProperty().set(actionEvent ->{
+            tournoiJoueurs(8);
+        });
+        Button seizeJoueurs = new Button("16 joueurs");
+        seizeJoueurs.onActionProperty().set(actionEvent ->{
+            tournoiJoueurs(16);
+        });
+        hBoxBoutons.getChildren().addAll(quatreJoueurs, huitJoueurs, seizeJoueurs);
+        boxRight.getChildren().add(0, hBoxBoutons);
+        hBoxBoutons.setAlignment(Pos.CENTER);
+
 
         tournoi(4, joueurs);
     }
+
+    private void tournoiJoueurs(int i) {
+    }
+
 
     /**
      * Permet de prendre en charge la fin d'une partie dans un tournoi pour afficher le gagnant et passer au prochain match
@@ -837,3 +860,4 @@ public class ChessController implements Initializable {
     }
 
 }
+
