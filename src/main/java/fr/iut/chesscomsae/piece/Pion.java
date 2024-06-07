@@ -79,7 +79,7 @@ public class Pion extends Piece {
         System.out.println(mouvements.size());
         System.out.println(plateau.canPieceMove(this, estBlanc()));
         System.out.println("\n\n");
-        return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<int[]>();
+        return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<>();
         //return mouvements;
     }
 
@@ -94,38 +94,14 @@ public class Pion extends Piece {
     public ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau) {
 
         ArrayList<int[]> mouvements = new ArrayList<>();
-        ArrayList<ArrayList<Piece>> tableau = plateau.getTableau();
-
-        int deplacement = 1;
-        // Regarde s'il s'agit du premier coup du pion
-        if (premierCoup) {
-            // Si oui, le pion peut avancer de 2 cases
-            deplacement = 2;
-        }
 
         if (estBlanc()) {
-            // Ajout des mouvements possibles en avant pour le pion blanc
-            for (int i = 1; i <= deplacement; ++i) {
-                if (getLigne() - i >= 0 && tableau.get(getLigne()-i).get(getColonne()) == null) {
-                    mouvements.add(new int[]{getLigne() - i, getColonne()});
-                }else {
-                    break;
-                }
-            }
 
             // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion blanc
             if (getColonne() - 1 >= 0 && getLigne() - 1 >= 0) mouvements.add(new int[]{getLigne()-1, getColonne()-1});
             if (getColonne() + 1 <= 7 && getLigne() - 1 >= 0) mouvements.add(new int[]{getLigne()-1, getColonne()+1});
 
         }else {
-            // Ajout des mouvements possibles en avant pour le pion noir
-            for (int i = 1; i <= deplacement; ++i) {
-                if (getLigne() + i < 8 && tableau.get(getLigne()+i).get(getColonne()) == null) {
-                    mouvements.add(new int[]{getLigne()+i, getColonne()});
-                }else {
-                    break;
-                }
-            }
 
             // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion noir
             if (getColonne() - 1 >= 0 && getLigne() + 1 < 8) mouvements.add(new int[]{getLigne()+1, getColonne()-1});
@@ -145,6 +121,19 @@ public class Pion extends Piece {
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> path = new ArrayList<>();
         path.add(new int[]{getLigne(), getColonne()});
+        if (estBlanc()) {
+
+            // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion blanc
+            if (getColonne() - 1 >= 0 && getLigne() - 1 >= 0 && plateau.getTableau().get(getLigne()-1).get(getColonne()-1) instanceof Roi && plateau.getTableau().get(getLigne()-1).get(getColonne()-1).estBlanc() != estBlanc()) path.add(new int[]{getLigne()-1, getColonne()-1});
+            if (getColonne() + 1 <= 7 && getLigne() - 1 >= 0 && plateau.getTableau().get(getLigne()-1).get(getColonne()+1) instanceof Roi && plateau.getTableau().get(getLigne()-1).get(getColonne()+1).estBlanc() != estBlanc()) path.add(new int[]{getLigne()-1, getColonne()+1});
+
+        }else {
+
+            // Ajout des prises en diagonale lorsqu'elles sont possibles pour le pion noir
+            if (getColonne() - 1 >= 0 && getLigne() + 1 < 8 && plateau.getTableau().get(getLigne()-1).get(getColonne()-1) instanceof Roi && plateau.getTableau().get(getLigne()-1).get(getColonne()-1).estBlanc() != estBlanc()) path.add(new int[]{getLigne()+1, getColonne()-1});
+            if (getColonne() + 1 <= 7 && getLigne() + 1 < 8 && plateau.getTableau().get(getLigne()+1).get(getColonne()+1) instanceof Roi && plateau.getTableau().get(getLigne()+1).get(getColonne()+1).estBlanc() != estBlanc()) path.add(new int[]{getLigne()+1, getColonne()+1});
+
+        }
         return path;
     }
 
