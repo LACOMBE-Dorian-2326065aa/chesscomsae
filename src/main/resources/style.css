@@ -320,3 +320,14 @@ Button, ChoiceBox {
 .stat {
     -fx-min-width: 20px;
 }
+
+.buttonsTournoi {
+    -fx-spacing: 10;
+}
+
+.buttonsTournoi Button {
+    -fx-background-color: #5F7774;
+    -fx-text-fill: #fff;
+    padding: 15px 25px;
+    -fx-font-size: 1.2em;
+}

@@ -199,6 +199,7 @@ public class ChessController implements Initializable {
     public void play() {
         buttonPlay.setDisable(true);
         choiceBox.setDisable(true);
+        buttonTournoi.setDisable(true);
         prenomLabel = new Label("Prénom J1 :");
         prenom = new TextField();
         nomLabel = new Label("Nom J1 :");
@@ -577,6 +578,7 @@ public class ChessController implements Initializable {
         popup.getStyleClass().remove("visible");
         buttonPlay.setDisable(false);
         choiceBox.setDisable(false);
+        buttonTournoi.setDisable(false);
         createBindings();
         j1 = null;
         j2 = null;
@@ -823,17 +825,18 @@ public class ChessController implements Initializable {
         buttonTournoi.setVisible(false);
 
         HBox hBoxBoutons = new HBox();
+        hBoxBoutons.getStyleClass().add("buttonsTournoi");
         Button quatreJoueurs = new Button("4 joueurs");
         quatreJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(4);
+            tournoiJoueurs(4, hBoxBoutons);
         });
         Button huitJoueurs = new Button("8 joueurs");
         huitJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(8);
+            tournoiJoueurs(8, hBoxBoutons);
         });
         Button seizeJoueurs = new Button("16 joueurs");
         seizeJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(16);
+            tournoiJoueurs(16, hBoxBoutons);
         });
         hBoxBoutons.getChildren().addAll(quatreJoueurs, huitJoueurs, seizeJoueurs);
         boxRight.getChildren().add(0, hBoxBoutons);
@@ -843,7 +846,17 @@ public class ChessController implements Initializable {
         tournoi(4, joueurs);
     }
 
-    private void tournoiJoueurs(int i) {
+    private void tournoiJoueurs(int nb, HBox hBoxBoutons) {
+        boxRight.getChildren().remove(hBoxBoutons);
+        TextField prenomTournoi = new TextField();
+        TextField nomTournoi = new TextField();
+        prenomTournoi.getStyleClass().add("fieldTournoi");
+        nomTournoi.getStyleClass().add("fieldTournoi");
+        Button validTournoi = new Button("Valider");
+        validTournoi.getStyleClass().add("validTournoi");
+        boxRight.getChildren().add(0, validTournoi);
+        boxRight.getChildren().add(0, nomTournoi);
+        boxRight.getChildren().add(0, prenomTournoi);
     }
 
 
