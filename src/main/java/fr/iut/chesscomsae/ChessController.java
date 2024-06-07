@@ -10,12 +10,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -147,6 +145,7 @@ public class ChessController implements Initializable {
         joueursAyantJoue = new ArrayList<>();
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
+        newGameContent = null;
         managerJoueur = new ManagerJoueur();
         modeTournoi = false;
 
@@ -232,7 +231,7 @@ public class ChessController implements Initializable {
      */
     public void playAgainstBot() {
         j1 = new Joueur(nom.getText(), prenom.getText(), true);
-        j2 = new Joueur("BOT", "", false);
+        j2 = new Joueur("BOT", " ", false);
         managerJoueur.ajouterJoueur(j1);
         managerJoueur.ajouterJoueur(j2);
         nom.setText("");
@@ -582,6 +581,7 @@ public class ChessController implements Initializable {
         boxRight.getChildren().addAll(newGameContent);
         newGameContent = null;
     }
+
     /**
      * Permet de prendre en charge le clic du bouton "Parties" pour afficher le contenu associé
      * @author Dorian Lacombe
@@ -634,6 +634,13 @@ public class ChessController implements Initializable {
      */
     public void loadPlayers() {
         boxRight.getChildren().clear();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinWidth(boxRight.getMinWidth());
+        scrollPane.setMinHeight(boxRight.getMinHeight());
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setMinHeight(scrollPane.getMinHeight());
         playersList = ManagerJoueur.getJoueurs().toArray(new Joueur[0]);
         for(Joueur j : playersList) {
             if(j == null) continue;
@@ -654,8 +661,10 @@ public class ChessController implements Initializable {
             jLabelPlayed.setAlignment(Pos.CENTER);
             jLabelWon.setAlignment(Pos.CENTER);
             playerInList.getChildren().addAll(imgV, jLabelPrenom, jLabelNom, jLabelWon, jLabelPlayed);
-            boxRight.getChildren().add(playerInList);
+            vBox.getChildren().add(playerInList);
         }
+        scrollPane.setContent(vBox);
+        boxRight.getChildren().add(scrollPane);
         Region rg = new Region();
         VBox.setVgrow(rg, Priority.ALWAYS);
         boxRight.getChildren().add(rg);
@@ -667,6 +676,13 @@ public class ChessController implements Initializable {
      */
     public void loadGames() {
         boxRight.getChildren().clear();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinWidth(boxRight.getMinWidth());
+        scrollPane.setMinHeight(boxRight.getMinHeight());
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setMinHeight(scrollPane.getMinHeight());
         gamesList = ManagerParties.getParties().toArray(new Partie[0]);
         for(Partie g : gamesList) {
             if(g == null) continue;
@@ -691,8 +707,10 @@ public class ChessController implements Initializable {
             imgV2.setFitHeight(30);
             imgV2.setFitWidth(30);
             playerInList.getChildren().addAll(imgV, winnerLabelPrenom, winnerLabelNom, separator, loserLabelPrenom, loserLabelNom, imgV2);
-            boxRight.getChildren().add(playerInList);
+            vBox.getChildren().add(playerInList);
         }
+        scrollPane.setContent(vBox);
+        boxRight.getChildren().add(scrollPane);
         Region rg = new Region();
         VBox.setVgrow(rg, Priority.ALWAYS);
         boxRight.getChildren().add(rg);
