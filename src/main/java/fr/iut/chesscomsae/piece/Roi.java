@@ -9,7 +9,7 @@ public class Roi extends Piece {
 
     /**
      * Constructeur de la classe Roi
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @param ligne Ligne de la pièce
      * @param colonne Colonne de la pièce
      * @param joueur Joueur de la pièce
@@ -21,7 +21,7 @@ public class Roi extends Piece {
 
     /**
      * Permet de récupérer les mouvements possibles de la pièce Roi sur le plateau
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @param plateau Plateau de jeu
      * @return Liste des mouvements possibles de la pièce Roi
      */
@@ -50,7 +50,7 @@ public class Roi extends Piece {
 
     /**
      * Permet de récupérer les mouvements possibles de la pièce Roi sur le plateau, y compris les protections d'alliés
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @param plateau Plateau de jeu
      * @return Liste des mouvements possibles de la pièce Roi
      */
@@ -75,13 +75,19 @@ public class Roi extends Piece {
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel le Roi peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin (toujours null ici, car impossible)
+     */
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         return null;
     }
 
     /**
      * Permet de récupérer l'image de la pièce Roi
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @return Image de la pièce Roi
      */
     @Override
@@ -91,7 +97,7 @@ public class Roi extends Piece {
 
     /**
      * Permet de récupérer la valeur de la pièce Roi
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @return Valeur de la pièce Roi
      */
     @Override

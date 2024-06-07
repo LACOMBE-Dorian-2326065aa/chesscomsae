@@ -228,7 +228,7 @@ public class Reine extends Piece{
     }
 
     /**
-     * Permet de vérifier si la colonne est valide pour le mouvement de la reine
+     * Permet de vérifier si la colonne est valide pour le mouvement de la reine, en comptant les protections
      * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
@@ -246,7 +246,7 @@ public class Reine extends Piece{
     }
 
     /**
-     * Permet de vérifier si la ligne est valide pour le mouvement de la reine
+     * Permet de vérifier si la ligne est valide pour le mouvement de la reine, en comptant les protections d'alliés
      * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
@@ -263,6 +263,12 @@ public class Reine extends Piece{
         return false;
     }
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel la Reine peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin
+     */
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
 

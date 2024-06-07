@@ -73,6 +73,7 @@ public abstract class Piece {
 
     /**
      * Permet d'obtenir les mouvements possibles de la pièce
+     * @author Hugo Valente
      * @param plateau Plateau de jeu
      * @return Les mouvements possibles de la pièce
      */
@@ -80,11 +81,18 @@ public abstract class Piece {
 
     /**
      * Permet d'obtenir les mouvements possibles de la pièce, y compris ceux pouvant portéger un allié du roi ennemi
+     * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @return Les mouvements possibles de la pièce
      */
     public abstract ArrayList<int[]> mouvementsPossiblesEchecEtMat(Plateau plateau);
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel la pièce peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin
+     */
     public abstract ArrayList<int[]> getPathToKing(Plateau plateau);
 
     /**

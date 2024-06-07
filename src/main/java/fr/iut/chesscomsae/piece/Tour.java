@@ -139,7 +139,7 @@ public class Tour extends Piece {
     }
 
     /**
-     * Permet de vérifier si la colonne est valide pour le mouvement de la tour
+     * Permet de vérifier si la colonne est valide pour le mouvement de la Tour, en comptant les protections
      * @author Valente Hugo
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
@@ -157,7 +157,7 @@ public class Tour extends Piece {
     }
 
     /**
-     * Permet de vérifier si la ligne est valide pour le mouvement de la reine
+     * Permet de vérifier si la ligne est valide pour le mouvement de la Tour, en comptant les protections
      * @author Lacombe Dorian
      * @param plateau Plateau de jeu
      * @param mouvements Listes des mouvements possibles
@@ -174,6 +174,12 @@ public class Tour extends Piece {
         return false;
     }
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel la Tour peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin
+     */
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> mouvements = new ArrayList<>();
 

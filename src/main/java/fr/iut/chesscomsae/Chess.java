@@ -12,6 +12,12 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Chess extends Application {
+
+    /**
+     * Initialiser l'application et l'affiche à l'écran
+     * @param stage L'élément stage contenant la scene de notre fenêtre
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         StackPane root = FXMLLoader.load(getClass().getClassLoader().getResource("chess.fxml"));
@@ -27,6 +33,10 @@ public class Chess extends Application {
         stage.show();
     }
 
+    /**
+     * Lance l'applications
+     * @param args Paramètres
+     */
     public static void main(String[] args) {
         launch();
     }

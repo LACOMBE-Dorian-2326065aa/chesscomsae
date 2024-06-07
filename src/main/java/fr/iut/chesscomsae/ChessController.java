@@ -208,6 +208,10 @@ public class ChessController implements Initializable {
         rematch.onActionProperty().set(actionEvent -> rematch());
     }
 
+    /**
+     * Prépare l'initialisation d'une partie contre un BOT
+     * @author Dorian Lacombe
+     */
     public void playAgainstBot() {
         j1 = new Joueur(nom.getText(), prenom.getText(), true);
         j2 = new Joueur("BOT", "", false);
@@ -243,6 +247,10 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * Initialise la partie une fois les 2 joueurs enregistrés, BOT ou non
+     * @author Dorian Lacombe
+     */
     public void initGame() {
         nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
         nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
@@ -435,6 +443,10 @@ public class ChessController implements Initializable {
         }
     }
 
+    /**
+     * Permet de gérer les timers des 2 joueurs en les faisant décrémenter toutes les secondes
+     * @author Dorian Lacombe
+     */
     public void timerLoop() {
         timerMe.textProperty().unbind();
         timerEnnemy.textProperty().unbind();
@@ -479,6 +491,12 @@ public class ChessController implements Initializable {
         timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
+    /**
+     * Permet de prendre en charge une fin de partie avec tout ce qui est nécessaire
+     * @author Dorian Lacombe
+     * @param winner Joueur gagnant
+     * @param loser Joueur perdant
+     */
     public void initEnd(Joueur winner, Joueur loser) {
         popupLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
         popup.getStyleClass().add("visible");
@@ -497,6 +515,10 @@ public class ChessController implements Initializable {
         managerParties.ajouterPartie(winner, loser);
     }
 
+    /**
+     * Permet de fermer le popup indiquant la victoire
+     * @author Dorian Lacombe
+     */
     public void closePopup() {
         popup.getStyleClass().remove("visible");
         buttonPlay.setDisable(false);
@@ -508,6 +530,10 @@ public class ChessController implements Initializable {
         nicknameEnnemy.setText("Adversaire");
     }
 
+    /**
+     * Permet de relancer automatiquement une partie avec les mêmes jours à partir du popup indiquant la victoire
+     * @author Dorian Lacombe
+     */
     public void rematch() {
         popup.getStyleClass().remove("visible");
         popupTournoi.setVisible(false);
@@ -515,6 +541,10 @@ public class ChessController implements Initializable {
         play();
     }
 
+    /**
+     * Permet de prendre en charge le clic du bouton "Nouvelle partie" pour afficher le contenu associé
+     * @author Dorian Lacombe
+     */
     public void windowNewGame() {
         if(newGameContent == null) return;
         buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
@@ -532,7 +562,10 @@ public class ChessController implements Initializable {
         boxRight.getChildren().addAll(newGameContent);
         newGameContent = null;
     }
-
+    /**
+     * Permet de prendre en charge le clic du bouton "Parties" pour afficher le contenu associé
+     * @author Dorian Lacombe
+     */
     public void windowGames() {
         if(gamesContent == null) return;
         buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
@@ -552,6 +585,10 @@ public class ChessController implements Initializable {
         loadGames();
     }
 
+    /**
+     * Permet de prendre en charge le clic du bouton "Joueurs" pour afficher le contenu associé
+     * @author Dorian Lacombe
+     */
     public void windowPlayers() {
         if(playersContent == null) return;
         buttonGames.getStyleClass().removeAll("menuRight", "menuRightActual");
@@ -571,6 +608,10 @@ public class ChessController implements Initializable {
         loadPlayers();
     }
 
+    /**
+     * Permet de charger la liste des joueurs enregistrés dans un fichier JSON et de les afficher
+     * @author Dorian Lacombe
+     */
     public void loadPlayers() {
         boxRight.getChildren().clear();
         playersList = ManagerJoueur.getJoueurs().toArray(new Joueur[0]);
@@ -600,6 +641,10 @@ public class ChessController implements Initializable {
         boxRight.getChildren().add(rg);
     }
 
+    /**
+     * Permet de charger la liste des parties enregistrées dans un fichier JSON et de les afficher
+     * @author Hugo Valente
+     */
     public void loadGames() {
         boxRight.getChildren().clear();
         gamesList = ManagerParties.getParties().toArray(new Partie[0]);
@@ -633,6 +678,12 @@ public class ChessController implements Initializable {
         boxRight.getChildren().add(rg);
     }
 
+    /**
+     * Permet d'initialiser la création d'un tournoi
+     * @author Quentin Fournier
+     * @param nombreJoueurs Nombre de joueurs dans le tournoi
+     * @param joueurs Liste des joueurs participant
+     */
     public void tournoi (int nombreJoueurs, ArrayList<Joueur> joueurs) {
         Random r = new Random();
         ArrayList<Integer> indexList = new ArrayList<Integer>();
@@ -661,6 +712,10 @@ public class ChessController implements Initializable {
 
     }
 
+    /**
+     * Permet de prendre en charge le clic sur le bouton "Tournois" pour créer les joueurs participant
+     * @author Dorian Lacombe
+     */
     public void tournoiBouton () {
         ArrayList<Joueur> joueurs = new ArrayList<>();
         Joueur jo1 = new Joueur("prout", "caca");
@@ -680,6 +735,12 @@ public class ChessController implements Initializable {
         tournoi(4, joueurs);
     }
 
+    /**
+     * Permet de prendre en charge la fin d'une partie dans un tournoi pour afficher le gagnant et passer au prochain match
+     * @author Quentin Fournier
+     * @param winner Gagnant de la partie
+     * @param loser Perdant de la partie
+     */
     public void tournoiEndMsg (Joueur winner, Joueur loser) {
         popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
         popupTournoi.setVisible(true);

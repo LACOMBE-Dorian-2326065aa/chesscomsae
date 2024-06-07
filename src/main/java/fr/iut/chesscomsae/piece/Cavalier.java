@@ -9,7 +9,7 @@ public class Cavalier extends Piece{
 
     /**
      * Constructeur de la classe Cavalier
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @param ligne Ligne de la pièce
      * @param colonne Colonne de la pièce
      * @param joueur Joueur de la pièce
@@ -20,7 +20,7 @@ public class Cavalier extends Piece{
 
     /**
      * Permet de récupérer l'image de la pièce
-     * @author Valent Hugo
+     * @author Valente Hugo
      * @return Image de la pièce
      */
     @Override
@@ -147,6 +147,12 @@ public class Cavalier extends Piece{
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel le Cavalier peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin
+     */
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> path = new ArrayList<>();
         path.add(new int[]{getLigne(), getColonne()});

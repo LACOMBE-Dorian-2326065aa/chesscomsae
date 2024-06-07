@@ -136,6 +136,12 @@ public class Pion extends Piece {
         return mouvements;
     }
 
+    /**
+     * Permet de récupérer l'éventuel chemin pour lequel le Pion peut tuer un Roi
+     * @author Lacombe Dorian
+     * @param plateau Plateau de jeu
+     * @return Liste des mouvements du chemin
+     */
     public ArrayList<int[]> getPathToKing(Plateau plateau) {
         ArrayList<int[]> path = new ArrayList<>();
         path.add(new int[]{getLigne(), getColonne()});
