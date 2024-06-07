@@ -212,7 +212,7 @@ public class ChessController implements Initializable {
      */
     public void playAgainstBot() {
         j1 = new Joueur(nom.getText(), prenom.getText(), true);
-        j2 = new Joueur("BOT", "", false);
+        j2 = new Joueur("BOT", " ", false);
         managerJoueur.ajouterJoueur(j1);
         managerJoueur.ajouterJoueur(j2);
         nom.setText("");
@@ -612,6 +612,13 @@ public class ChessController implements Initializable {
      */
     public void loadPlayers() {
         boxRight.getChildren().clear();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinWidth(boxRight.getMinWidth());
+        scrollPane.setMinHeight(boxRight.getMinHeight());
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setMinHeight(scrollPane.getMinHeight());
         playersList = ManagerJoueur.getJoueurs().toArray(new Joueur[0]);
         for(Joueur j : playersList) {
             if(j == null) continue;
@@ -632,8 +639,10 @@ public class ChessController implements Initializable {
             jLabelPlayed.setAlignment(Pos.CENTER);
             jLabelWon.setAlignment(Pos.CENTER);
             playerInList.getChildren().addAll(imgV, jLabelPrenom, jLabelNom, jLabelWon, jLabelPlayed);
-            boxRight.getChildren().add(playerInList);
+            vBox.getChildren().add(playerInList);
         }
+        scrollPane.setContent(vBox);
+        boxRight.getChildren().add(scrollPane);
         Region rg = new Region();
         VBox.setVgrow(rg, Priority.ALWAYS);
         boxRight.getChildren().add(rg);
