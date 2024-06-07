@@ -75,6 +75,12 @@ public class ChessController implements Initializable {
     private VBox buttonPlayers;
     @FXML
     private Button buttonTournoi;
+    @FXML
+    private VBox popupFinTournoi;
+    @FXML
+    private Label popupFinTournoiLabel;
+    @FXML
+    private Button popupFin;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -85,7 +91,15 @@ public class ChessController implements Initializable {
 
     private Joueur j1;
     private Joueur j2;
+    private Joueur winner;
+    private Joueur loser;
     private Plateau plateau;
+
+    private ArrayList<Joueur> joueursTournoi;
+    private ArrayList<Joueur> joueursAyantJoue;
+    private int nombreJoueursTournoi;
+    private ArrayList<Integer> indexList;
+    private int dernierIndex;
 
     private Piece cellSelected;
     private Node nodeSelected;
@@ -128,10 +142,14 @@ public class ChessController implements Initializable {
         buttonNewGame.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowNewGame());
         buttonPlayers.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowPlayers());
 
+        dernierIndex = 0;
+        indexList = new ArrayList<>();
+        joueursAyantJoue = new ArrayList<>();
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
         managerJoueur = new ManagerJoueur();
         modeTournoi = false;
+
     }
 
     /**
@@ -498,6 +516,8 @@ public class ChessController implements Initializable {
      * @param loser Joueur perdant
      */
     public void initEnd(Joueur winner, Joueur loser) {
+        this.winner = winner;
+        this.loser = loser;
         popupLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
         popup.getStyleClass().add("visible");
         popupLabel.setWrapText(true);
@@ -681,35 +701,43 @@ public class ChessController implements Initializable {
     /**
      * Permet d'initialiser la création d'un tournoi
      * @author Quentin Fournier
-     * @param nombreJoueurs Nombre de joueurs dans le tournoi
-     * @param joueurs Liste des joueurs participant
+     * @param nombreJoueursTournoi Nombre de joueurs dans le tournoi
+     * @param joueursTournoi Liste des joueurs participant
      */
-    public void tournoi (int nombreJoueurs, ArrayList<Joueur> joueurs) {
-        Random r = new Random();
-        ArrayList<Integer> indexList = new ArrayList<Integer>();
+    public void tournoi (int nombreJoueursTournoi, ArrayList<Joueur> joueursTournoi) {
+        this.nombreJoueursTournoi = nombreJoueursTournoi;
+        this.joueursTournoi = joueursTournoi;
+        int index1 = dernierIndex;
+        int index2 = dernierIndex+1;
+        this.dernierIndex = index2;
+        System.out.println("ergerg");
 
-        //while (joueurs.size()!=1) {
+        if (joueursTournoi.size()==1) {
+            msgFinDeTournoi (joueursTournoi.get(0));
+        }
 
-        int index1 = r.nextInt(joueurs.size() - 1);
-        int index2 = r.nextInt(joueurs.size() - 1);
-        while (indexList.contains(index1)) index1 = r.nextInt(joueurs.size() - 1);
-        while (index1 == index2 || indexList.contains(index2)) index2 = r.nextInt(joueurs.size() - 1);
-        indexList.add(index1);
-        indexList.add(index2);
+        else {
 
-        this.j1 = joueurs.get(index1);
-        this.j1.setEstBlanc(true);
-        this.j2 = joueurs.get(index2);
-        this.j2.setEstBlanc(false);
-        this.isWhitePlaying = true;
+            if (joueursTournoi.size()==2) {
+                index1 = 0;
+                index2 = 1;
+            }
 
-        System.out.println("index 1 : " + index1 + " , joueur 1 : " + joueurs.get(index1) + "index 2 : " + index1 + " , joueur 2 : " + joueurs.get(index2));
-        System.out.println(joueurs);
-        System.out.println(indexList);
-        modeTournoi = true;
-        initGame();
-        //}
+            indexList.add(index1);
+            indexList.add(index2);
 
+            this.j1 = joueursTournoi.get(index1);
+            this.j1.setEstBlanc(true);
+            this.j2 = joueursTournoi.get(index2);
+            this.j2.setEstBlanc(false);
+            this.isWhitePlaying = true;
+
+            System.out.println("index 1 : " + index1 + " , joueur 1 : " + joueursTournoi.get(index1) + "index 2 : " + index2 + " , joueur 2 : " + joueursTournoi.get(index2));
+            System.out.println(joueursTournoi);
+            System.out.println(indexList);
+            modeTournoi = true;
+            play();
+        }
     }
 
     /**
@@ -742,12 +770,19 @@ public class ChessController implements Initializable {
      * @param loser Perdant de la partie
      */
     public void tournoiEndMsg (Joueur winner, Joueur loser) {
-        popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie !");
+        joueursTournoi.remove(loser);
+        joueursAyantJoue.add(winner);
+        popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie ! " + loser.getPrenom() + " " + loser.getNom() + " est éliminé du tournoi.");
         popupTournoi.setVisible(true);
         popupTournoi.getStyleClass().add("visible");
         popupTournoiLabel.setWrapText(true);
-        popupSuivant.onActionProperty().set(actionEvent -> rematch());
-
+        popupSuivant.onActionProperty().set(actionEvent -> {
+            System.out.println(joueursTournoi);
+            System.out.println(joueursAyantJoue);
+            popupTournoi.setVisible(false);
+            tournoi(nombreJoueursTournoi, joueursTournoi);
+        });
+        createBindings();
         timer.cancel();
         timer.purge();
         chessBoard.setOnMouseClicked(null);
@@ -758,71 +793,29 @@ public class ChessController implements Initializable {
         nodeSelected = null;
         managerJoueur.modifieJoueurInformation(winner, winner.getNombrePartiesJouees()+1, winner.getNombrePartiesGagnees()+1);
         managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
+
     }
 
-    /**
-    public void initGameTournoi () {
-        nicknameMe.setText(j1.getPrenom() + " " + j1.getNom() + " (" + j1.getNombrePartiesGagnees() + " / " + j1.getNombrePartiesJouees() + ")");
-        nicknameEnnemy.setText(j2.getPrenom() + " " + j2.getNom() + " (" + j2.getNombrePartiesGagnees() + " / " + j2.getNombrePartiesJouees() + ")");
-        clearAll();
-        plateau = new Plateau(j1, j2);
-        plateau.init();
-        displayGame(plateau);
-        handleClicks();
-        if(!timerMe.getText().substring(0, 2).contains(":")) {
-            time1 = Integer.parseInt(timerMe.getText().substring(0, 2));
-            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 2));
-        } else {
-            time1 = Integer.parseInt(timerMe.getText().substring(0, 1));
-            time2 = Integer.parseInt(timerEnnemy.getText().substring(0, 1));
-        }
-        subTime1 = 0;
-        subTime2 = 0;
-        timerLoopTournoi();
+    public void msgFinDeTournoi (Joueur winner) {
+        this.indexList = new ArrayList<>();
+        this.dernierIndex = 0;
+        this.joueursAyantJoue = new ArrayList<>();
+        this.joueursTournoi = new ArrayList<>();
+        this.nombreJoueursTournoi = 0;
+        popupFinTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné le tournoi !");
+        popupFinTournoi.setVisible(true);
+        popupFinTournoi.getStyleClass().add("visible");
+        popupFinTournoiLabel.setWrapText(true);
+        popupFin.onActionProperty().set(actionEvent -> {
+            buttonPlay.setVisible(true);
+            choiceBox.setVisible(true);
+            buttonTournoi.setVisible(true);
+            popupFinTournoi.setVisible(false);
+            buttonPlay.setDisable(false);
+            choiceBox.setDisable(false);
+            j1 = null;
+            j2 = null;
+        });
     }
-
-    public void timerLoopTournoi() {
-        timerMe.textProperty().unbind();
-        timerEnnemy.textProperty().unbind();
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    if (isWhitePlaying) {
-                        //subTime1--;
-                        subTime1--;
-                        if (subTime1 <= -1) {
-                            subTime1 = 59;
-                            time1--;
-                            if (time1 == -1) {
-                                time1 = 0;
-                                subTime1 = 0;
-                            }
-                        }
-                    } else {
-                        subTime2--;
-                        if (subTime2 <= -1) {
-                            subTime2 = 59;
-                            time2--;
-                            if (time2 == -1) {
-                                time2 = 0;
-                                subTime2 = 0;
-                            }
-                        }
-                    }
-                    timerMe.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time1, subTime1)));
-                    timerEnnemy.textProperty().bind(Bindings.concat(String.format("%02d:%02d", time2, subTime2)));
-
-                    if(time1 == 0 && subTime1 == 0 && isWhitePlaying) {
-                        tournoiEndMsg(j2, j1);
-                    } else if(time2 == 0 && subTime2 == 0 && !isWhitePlaying) {
-                        tournoiEndMsg(j1, j2);
-                    }
-                });
-            }
-        };
-        timer.scheduleAtFixedRate(task, 1000, 1000);
-    }**/
 
 }

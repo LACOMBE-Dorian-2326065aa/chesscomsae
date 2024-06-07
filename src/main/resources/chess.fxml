@@ -129,4 +129,11 @@
             <Button fx:id="popupSuivant" styleClass="popupSuivant">Suivant</Button>
         </HBox>
     </VBox>
+
+    <VBox alignment="CENTER" styleClass="centeredBox" fx:id="popupFinTournoi">
+        <Label text="Centered Box" styleClass="centeredLabel" fx:id="popupFinTournoiLabel"/>
+        <HBox styleClass="bottomButtons">
+            <Button fx:id="popupFin" styleClass="popupFin">Terminer le tournoi</Button>
+        </HBox>
+    </VBox>
 </StackPane>
