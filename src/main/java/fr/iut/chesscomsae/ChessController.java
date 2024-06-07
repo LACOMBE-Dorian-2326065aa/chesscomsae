@@ -382,7 +382,7 @@ public class ChessController implements Initializable {
             return;
         }
 
-        if(j2.getPrenom().equals("") && j2.getNom().equals("BOT") && !isWhitePlaying) {
+        if(j2.getPrenom().equals(" ") && j2.getNom().equals("BOT") && !isWhitePlaying) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
                 piecesNoires = plateau.piecesNoires();
                 ArrayList<Piece> toRemove = new ArrayList<>();
@@ -406,6 +406,20 @@ public class ChessController implements Initializable {
             }));
             timeline.setCycleCount(1);
             timeline.play();
+        }
+        int sum = 0;
+        for(Piece piece : plateau.piecesNoires()) {
+            sum += piece.mouvementsPossibles(plateau).size();
+        }
+        if(sum == 0) {
+            initPAT(j1, j2);
+        }
+        sum = 0;
+        for(Piece piece : plateau.piecesBlanches()) {
+            sum += piece.mouvementsPossibles(plateau).size();
+        }
+        if(sum == 0) {
+            initPAT(j1, j2);
         }
     }
 
@@ -511,7 +525,25 @@ public class ChessController implements Initializable {
         managerJoueur.modifieJoueurInformation(winner, winner.getNombrePartiesJouees()+1, winner.getNombrePartiesGagnees()+1);
         managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
         ManagerParties managerParties = new ManagerParties();
-        managerParties.ajouterPartie(winner, loser);
+        managerParties.ajouterPartie(winner, loser, false);
+    }
+
+    public void initPAT(Joueur winner, Joueur loser) {
+        popupLabel.setText("PAT ! La partie est nulle !");
+        popup.getStyleClass().add("visible");
+        popupLabel.setWrapText(true);
+        timer.cancel();
+        timer.purge();
+        chessBoard.setOnMouseClicked(null);
+        if(nodeSelected != null)
+            nodeSelected.getStyleClass().remove("selectedCell");
+        clearMoves();
+        cellSelected = null;
+        nodeSelected = null;
+        managerJoueur.modifieJoueurInformation(winner, winner.getNombrePartiesJouees()+1, winner.getNombrePartiesGagnees());
+        managerJoueur.modifieJoueurInformation(loser, loser.getNombrePartiesJouees()+1, loser.getNombrePartiesGagnees());
+        ManagerParties managerParties = new ManagerParties();
+        managerParties.ajouterPartie(winner, loser, true);
     }
 
     /**
@@ -668,13 +700,18 @@ public class ChessController implements Initializable {
             if(g == null) continue;
             HBox playerInList = new HBox();
             playerInList.getStyleClass().add("gameInList");
-            Image img = new Image("file:src/main/resources/img/couronne.png");
+            Image img;
+            if (g.isPAT()) {
+                img = new Image("file:src/main/resources/img/balance.png");
+            }else {
+                img = new Image("file:src/main/resources/img/couronne.png");
+            }
             ImageView imgV = new ImageView(img);
             imgV.setFitHeight(30);
             imgV.setFitWidth(30);
             Label winnerLabelPrenom = new Label(g.getJoueurGagnant().getPrenom());
             Label winnerLabelNom = new Label(g.getJoueurGagnant().getNom());
-            Label separator = new Label(" vs");
+            Label separator = new Label("vs");
             Label loserLabelPrenom = new Label(g.getJoueurPerdant().getPrenom());
             Label loserLabelNom = new Label(g.getJoueurPerdant().getNom());
             winnerLabelPrenom.setAlignment(Pos.CENTER);
@@ -682,7 +719,12 @@ public class ChessController implements Initializable {
             separator.setAlignment(Pos.CENTER);
             loserLabelPrenom.setAlignment(Pos.CENTER);
             loserLabelNom.setAlignment(Pos.CENTER);
-            Image image = new Image("file:src/main/resources/img/blesse.png");
+            Image image;
+            if (g.isPAT()) {
+                image = new Image("file:src/main/resources/img/balance.png");
+            }else {
+                image = new Image("file:src/main/resources/img/blesse.png");
+            }
             ImageView imgV2 = new ImageView(image);
             imgV2.setFitHeight(30);
             imgV2.setFitWidth(30);
