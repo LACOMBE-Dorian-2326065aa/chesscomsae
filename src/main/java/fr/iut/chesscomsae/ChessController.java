@@ -10,12 +10,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -647,6 +645,13 @@ public class ChessController implements Initializable {
      */
     public void loadGames() {
         boxRight.getChildren().clear();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinWidth(boxRight.getMinWidth());
+        scrollPane.setMinHeight(boxRight.getMinHeight());
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(10));
+        vBox.setMinHeight(scrollPane.getMinHeight());
         gamesList = ManagerParties.getParties().toArray(new Partie[0]);
         for(Partie g : gamesList) {
             if(g == null) continue;
@@ -671,8 +676,10 @@ public class ChessController implements Initializable {
             imgV2.setFitHeight(30);
             imgV2.setFitWidth(30);
             playerInList.getChildren().addAll(imgV, winnerLabelPrenom, winnerLabelNom, separator, loserLabelPrenom, loserLabelNom, imgV2);
-            boxRight.getChildren().add(playerInList);
+            vBox.getChildren().add(playerInList);
         }
+        scrollPane.setContent(vBox);
+        boxRight.getChildren().add(scrollPane);
         Region rg = new Region();
         VBox.setVgrow(rg, Priority.ALWAYS);
         boxRight.getChildren().add(rg);
