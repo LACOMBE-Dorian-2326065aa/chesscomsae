@@ -883,6 +883,7 @@ public class ChessController implements Initializable {
         annuler.getStyleClass().add("annuler");
         annuler.setOnAction(actionEvent -> {
             boxRight.getChildren().remove(vBoxTournoi);
+            joueursTournoi = new ArrayList<>();
             buttonPlay.setVisible(true);
             choiceBox.setVisible(true);
             buttonTournoi.setVisible(true);
