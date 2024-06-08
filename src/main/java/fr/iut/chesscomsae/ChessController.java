@@ -1005,6 +1005,8 @@ public class ChessController implements Initializable {
             buttonTournoi.setDisable(false);
             j1 = null;
             j2 = null;
+            nicknameMe.setText("Moi");
+            nicknameEnnemy.setText("Adversaire");
         });
     }
 
