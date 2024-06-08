@@ -81,6 +81,14 @@ public class ChessController implements Initializable {
     private Label popupFinTournoiLabel;
     @FXML
     private Button popupFin;
+    @FXML
+    private HBox annonce;
+    @FXML
+    private VBox popupMatch;
+    @FXML
+    private Label popupMatchLabel;
+    @FXML
+    private Button matchButton;
 
     private Label prenomLabel;
     private TextField prenom;
@@ -96,10 +104,13 @@ public class ChessController implements Initializable {
     private Plateau plateau;
 
     private ArrayList<Joueur> joueursTournoi;
+    private int nbJoueursTextField;
     private ArrayList<Joueur> joueursAyantJoue;
     private int nombreJoueursTournoi;
     private ArrayList<Integer> indexList;
     private int dernierIndex;
+    private ArrayList<Joueur> joueursElimines;
+    private int nbMatch;
 
     private Piece cellSelected;
     private Node nodeSelected;
@@ -122,6 +133,8 @@ public class ChessController implements Initializable {
     private ManagerJoueur managerJoueur;
     private boolean modeTournoi;
 
+    private VBox vBoxTournoi;
+
 
     /**
      * Initialise les données de la fenêtre
@@ -143,8 +156,11 @@ public class ChessController implements Initializable {
         buttonPlayers.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> windowPlayers());
 
         dernierIndex = 0;
+        nbMatch = 1;
+        joueursElimines = new ArrayList<>();
         indexList = new ArrayList<>();
         joueursAyantJoue = new ArrayList<>();
+        joueursTournoi = new ArrayList<>();
         gamesContent = new ArrayList<>();
         playersContent = new ArrayList<>();
         newGameContent = null;
@@ -775,7 +791,8 @@ public class ChessController implements Initializable {
         int index1 = dernierIndex;
         int index2 = dernierIndex+1;
         this.dernierIndex = index2;
-        System.out.println("ergerg");
+
+        statsTournoi(joueursTournoi.size(), joueursTournoi);
 
         if (joueursTournoi.size()==1) {
             msgFinDeTournoi (joueursTournoi.get(0));
@@ -797,11 +814,19 @@ public class ChessController implements Initializable {
             this.j2.setEstBlanc(false);
             this.isWhitePlaying = true;
 
-            System.out.println("index 1 : " + index1 + " , joueur 1 : " + joueursTournoi.get(index1) + "index 2 : " + index2 + " , joueur 2 : " + joueursTournoi.get(index2));
-            System.out.println(joueursTournoi);
-            System.out.println(indexList);
-            modeTournoi = true;
-            play();
+            if (joueursTournoi.size()==2) {
+                popupMatchLabel.setText("Finale : " + j1.getPrenom() + " " + j1.getNom() + " contre " + j2.getPrenom() + " " + j2.getNom());
+            }
+            else popupMatchLabel.setText(nbMatch + "e Partie : " + j1.getPrenom() + " " + j1.getNom() + " contre " + j2.getPrenom() + " " + j2.getNom());
+            popupMatch.setVisible(true);
+            popupMatch.getStyleClass().add("visible");
+            popupMatchLabel.setWrapText(true);
+            matchButton.onActionProperty().set(actionEvent -> {
+                popupMatch.setVisible(false);
+                modeTournoi = true;
+                play();
+            });
+            nbMatch = nbMatch+1;
         }
     }
 
@@ -809,54 +834,119 @@ public class ChessController implements Initializable {
      * Permet de prendre en charge le clic sur le bouton "Tournois" pour créer les joueurs participant
      * @author Dorian Lacombe
      */
-    public void tournoiBouton () {
-        ArrayList<Joueur> joueurs = new ArrayList<>();
-        Joueur jo1 = new Joueur("prout", "caca");
-        Joueur jo2 = new Joueur("Le Pen", "Marine");
-        Joueur jo3 = new Joueur("Praud", "Pascal");
-        Joueur jo4 = new Joueur("vavae", "tutu");
-        joueurs.add(jo1);
-        joueurs.add(jo2);
-        joueurs.add(jo3);
-        joueurs.add(jo4);
+    public void tournoiBouton() {
 
         buttonPlay.setVisible(false);
         choiceBox.setVisible(false);
         buttonTournoi.setVisible(false);
 
+        HBox hBoxAnnuler = new HBox();
+        VBox vBoxTournoi = new VBox();
+        this.vBoxTournoi = vBoxTournoi;
+        VBox vBoxChamps = new VBox();
         HBox hBoxBoutons = new HBox();
         hBoxBoutons.getStyleClass().add("buttonsTournoi");
+
+        Label choisirNbJoueurs = new Label("Nombre de joueurs :");
+        choisirNbJoueurs.getStyleClass().add("choisirNbJoueurs");
+
         Button quatreJoueurs = new Button("4 joueurs");
-        quatreJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(4, hBoxBoutons);
+        quatreJoueurs.onActionProperty().set(actionEvent -> {
+            this.nbJoueursTextField = 4;
+            this.nombreJoueursTournoi = 4;
+            quatreJoueurs.getStyleClass().add("selectedButton");
+            annonce.setVisible(false);
+            choisirNbJoueurs.setDisable(true);
+            tournoiJoueurs(nbJoueursTextField, hBoxBoutons, vBoxChamps, vBoxTournoi, hBoxAnnuler, choisirNbJoueurs);
         });
+
         Button huitJoueurs = new Button("8 joueurs");
-        huitJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(8, hBoxBoutons);
+        huitJoueurs.onActionProperty().set(actionEvent -> {
+            this.nbJoueursTextField = 8;
+            this.nombreJoueursTournoi = 8;
+            choisirNbJoueurs.setDisable(true);
+            huitJoueurs.getStyleClass().add("selectedButton");
+
+            tournoiJoueurs(nbJoueursTextField, hBoxBoutons, vBoxChamps, vBoxTournoi, hBoxAnnuler, choisirNbJoueurs);
         });
+
         Button seizeJoueurs = new Button("16 joueurs");
-        seizeJoueurs.onActionProperty().set(actionEvent ->{
-            tournoiJoueurs(16, hBoxBoutons);
+        seizeJoueurs.onActionProperty().set(actionEvent -> {
+            this.nbJoueursTextField = 16;
+            this.nombreJoueursTournoi = 16;
+            choisirNbJoueurs.setDisable(true);
+            seizeJoueurs.getStyleClass().add("selectedButton");
+            tournoiJoueurs(nbJoueursTextField, hBoxBoutons, vBoxChamps, vBoxTournoi, hBoxAnnuler, choisirNbJoueurs);
         });
+
+        Button annuler = new Button("Annuler le tournoi");
+        annuler.getStyleClass().add("annuler");
+        annuler.setOnAction(actionEvent -> {
+            boxRight.getChildren().remove(vBoxTournoi);
+            buttonPlay.setVisible(true);
+            choiceBox.setVisible(true);
+            buttonTournoi.setVisible(true);
+            annonce.setVisible(true);
+        });
+
         hBoxBoutons.getChildren().addAll(quatreJoueurs, huitJoueurs, seizeJoueurs);
-        boxRight.getChildren().add(0, hBoxBoutons);
         hBoxBoutons.setAlignment(Pos.CENTER);
 
+        vBoxTournoi.getChildren().addAll(choisirNbJoueurs, hBoxBoutons);
+        vBoxTournoi.getChildren().add(vBoxChamps);
 
-        tournoi(4, joueurs);
+        vBoxTournoi.setAlignment(Pos.CENTER);
+        vBoxTournoi.setSpacing(20);
+        vBoxChamps.setSpacing(10);
+        vBoxChamps.setAlignment(Pos.CENTER);
+
+        hBoxAnnuler.getChildren().add(annuler);
+        hBoxAnnuler.setAlignment(Pos.BOTTOM_CENTER);
+        vBoxTournoi.getChildren().add(hBoxAnnuler);
+
+        boxRight.getChildren().add(1, vBoxTournoi);
     }
 
-    private void tournoiJoueurs(int nb, HBox hBoxBoutons) {
-        boxRight.getChildren().remove(hBoxBoutons);
+    private void tournoiJoueurs(int nb, HBox hBoxBoutons, VBox vBoxChamps, VBox vBoxTournoi, HBox hBoxAnnuler, Label choisirNbJoueurs) {
+        hBoxBoutons.setDisable(true);
+
+        Label prenomTournoiLabel = new Label("Prenom : ");
+        prenomTournoiLabel.getStyleClass().add("prenomLabel");
         TextField prenomTournoi = new TextField();
+        prenomTournoi.getStyleClass().add("prenom");
+        Label nomTournoiLabel = new Label("Nom : ");
+        nomTournoiLabel.getStyleClass().add("nomLabel");
         TextField nomTournoi = new TextField();
-        prenomTournoi.getStyleClass().add("fieldTournoi");
-        nomTournoi.getStyleClass().add("fieldTournoi");
+        nomTournoi.getStyleClass().add("nom");
         Button validTournoi = new Button("Valider");
-        validTournoi.getStyleClass().add("validTournoi");
-        boxRight.getChildren().add(0, validTournoi);
-        boxRight.getChildren().add(0, nomTournoi);
-        boxRight.getChildren().add(0, prenomTournoi);
+        validTournoi.getStyleClass().add("valid");
+
+        vBoxChamps.getChildren().addAll(prenomTournoiLabel, prenomTournoi, nomTournoiLabel, nomTournoi, validTournoi);
+
+        if (nb == 0) {
+            vBoxTournoi.getChildren().remove(choisirNbJoueurs);
+            vBoxChamps.getChildren().clear();
+            hBoxBoutons.setVisible(false);
+            Button demarrer = new Button("Demarrer");
+            demarrer.getStyleClass().add("buttonPlay");
+            demarrer.onActionProperty().set(actionEvent -> {
+                vBoxTournoi.getChildren().clear();
+                annonce.setVisible(true);
+                tournoi(nombreJoueursTournoi, joueursTournoi);
+            });
+            vBoxTournoi.getChildren().add(0, demarrer);
+        }
+
+        validTournoi.onActionProperty().set(actionEvent -> {
+            vBoxChamps.getChildren().clear();
+            validButtonTournoi(nomTournoi.getText(), prenomTournoi.getText(), hBoxBoutons, vBoxChamps, vBoxTournoi, hBoxAnnuler, choisirNbJoueurs);
+        });
+    }
+
+    private void validButtonTournoi(String nom, String prenom, HBox hBoxBoutons, VBox vBoxChamps, VBox vBoxTournoi, HBox hBoxAnnuler, Label choisirNbJoueurs) {
+        joueursTournoi.add(new Joueur(nom, prenom));
+        this.nbJoueursTextField = nbJoueursTextField - 1;
+        tournoiJoueurs(nbJoueursTextField, hBoxBoutons, vBoxChamps, vBoxTournoi, hBoxAnnuler, choisirNbJoueurs);
     }
 
 
@@ -867,6 +957,7 @@ public class ChessController implements Initializable {
      * @param loser Perdant de la partie
      */
     public void tournoiEndMsg (Joueur winner, Joueur loser) {
+        joueursElimines.add(loser);
         joueursTournoi.remove(loser);
         joueursAyantJoue.add(winner);
         popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie ! " + loser.getPrenom() + " " + loser.getNom() + " est éliminé du tournoi.");
@@ -874,8 +965,6 @@ public class ChessController implements Initializable {
         popupTournoi.getStyleClass().add("visible");
         popupTournoiLabel.setWrapText(true);
         popupSuivant.onActionProperty().set(actionEvent -> {
-            System.out.println(joueursTournoi);
-            System.out.println(joueursAyantJoue);
             popupTournoi.setVisible(false);
             tournoi(nombreJoueursTournoi, joueursTournoi);
         });
@@ -894,7 +983,9 @@ public class ChessController implements Initializable {
     }
 
     public void msgFinDeTournoi (Joueur winner) {
+        this.nbMatch = 1;
         this.indexList = new ArrayList<>();
+        this.joueursElimines = new ArrayList<>();
         this.dernierIndex = 0;
         this.joueursAyantJoue = new ArrayList<>();
         this.joueursTournoi = new ArrayList<>();
@@ -904,15 +995,75 @@ public class ChessController implements Initializable {
         popupFinTournoi.getStyleClass().add("visible");
         popupFinTournoiLabel.setWrapText(true);
         popupFin.onActionProperty().set(actionEvent -> {
+            vBoxTournoi.getChildren().clear();
             buttonPlay.setVisible(true);
             choiceBox.setVisible(true);
             buttonTournoi.setVisible(true);
             popupFinTournoi.setVisible(false);
             buttonPlay.setDisable(false);
             choiceBox.setDisable(false);
+            buttonTournoi.setDisable(false);
             j1 = null;
             j2 = null;
         });
+    }
+
+    public void statsTournoi(int nombreJoueursTournoi, ArrayList<Joueur> joueursTournoi) {
+        vBoxTournoi.getChildren().clear();
+
+        HBox hBoxLabels = new HBox();
+
+        VBox vBoxJoueurs = new VBox();
+        vBoxJoueurs.setSpacing(10);
+
+        VBox vBoxJoueursElimines = new VBox();
+        vBoxJoueursElimines.setSpacing(10);
+
+        Image nonElimine = new Image("file:src/main/resources/img/validSized.png");
+        Image elimine = new Image("file:src/main/resources/img/eliminatedSized.png");
+
+        Label labelNbJoueurs = new Label(String.valueOf(nombreJoueursTournoi));
+        labelNbJoueurs.getStyleClass().add("labelNbJoueurs");
+
+        Label labelNbJoueursTexte = new Label(" joueurs encore en jeu");
+        labelNbJoueursTexte.getStyleClass().add("labelNbJoueursTexte");
+
+        Label labelJoueursFinal = new Label(labelNbJoueurs + " " + labelNbJoueursTexte);
+
+        Label labelJoueurs = new Label("Joueurs :");
+        labelJoueurs.getStyleClass().add("labelNbJoueursTexte");
+
+        hBoxLabels.getChildren().addAll(labelNbJoueurs, labelNbJoueursTexte);
+        hBoxLabels.setAlignment(Pos.CENTER);
+        vBoxTournoi.getChildren().addAll(hBoxLabels, labelJoueurs);
+
+        for (Joueur joueur : joueursTournoi) {
+            HBox hBoxJoueur = new HBox();
+            hBoxJoueur.setSpacing(10);
+
+            ImageView imageView = new ImageView(nonElimine);
+            Label labelJoueur = new Label(joueur.getPrenom() + " " + joueur.getNom());
+            labelJoueur.getStyleClass().add("labelNbJoueurs");
+
+            hBoxJoueur.getChildren().addAll(imageView, labelJoueur);
+            vBoxJoueurs.getChildren().add(hBoxJoueur);
+        }
+        vBoxTournoi.getChildren().add(vBoxJoueurs);
+
+        for (Joueur joueur : joueursElimines) {
+            HBox hBoxJoueurElimine = new HBox();
+            hBoxJoueurElimine.setSpacing(10);
+
+            ImageView imageView = new ImageView(elimine);
+            Label labelJoueur = new Label(joueur.getPrenom() + " " + joueur.getNom());
+            labelJoueur.getStyleClass().add("joueurElimine");
+
+            hBoxJoueurElimine.getChildren().addAll(imageView, labelJoueur);
+            vBoxJoueursElimines.getChildren().add(hBoxJoueurElimine);
+        }
+
+        vBoxTournoi.getChildren().add(vBoxJoueursElimines);
+        vBoxTournoi.setAlignment(Pos.CENTER);
     }
 
 }
