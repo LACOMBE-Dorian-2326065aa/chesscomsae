@@ -1,0 +1,38 @@
+[
+  {
+    "nom": "Lacombe",
+    "prenom": "Dorian",
+    "nombrePartiesJouees": 2,
+    "nombrePartiesGagnees": 2
+  },
+  {
+    "nom": "Valente",
+    "prenom": "Hugo",
+    "nombrePartiesJouees": 2,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "Fournier",
+    "prenom": "Quentin",
+    "nombrePartiesJouees": 2,
+    "nombrePartiesGagnees": 1
+  },
+  {
+    "nom": "Turmo",
+    "prenom": "Baptiste",
+    "nombrePartiesJouees": 2,
+    "nombrePartiesGagnees": 1
+  },
+  {
+    "nom": "Sebbak",
+    "prenom": "Mehdi",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 0
+  },
+  {
+    "nom": "Daubrege",
+    "prenom": "Simon",
+    "nombrePartiesJouees": 1,
+    "nombrePartiesGagnees": 0
+  },
+]

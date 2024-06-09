@@ -1,0 +1,27 @@
+[
+  {
+    "gagnant": "Lacombe/§/Dorian",
+    "perdant": "Valente/§/Hugo",
+    "PAT": false
+  },
+  {
+    "gagnant": "Lacombe/§/Dorian",
+    "perdant": "Valente/§/Hugo",
+    "PAT": false
+  },
+  {
+    "gagnant": "Fournier/§/Quentin",
+    "perdant": "Turmo/§/Baptiste",
+    "PAT": false
+  },
+  {
+    "gagnant": "Turmo/§/Baptiste",
+    "perdant": "Fournier/§/Quentin",
+    "PAT": false
+  },
+  {
+    "gagnant": "Sebbak/§/Mehdi",
+    "perdant": "Daubrege/§/Simon",
+    "PAT": true
+  }
+]
