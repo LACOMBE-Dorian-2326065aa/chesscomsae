@@ -800,9 +800,10 @@ public class ChessController implements Initializable {
 
         else {
 
-            if (joueursTournoi.size()==2) {
+            if (joueursTournoi.size() == 2 ||joueursTournoi.size() == 4 || joueursTournoi.size() == 8) {
                 index1 = 0;
                 index2 = 1;
+                this.dernierIndex = index2;
             }
 
             indexList.add(index1);
@@ -832,7 +833,7 @@ public class ChessController implements Initializable {
 
     /**
      * Permet de prendre en charge le clic sur le bouton "Tournois" pour créer les joueurs participant
-     * @author Dorian Lacombe
+     * @author Quentin Fournier
      */
     public void tournoiBouton() {
 
@@ -908,6 +909,16 @@ public class ChessController implements Initializable {
         boxRight.getChildren().add(1, vBoxTournoi);
     }
 
+    /**
+     * Permet de prendre en charge le clic sur le nombre de joueurs choisi
+     * @author Quentin Fournier
+     * @param nb Nombre de joueurs
+     * @param hBoxBoutons HBox contenant les boutons de choix
+     * @param vBoxChamps VBox contenant les champs de texte
+     * @param vBoxTournoi VBox contenant la visualisation du tournoi
+     * @param hBoxAnnuler HBox contenant le bouton Annuler
+     * @param choisirNbJoueurs Label cliqué
+     */
     private void tournoiJoueurs(int nb, HBox hBoxBoutons, VBox vBoxChamps, VBox vBoxTournoi, HBox hBoxAnnuler, Label choisirNbJoueurs) {
         hBoxBoutons.setDisable(true);
 
@@ -928,7 +939,7 @@ public class ChessController implements Initializable {
             vBoxTournoi.getChildren().remove(choisirNbJoueurs);
             vBoxChamps.getChildren().clear();
             hBoxBoutons.setVisible(false);
-            Button demarrer = new Button("Demarrer");
+            Button demarrer = new Button("Démarrer");
             demarrer.getStyleClass().add("buttonPlay");
             demarrer.onActionProperty().set(actionEvent -> {
                 vBoxTournoi.getChildren().clear();
@@ -944,6 +955,17 @@ public class ChessController implements Initializable {
         });
     }
 
+    /**
+     * Permet de prendre en charge le clic sur la bouton validant un joueur
+     * @author Quentin Fournier
+     * @param nom Nom du joueur
+     * @param prenom Prénom du joueur
+     * @param hBoxBoutons HBox contenant les boutons
+     * @param vBoxChamps VBox contenant les champs de texte
+     * @param vBoxTournoi VBox contenant la visualisation du tournoi
+     * @param hBoxAnnuler HBox contenant le bouton Annuler
+     * @param choisirNbJoueurs Label cliqué
+     */
     private void validButtonTournoi(String nom, String prenom, HBox hBoxBoutons, VBox vBoxChamps, VBox vBoxTournoi, HBox hBoxAnnuler, Label choisirNbJoueurs) {
         joueursTournoi.add(new Joueur(nom, prenom));
         this.nbJoueursTextField = nbJoueursTextField - 1;
@@ -983,6 +1005,11 @@ public class ChessController implements Initializable {
 
     }
 
+    /**
+     * Prend en charge la fin de la finale
+     * @author Quentin Fournier
+     * @param winner Gagnant de la partie
+     */
     public void msgFinDeTournoi (Joueur winner) {
         this.nbMatch = 1;
         this.indexList = new ArrayList<>();
@@ -1011,6 +1038,12 @@ public class ChessController implements Initializable {
         });
     }
 
+    /**
+     * Permet d'actualiser la visualisation latérale du tournoi
+     * @author Quentin Fournier
+     * @param nombreJoueursTournoi Nomdre de joueurs
+     * @param joueursTournoi Joueurs du tournoi
+     */
     public void statsTournoi(int nombreJoueursTournoi, ArrayList<Joueur> joueursTournoi) {
         vBoxTournoi.getChildren().clear();
 
