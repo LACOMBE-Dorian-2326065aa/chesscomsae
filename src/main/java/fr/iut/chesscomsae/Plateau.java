@@ -369,8 +369,6 @@ public class Plateau {
 
         tableau.get(checkedPiece.getLigne()).set(checkedPiece.getColonne(), checkedPiece);
         return nb == nb2;
-
-        // FAUT ENCORE CORRIGER LE PROBLEME DU PION QUI NE FAIT PAS D'ECHEC :( + qui bloque devant sans raison
     }
 
     /**
