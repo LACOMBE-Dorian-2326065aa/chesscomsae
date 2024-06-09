@@ -976,6 +976,8 @@ public class ChessController implements Initializable {
     public void tournoiEndMsg (Joueur winner, Joueur loser) {
         joueursElimines.add(loser);
         joueursTournoi.remove(loser);
+        ManagerParties managerParties = new ManagerParties();
+        managerParties.ajouterPartie(winner, loser, false);
         joueursAyantJoue.add(winner);
         popupTournoiLabel.setText(winner.getPrenom() + " " + winner.getNom() + " a gagné la partie ! " + loser.getPrenom() + " " + loser.getNom() + " est éliminé du tournoi.");
         popupTournoi.setVisible(true);
@@ -1016,6 +1018,7 @@ public class ChessController implements Initializable {
         popupFinTournoi.setVisible(true);
         popupFinTournoi.getStyleClass().add("visible");
         popupFinTournoiLabel.setWrapText(true);
+        modeTournoi = false;
         popupFin.onActionProperty().set(actionEvent -> {
             vBoxTournoi.getChildren().clear();
             buttonPlay.setVisible(true);
