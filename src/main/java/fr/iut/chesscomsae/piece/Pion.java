@@ -76,9 +76,6 @@ public class Pion extends Piece {
         }
 
         mouvements = plateau.filtreEchec(mouvements, estBlanc());
-        System.out.println(mouvements.size());
-        System.out.println(plateau.canPieceMove(this, estBlanc()));
-        System.out.println("\n\n");
         return plateau.canPieceMove(this, estBlanc()) ? mouvements : new ArrayList<>();
         //return mouvements;
     }

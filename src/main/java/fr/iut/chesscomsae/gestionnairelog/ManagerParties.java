@@ -18,7 +18,6 @@ public class ManagerParties extends ManagerFichier{
         super();
         File file = new File(CHEMIN);
         if (!file.exists()) {
-            System.err.println("Le fichier " + CHEMIN + " n'existe pas");
             try {
                 System.out.println("Création du fichier " + CHEMIN);
                 file.createNewFile();
